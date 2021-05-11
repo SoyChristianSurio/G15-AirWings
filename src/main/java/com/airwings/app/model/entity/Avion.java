@@ -16,19 +16,19 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "aviones")
+@Table(name = "avion")
 public class Avion implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "avion_id")
+	
 	private Long id;
 	
 	private String modelo;
 	private String marca;
 	
-	@OneToMany(mappedBy = "asiento", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "avion", fetch = FetchType.LAZY)
 	private List<Asiento> asientos;
 	
 }

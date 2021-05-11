@@ -17,13 +17,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "asientos")
+@Table(name = "asiento")
 public class Asiento implements Serializable {	 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "asiento_id")
+	
 	private Long id;
 	
 	@Column(name = "cantidad_asiento")
