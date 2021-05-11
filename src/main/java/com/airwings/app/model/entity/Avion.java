@@ -30,5 +30,5 @@ public class Avion implements Serializable {
 	
 	@OneToMany(mappedBy = "avion", fetch = FetchType.LAZY)
 	private List<Asiento> asientos;
-	
+	//:v
 }
