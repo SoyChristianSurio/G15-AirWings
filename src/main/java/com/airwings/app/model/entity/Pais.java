@@ -21,8 +21,8 @@ public class Pais implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String nombrePais;
-	private String codigoPais;
+	private String nombre;
+	private String codigo;
 	
 	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
 	private List<Ciudad> ciudades;
