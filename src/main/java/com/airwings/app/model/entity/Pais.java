@@ -9,25 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "avion")
-public class Avion implements Serializable {
+public class Pais implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long id;
 	
-	private String modelo;
-	private String marca;
+	private String nombrePais;
+	private String codigoPais;
 	
-	@OneToMany(mappedBy = "avion", fetch = FetchType.LAZY)
-	private List<Asiento> asientos;
-	//:v
+	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
+	private List<Ciudad> ciudades;
+	
 }
