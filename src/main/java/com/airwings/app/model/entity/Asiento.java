@@ -1,7 +1,6 @@
 package com.airwings.app.model.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,26 +8,30 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
-@Table(name = "aviones")
-public class Avion implements Serializable {
+@Getter
+@Setter
+@Table(name = "asientos")
+public class Asiento implements Serializable {	 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "avion_id")
+	@Column(name = "asiento_id")
 	private Long id;
 	
-	private String modelo;
-	private String marca;
+	@Column(name = "cantidad_asiento")
+	private Integer cantidadAsiento;
 	
-	@OneToMany(mappedBy = "asiento", fetch = FetchType.LAZY)
-	private List<Asiento> asientos;
+	@Column(name = "precio_asiento",precision = 2)
+	private Double precioAsiento;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Avion avion;
 }
