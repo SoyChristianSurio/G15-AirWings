@@ -1,20 +1,17 @@
-package com.airwings.app.model.entity;
+package com.airwings.app.model.entity.Avion;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import lombok.Data;
 
 @Entity
 @Data
-public class Pais implements Serializable {
+public class Clase implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -22,8 +19,4 @@ public class Pais implements Serializable {
 	private Long id;
 	
 	private String nombre;
-	private String codigo;
-	
-	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
-	private List<Ciudad> ciudades;
 }
