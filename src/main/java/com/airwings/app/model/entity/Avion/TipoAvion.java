@@ -1,5 +1,5 @@
 
-package com.airwings.app.model.entity;
+package com.airwings.app.model.entity.Avion;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -21,4 +21,3 @@ public class TipoAvion implements Serializable{
     @NotEmpty
     private String nombre;
 }
-// comentario

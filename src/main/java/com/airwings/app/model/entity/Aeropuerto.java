@@ -24,7 +24,7 @@ public class Aeropuerto implements Serializable{
 	private String telefono;
 	private String nombreResponsable;
 	private String codigo;
-	//private Integer numeroBahia;
+	private Integer numeroBahia;
 	private Integer capacidad;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

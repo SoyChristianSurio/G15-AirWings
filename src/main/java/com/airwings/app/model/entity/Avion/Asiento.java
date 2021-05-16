@@ -1,4 +1,4 @@
-package com.airwings.app.model.entity;
+package com.airwings.app.model.entity.Avion;
 
 import java.io.Serializable;
 
@@ -23,15 +23,14 @@ public class Asiento implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	private Long id;
 	
 	@Column(name = "cantidad_asiento")
-	private Integer cantidadAsiento;
-	
+	private Integer cantidadAsiento;	
 	@Column(name = "precio_asiento",precision = 2)
-	private Double precioAsiento;
-	
+	private Double precioAsiento;	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Avion avion;
+	@ManyToOne
+	private Clase clase;
 }
