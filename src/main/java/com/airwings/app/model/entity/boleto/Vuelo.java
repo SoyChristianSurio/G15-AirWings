@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.airwings.app.model.entity.Aeropuerto;
-import com.airwings.app.model.entity.Avion.Avion;
+import com.airwings.app.model.entity.avion.Avion;
 
 import lombok.Data;
 
