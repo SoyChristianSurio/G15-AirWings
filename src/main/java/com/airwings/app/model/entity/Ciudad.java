@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.Data;
 
 @Entity
@@ -21,6 +23,7 @@ public class Ciudad implements Serializable{
 	
 	private String nombre;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pais pais;
 }

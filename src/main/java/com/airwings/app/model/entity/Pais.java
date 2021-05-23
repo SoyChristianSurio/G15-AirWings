@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 
 @Entity
@@ -24,6 +26,7 @@ public class Pais implements Serializable {
 	private String nombre;
 	private String codigo;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
 	private List<Ciudad> ciudades;
 }

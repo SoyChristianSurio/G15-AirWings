@@ -1,4 +1,4 @@
-package com.airwings.app.model.entity.Avion;
+package com.airwings.app.model.entity.avion;
 
 import java.io.Serializable;
 
