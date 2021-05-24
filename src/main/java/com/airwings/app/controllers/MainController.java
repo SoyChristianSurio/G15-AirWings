@@ -12,4 +12,15 @@ public class MainController {
 		model.addAttribute("title", "Inicio");
 		return "index";
 	}
+	
+	@GetMapping("login")
+	public String login(Model model) {
+		model.addAttribute("title", "Login");
+		return "login";
+	}
+	
+	@GetMapping("gestion")
+	public String gestion() {
+		return "index";
+	}
 }

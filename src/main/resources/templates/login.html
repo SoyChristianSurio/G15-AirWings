@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html   
+		xmlns:th="https://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+	<div th:replace="fragmentos/head::bootstrap"></div>
+
+</head>
+
+<body>
+	<div style="height: 5em; background-color: rgb(4, 37, 62);">
+	</div>
+	
+	<div class="container">
+		<div class="h1">Página principal</div>
+		<div class="card mb-3 mx-auto" style="max-width: 540px;">
+		  <div class="row g-0">
+		    <div class="col-md-4">
+		      <img th:src="@{/img/wings.png}" alt="..." class="w-100">
+		    </div>
+		    <div class="col-md-8">
+		      <div class="card-body">
+		        <h2 class="card-title">Login</h2>
+		        <p class="card-text">Inicia sesión para hacer... cosas :)</p>
+		        <form th:action="@{/login}" th:method="post">
+		        	<div class="input-group flex-nowrap">
+					  <span class="input-group-text" id="username-icon">@</span>
+					  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping">
+					</div>
+					
+					<div class="input-group flex-nowrap mt-2">
+					  <span class="input-group-text" id="password-icon">@</span>
+					  <input type="password" class="form-control" placeholder="Password" aria-label="Username" aria-describedby="addon-wrapping">
+					</div>
+		        </form>
+		        <p class="card-text"><small class="text-muted">esto es un texto misterioso</small></p>
+		      </div>
+		    </div>
+ 		 </div>
+	</div>
+		<p>[[${title}]]</p>
+	</div>
+	
+</body>
+</html>	
