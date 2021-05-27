@@ -1,7 +1,5 @@
 package com.airwings.app.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +21,8 @@ public class PaisServiceImpl implements PaisService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Pais> findById(Long id) {
-		return paisDao.findById(id);
+	public Pais findById(Long id) {
+		return paisDao.findById(id).orElse(null);
 	}
 
 	@Override

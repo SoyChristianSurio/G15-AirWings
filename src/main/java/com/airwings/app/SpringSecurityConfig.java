@@ -20,7 +20,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests().antMatchers("/**","/css/**","/js/**","/img/**").permitAll()
 		.antMatchers("/gestion/paises").hasAnyAuthority("gestion_paises")					//hasAnyAuthority para cualquier string
-		.antMatchers("/gestion/").hasAnyRole("ROLE_admin","ROLE_admin_aeropuerto")									//hasAnyRole, el string debe iniciar con "ROLE_"
+		.antMatchers("/gestion/").hasAnyRole("ROLE_admin","ROLE_admin_aeropuerto")			//hasAnyRole, el string debe iniciar con "ROLE_"
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().loginPage("/login").permitAll()
