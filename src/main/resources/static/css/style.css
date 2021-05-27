@@ -1,0 +1,74 @@
+.wbtn-outline-green{
+	background-color: white;
+	border-color: rgb(4, 37, 62);
+	color: rgb(4, 37, 62);
+}
+.wbtn-outline-green:hover{
+	background-color: rgb(4, 37, 62);
+	border-color: white;
+	color: white;
+}
+.wbtn-green{
+	background-color: rgb(4, 37, 62);
+	border-color: rgb(4, 37, 62);
+	color: white;
+}
+.wbtn-green:hover{
+	background-color: rgb(47, 83, 119);
+	border-color: rgb(4, 37, 62);
+	color: white;
+}
+
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {   
+  border-color: rgb(0, 128, 128);
+  box-shadow: 0 0px 0px rgb(0, 128, 128)  inset, 0 0 5px rgb(58, 114, 137);
+  outline: 0 none;
+}
+
+.form-check-input:checked{
+  color: rgb(0, 128, 128);
+  border-color: rgb(0, 128, 128);
+  background-color: rgb(0, 128, 128);
+  border-color: rgb(0, 128, 128);
+  box-shadow: 0 0px 0px rgb(0, 128, 128)  inset, 0 0 5px rgb(58, 114, 137);
+  outline: 0 none;
+}
+
+
+.input-correct{
+	border-color: rgb(0, 128, 128);
+  	box-shadow: 0 0px 0px rgb(0, 128, 128)  inset, 0 0 5px rgb(58, 114, 137);
+  	outline: 0 none;
+}
+.input-error{
+	border-color: rgb(204, 60, 63);
+  	box-shadow: 0 0px 0px rgb(0, 128, 128)  inset, 0 0 5px rgb(255, 128, 128);
+  	outline: 0 none;
+}
+
+.wtext-green-light{
+	color:rgb(0, 128, 128);
+}
+
+.wlink-green{
+	color:rgb(0, 128, 128);
+}
+.wlink-green:hover{
+	color:rgb(0, 64, 64);
+}

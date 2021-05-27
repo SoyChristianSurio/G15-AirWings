@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html   
+		xmlns:th="https://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+	<div th:replace="fragmentos/head::bootstrap"></div>
+
+</head>
+
+<body>
+	<div style="height: 5em; background-color: rgb(4, 37, 62);"></div>
+	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
+	
+	<div class="container">
+		<div class="h1 text-wgreen-light">Regístrate</div>
+		
+		<div class="card mb-3 mx-auto" style="max-width: 1000px;">
+			<div class="row g-0">
+			    
+		    <div class=" col-sm-4 col-3 m-auto pr-5">
+		    	<img th:src="@{/img/wings.png}" alt="..." class="w-100">
+		    </div>
+		    
+		    <div class="col-sm-12 col-md-7 pl-5">
+		    	<div class="card-body">
+		        	<h2 class="card-title">Formulario de registro</h2>
+		        	<p class="card-text">
+		        		rellena los siguientes campos para crear una cuenta
+		        		<small class="text-secondary">(todos los campos son obligatorios)</small>
+		        	</p>
+			        
+			        <form th:action="@{/registro}" th:object="${usuario}" th:method="post" name="myform">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td class="wtext-green-light">Username</td>
+									<td>
+										<input 
+											type="text" th:field="*{username}"
+											class="form-control form-control-sm"
+											onkeyup="quitarEspacios('username')"
+											autofocus/> 
+										<small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('username')}" 
+											th:errors="*{username}">
+										</small>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="wtext-green-light">E-mail</td>
+									<td><input type="text" th:field="*{email}"
+										class="form-control form-control-sm"
+										onkeyup="myFunction2('carnet')" />
+										
+										<small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('email')}" 
+											th:errors="*{email}">
+										</small>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="wtext-green-light">Contraseña</td>
+									<td><input type="password" th:field="*{pass}"
+										class="form-control form-control-sm" /> 
+										<small
+											class="form-text text-danger"
+											th:if="${#fields.hasErrors('pass')}" 
+											th:errors="*{pass}">
+										</small>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="wtext-green-light">Repetir Contraseña</td>
+									<td><input type="password" th:field="*{passConfirm}"
+										class="form-control form-control-sm"/>
+										<small
+											class="form-text text-danger"
+											th:if="${passError}" 
+											th:text="${passError}">
+										</small>
+									</td>
+								</tr>
+								
+								<tr>
+									<td class="wtext-green-light">Tipo de usuario</td>
+									<td>
+										<div class="form-group form-check-inline col-12">
+								            <div class="form-check form-check-inline">
+								                <input type="radio" class="form-check-input" value="1" th:field="*{persona}" checked>
+								                <label class="form-check-label" for="persona1">Persona</label>
+								            </div>
+								            <div class="form-check form-check-inline">
+								                <input type="radio" class="form-check-input" value="0" th:field="*{persona}">
+								                <label class="form-check-label" for="persona2">Empresa</label>
+								            </div>
+								        </div>
+										<small
+											class=" form-text text-danger"
+											th:if="${#fields.hasErrors('persona')}" 
+											th:errors="*{persona}">
+										</small>
+									</td>									
+								</tr>
+								
+								<tr>
+									<td colspan="2"> <!-- MENSAJES DE ERROR DEL FORMULARIO DE REGISTRO -->
+										<div class="alert alert-danger alert-block"
+											th:if="${errorMessage!=null}" th:text="${errorMessage}"></div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2" class="text-center">
+										<button type="submit"
+											class="btn wbtn-outline-green w-75"
+											onclick="document.getElementById('myform').formSubmit()">Registrar</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</form>
+		        <p class="card-text">
+		        	<small class="text-muted">¿Ya tienes cuenta?</small>
+		        	<a class="btn btn-link btn-sm wlink-green" th:href="@{/login}">Inicia Sesión</a>
+		        </p>
+		      </div>
+		    </div>
+ 		 </div>
+	</div>
+		<p>[[${title}]]</p>
+	</div>
+<script type="text/javascript" th:src="@{/js/funcionesRegistro.js}"></script>
+</body>
+</html>	

@@ -1,7 +1,5 @@
 package com.airwings.app.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +21,8 @@ public class CiudadServiceImpl implements CiudadService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Ciudad> findById(Long id) {
-		return ciudadDao.findById(id);
+	public Ciudad findById(Long id) {
+		return ciudadDao.findById(id).orElse(null);
 	}
 
 	@Override
