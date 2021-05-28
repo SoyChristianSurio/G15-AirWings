@@ -8,4 +8,5 @@ import com.airwings.app.model.entity.usuario.Rol;
 @Repository
 public interface RolDao extends JpaRepository<Rol, Long> {
 
+	public Rol findByNombre(String nombre);
 }

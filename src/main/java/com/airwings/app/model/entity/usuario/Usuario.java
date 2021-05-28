@@ -29,6 +29,7 @@ public class Usuario implements Serializable{
 	private Integer contadorBloqueo;
 	private Boolean bloqueado;
 	private Boolean clienteNatural;
+	private Boolean registroCompleto;
 	
 	@ManyToOne
 	private TipoDocumento documento;

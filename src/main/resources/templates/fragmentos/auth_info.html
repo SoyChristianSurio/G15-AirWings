@@ -1,0 +1,5 @@
+<div th:fragment="info"  th:remove="tag">
+	<p sec:authorize="isAuthenticated()">
+		Usuario: <span sec:authentication="name"></span> | Rol: <span sec:authentication="principal.authorities">
+	</p>
+</div>

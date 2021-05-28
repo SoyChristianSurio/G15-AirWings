@@ -34,6 +34,7 @@
 						  </span>
 						  <input type="text" class="form-control" 
 						  		 placeholder="Username" aria-label="Username" 
+						  		 name="username"
 						  		 aria-describedby="addon-wrapping" autofocus required>
 						</div>
 						
@@ -41,8 +42,8 @@
 							<span class="input-group-text text-secondary" id="password-icon">
 								<i class="fas fa-key"></i>
 							</span>
-							<input type="password" class="form-control" 
-								   placeholder="Password" aria-label="Username" 
+							<input type="password" class="form-control" name="password"
+								   placeholder="Password" aria-label="password" 
 								   aria-describedby="addon-wrapping" required>
 						</div>
 						
@@ -60,7 +61,8 @@
 		    </div>
  		 </div>
 	</div>
-		<p></p>
+		<p th:if="${error}" >[[${error}]]</p>
+		<p th:if="${info}" >[[${info}]]</p>
 	</div>
 	
 </body>

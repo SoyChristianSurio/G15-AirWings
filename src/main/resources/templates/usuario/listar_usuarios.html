@@ -11,14 +11,14 @@
 
 </head>
 
+<!-- sec:authorize="hasRole('ROLE_nombre')"-->
 <body>
-	
 	<div th:replace="fragmentos/navbar::user"></div>
 	
 	<div class="container">
 		<div class="h1">Página principal</div>
-		<p th:if="${info}">[[${info}]]</p>
+		<p>[[${title}]]</p>
 	</div>
-	<div th:replace="fragmentos/auth_info::info"></div>
+	
 </body>
 </html>	
