@@ -7,9 +7,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.airwings.app.model.DAO.usuario.ClienteNaturalDao;
+import com.airwings.app.model.DAO.usuario.EstadoCivilDao;
 import com.airwings.app.model.DAO.usuario.RolDao;
+import com.airwings.app.model.DAO.usuario.TipoDocumentoDao;
 import com.airwings.app.model.DAO.usuario.UsuarioDao;
+import com.airwings.app.model.DTO.usuario.EmpresaAutoEdit;
+import com.airwings.app.model.DTO.usuario.PersonaAutoEdit;
 import com.airwings.app.model.DTO.usuario.UsuarioRegistrable;
+import com.airwings.app.model.entity.usuario.ClienteEmpresa;
+import com.airwings.app.model.entity.usuario.ClienteNatural;
 import com.airwings.app.model.entity.usuario.Usuario;
 
 @Service
@@ -20,6 +27,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Autowired
 	UsuarioDao usuarioDao;
+	@Autowired
+	ClienteNaturalDao clienteNaturalDao;
+	@Autowired
+	EstadoCivilDao ecDao;
+	@Autowired
+	TipoDocumentoDao tdDao;
 	
 	@Autowired
 	RolDao rolDao;
@@ -70,4 +83,70 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return usuarioDao.save(u);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public PersonaAutoEdit getPersonaAutoEdit(ClienteNatural cn) {
+		PersonaAutoEdit p = new PersonaAutoEdit();
+		p.setUsuarioId(cn.getUsuario().getId());
+		p.setPNombre(cn.getPNombre());
+		p.setSNombre(cn.getSNombre());
+		p.setPApellido(cn.getSApellido());
+		p.setSApellido(cn.getSApellido());
+		p.setFechaNacimiento(cn.getFechaNacimiento());
+		p.setEstadoCivilId(cn.getEstadoCivil().getId());
+		p.setDocumentoId(cn.getDocumento().getId());
+		p.setNumeroDocumento(cn.getNumeroDocumento());
+		p.setTelefonoFijo(cn.getTelefonoFijo());
+		p.setTelefonoMovil(cn.getTelefonoMovil());
+		p.setSexo(cn.getSexo());
+		p.setNumViajero(cn.getNumViajero());
+		return p;
+	}
+
+	@Override
+	public String savePersona(PersonaAutoEdit persona) {
+		ClienteNatural cn;
+		Usuario u = usuarioDao.findById(persona.getUsuarioId()).orElse(null);
+		if(u.getNatural()==null) {
+			cn = new ClienteNatural();
+			cn.setDistanciaRecorrida(0.0);
+			cn.setMillas(0.0);
+			u.setRegistroCompleto(true);
+			usuarioDao.save(u);
+		}else {
+			cn = u.getNatural();
+		}
+		
+		cn.setPNombre(persona.getPNombre());
+		cn.setSNombre(persona.getSNombre());
+		cn.setPApellido(persona.getSApellido());
+		cn.setSApellido(persona.getSApellido());
+		cn.setFechaNacimiento(persona.getFechaNacimiento());
+		cn.setEstadoCivil(ecDao.findById(persona.getEstadoCivilId()).orElse(null));
+		cn.setDocumento(tdDao.findById(persona.getDocumentoId()).orElse(null));
+		cn.setNumeroDocumento(persona.getNumeroDocumento());
+		cn.setTelefonoFijo(persona.getTelefonoFijo());
+		cn.setTelefonoMovil(persona.getTelefonoMovil());
+		cn.setSexo(persona.getSexo());
+		cn.setNumViajero(persona.getNumViajero());
+		cn.setUsuario(u);
+		
+		clienteNaturalDao.save(cn);
+		
+		return "Los datos del usuario '"+u.getUsername()+"' han sido guardados";
+	}
+
+	@Override
+	public EmpresaAutoEdit getEmpresaAutoEdit(ClienteEmpresa ce) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String saveEmpresa(EmpresaAutoEdit empresa) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

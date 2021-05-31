@@ -1,38 +1,113 @@
 <div th:fragment="user"  th:remove="tag">
-	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgb(6, 37, 62);">
+	<nav class="navbar navbar-expand-lg navbar-dark position-relative" style="background-color: rgb(6, 37, 62);">
 	  	<div class="container-fluid" style="background-color: rgb(4, 37, 62);">
-	    	<a class="navbar-brand" href="#">[[${title}]]</a>
+	    	
 	    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	      		<span class="navbar-toggler-icon"></span>
 	    	</button>
+				     	
+				    	<li class="dropstart btn btn-menu" sec:authorize="isAuthenticated()">
+				        	<a 	class="nav-link dropdown-toggle btn wbtn-outline-green mt-0" 
+				          		href="#" id="navbarDropdown" 
+				          		role="button" data-bs-toggle="dropdown" 
+				          		aria-expanded="false"
+				          		th:text="${#authentication.getPrincipal().getUsername()}">
+				 			</a>
+					        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					          	<li><a class="dropdown-item" href="#">Enlace 1</a></li>
+					            <li><a class="dropdown-item" href="#">Enlace 2</a></li>
+					            <li><hr class="dropdown-divider"></li>
+					            <li>
+					            	<form th:action="@{/logout}" th:method="post" id="formLogout">
+					            		<button class="dropdown-item" onclick="document.getElementById('formLogout').submit();">
+					            			<i class="fas fa-sign-out-alt"></i><span> Cerrar Sesión </span>
+					            		</button>
+					            	</form>
+					            </li>
+					        </ul>
+				        </li>
+				    
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    
-	    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-<!-- ##########################################################################################################################-->		    	
-	    	
-	    	<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-	        	<a 	class="nav-link dropdown-toggle" 
-	          		href="#" id="navbarDropdown" 
-	          		role="button" data-bs-toggle="dropdown" 
-	          		aria-expanded="false"
-	          		th:text="${#authentication.getPrincipal().getUsername()}">
-	 			</a>
-		        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		          	<li><a class="dropdown-item" href="#">Enlace 1</a></li>
-		            <li><a class="dropdown-item" href="#">Enlace 2</a></li>
-		            <li><hr class="dropdown-divider"></li>
-		            <li>
-		            	<form th:action="@{/logout}" th:method="post" id="formLogout">
-		            		<button class="dropdown-item" onclick="document.getElementById('formLogout').submit();">
-		            			<i class="fas fa-sign-out-alt"></i><span> Cerrar Sesión </span>
-		            		</button>
-		            	</form>
-		            </li>
-		        </ul>
-	        </li>
+	    <ul class="navbar-nav mb-2 mb-lg-0">
 <!-- ##########################################################################################################################-->	        
 	    	<li class="nav-item">
-	        	<a class="nav-link active" aria-current="page" href="#">Home</a>
+	        	<a class="nav-link" th:classappend="${menuHome!=null}? 'active'" aria-current="page" th:href="@{/usuario/inicio}">Reserva de boletos</a>
+	        </li>
+	        
+	        <li class="nav-item">
+	        	<a class="nav-link" th:classappend="${menuDatos!=null}?' active'" th:href="@{/usuario/persona/datos}" th:if="${personaCl}">Mis Datos</a>
+	        	<a class="nav-link" th:classappend="${menuDatos!=null}?' active'" th:href="@{/usuario/empresa/datos}" th:if="${empresaCl}">Mis Datos</a>
+	        </li>
+	        
+	        <li class="nav-item">
+	          <a class="nav-link" href="#">Compras</a>
+	        </li>
+	        
+	        <li class="nav-item">
+	          <a class="nav-link" href="#">Otro link</a>
+	        </li>
+	        
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	            Dropdown
+	          </a>
+	          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <li><a class="dropdown-item" href="#">Action</a></li>
+	            <li><a class="dropdown-item" href="#">Another action</a></li>
+	            <li><hr class="dropdown-divider"></li>
+	            <li><a class="dropdown-item" href="#">Something else here</a></li>
+	          </ul>
+	        </li>
+	        
+	      </ul>
+	      
+	      <a class="btn wbtn-outline-green" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>        
+	      
+	    </div>
+
+	    
+	    </div>
+	  
+	</nav>
+	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
+</div>
+
+<div th:fragment="admin"  th:remove="tag">
+	<nav class="navbar navbar-expand-lg navbar-dark position-relative" style="background-color: rgb(6, 37, 62);">
+	  	<div class="container-fluid" style="background-color: rgb(4, 37, 62);">
+	    	
+	    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	      		<span class="navbar-toggler-icon"></span>
+	    	</button>
+				     	
+				    	<li class="dropstart btn btn-menu" sec:authorize="isAuthenticated()">
+				        	<a 	class="nav-link dropdown-toggle btn wbtn-outline-green mt-0" 
+				          		href="#" id="navbarDropdown" 
+				          		role="button" data-bs-toggle="dropdown" 
+				          		aria-expanded="false"
+				          		th:text="${#authentication.getPrincipal().getUsername()}">
+				 			</a>
+					        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+					          	<li><a class="dropdown-item" href="#">Enlace 1</a></li>
+					            <li><a class="dropdown-item" href="#">Enlace 2</a></li>
+					            <li><hr class="dropdown-divider"></li>
+					            <li>
+					            	<form th:action="@{/logout}" th:method="post" id="formLogout">
+					            		<button class="dropdown-item" onclick="document.getElementById('formLogout').submit();">
+					            			<i class="fas fa-sign-out-alt"></i><span> Cerrar Sesión </span>
+					            		</button>
+					            	</form>
+					            </li>
+					        </ul>
+				        </li>
+				    
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    
+	    <ul class="navbar-nav mb-2 mb-lg-0">
+<!-- ##########################################################################################################################-->	        
+	    	<li class="nav-item">
+	        	<a class="nav-link active" aria-current="page" href="#">Administración</a>
 	        </li>
 	        
 	        <li class="nav-item">
@@ -45,10 +120,13 @@
 	        </li>
 	      </ul>
 	      
-	      <a class="btn wbtn-outline-green" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-	      
+	      <a class="btn wbtn-outline-green" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>        
 	      
 	    </div>
-	  </div>
+
+	    
+	    </div>
+	  
 	</nav>
+	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
 </div>

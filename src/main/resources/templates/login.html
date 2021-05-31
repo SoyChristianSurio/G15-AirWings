@@ -13,56 +13,48 @@
 <body>
 	<div style="height: 5em; background-color: rgb(4, 37, 62);"></div>
 	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
-	
+	<div th:replace="fragmentos/mensajes::alertas"></div>
 	<div class="container">
 		<div class="h1 text-secondary">Air Wings</div>
 		<div class="card mt-3 mx-auto" style="max-width: 540px;">
+			
 			<div class="row g-0">
 			    
 			    <div class=" col-sm-4 col-4 m-auto">
 			    	<img th:src="@{/img/wings.png}" alt="..." class="w-100">
 			    </div>
 		    
-		    <div class="col-md-8">
-		    	<div class="card-body">
-		        	<h2 class="card-title wtext-green-light">Inicio de Sesión</h2>
-		        	<p class="card-text text-muted">Inicia sesión para hacer... cosas :)</p>
-			        <form th:action="@{/login}" th:method="post">
-			        	<div class="input-group flex-nowrap">
-						  <span class="input-group-text text-secondary" id="username-icon">
-						  		<i class="fas fa-user"></i>
-						  </span>
-						  <input type="text" class="form-control" 
-						  		 placeholder="Username" aria-label="Username" 
-						  		 name="username"
-						  		 aria-describedby="addon-wrapping" autofocus required>
-						</div>
-						
-						<div class="input-group flex-nowrap mt-2">
-							<span class="input-group-text text-secondary" id="password-icon">
-								<i class="fas fa-key"></i>
-							</span>
-							<input type="password" class="form-control" name="password"
-								   placeholder="Password" aria-label="password" 
-								   aria-describedby="addon-wrapping" required>
-						</div>
-						
-						<div class="form-group d-grid mx-auto col-12 mt-2" >
-							<button type="submit" class="btn btn-block wbtn-green">
-								Iniciar Sesión
-							</button>
-						</div>
-			        </form>
-		        <p class="card-text mt-3">
-		        	<small class="text-muted">¿No tienes cuenta?</small>
-		        	<a class="btn btn-link btn-sm wlink-green"  th:href="@{/registro}">Registrate</a>
-		        </p>
-		      </div>
-		    </div>
- 		 </div>
-	</div>
-		<p th:if="${error}" >[[${error}]]</p>
-		<p th:if="${info}" >[[${info}]]</p>
+			    <div class="col-md-8">
+			    	<div class="card-body">
+			        	<h2 class="card-title wtext-green-light">Inicio de Sesión</h2>
+			        	<p class="card-text text-muted">Inicia sesión para hacer... cosas :)</p>
+				        
+				        <form th:action="@{/login}" th:method="post">
+				        	<div class="input-group flex-nowrap">
+							  <span class="input-group-text text-secondary" id="username-icon"><i class="fas fa-user"></i></span>
+							  <input type="text" class="form-control" placeholder="Username" aria-label="Username" name="username" aria-describedby="addon-wrapping" autofocus required>
+							</div>
+							
+							<div class="input-group flex-nowrap mt-2">
+								<span class="input-group-text text-secondary" id="password-icon"><i class="fas fa-key"></i></span>
+								<input type="password" class="form-control" name="password" placeholder="Password" aria-label="password" aria-describedby="addon-wrapping" required>
+							</div>
+							
+							<div class="form-group d-grid mx-auto col-12 mt-2" >
+								<button type="submit" class="btn btn-block wbtn-green">	Iniciar Sesión </button>
+							</div>
+				        </form>
+				        
+				        <p class="card-text mt-3">
+				        	<small class="text-muted">¿No tienes cuenta?</small>
+				        	<a class="btn btn-link btn-sm wlink-green"  th:href="@{/registro}">Registrate</a>
+				        </p>
+			      	</div>		      	
+			    </div>
+		    
+ 		 	</div>
+		</div>
+		
 	</div>
 	
 </body>

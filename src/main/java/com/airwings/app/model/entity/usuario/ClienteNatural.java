@@ -8,9 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -25,6 +27,7 @@ public class ClienteNatural implements Serializable{
 	
 	private String telefonoFijo;
 	private String telefonoMovil;
+	@NotBlank
 	private String pNombre;
 	private String sNombre;
 	private String pApellido;
@@ -32,10 +35,15 @@ public class ClienteNatural implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	private String sexo;
-	private String estadoCivil;
+	@ManyToOne
+	private EstadoCivil estadoCivil;
 	private String numViajero;
 	private Double millas;
 	private Double distanciaRecorrida;
+	
+	@ManyToOne
+	private TipoDocumento documento;
+	private String numeroDocumento; 
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;

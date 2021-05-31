@@ -31,10 +31,6 @@ public class Usuario implements Serializable{
 	private Boolean clienteNatural;
 	private Boolean registroCompleto;
 	
-	@ManyToOne
-	private TipoDocumento documento;
-	private String numeroDocumento; 
-	
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private ClienteNatural natural;
 	

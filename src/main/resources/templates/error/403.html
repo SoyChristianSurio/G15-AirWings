@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>Login</title>
+	<div th:replace="fragmentos/head::bootstrap"></div>
+</head>
+
+<body>  		
+	<div th:replace="fragmentos/navbar::user"></div>
+	<div class="container align-middle">
+		<div class="card text-center mt-5">
+			<div class="card-header text-center ">
+				<h3 class="text-secondary">Air Wings Web</h3>
+				<h5 class="text-secondary">te damos las alas de la libertad</h5> 
+			</div>
+			<div class="card-body">
+			<div class="jumbotron d-flex col-5 mx-auto">
+				<div class="col-4 align-midle"><i class="fas fa-ban fa-5x float-right"></i></div>
+				<div class="col-8">
+				  <h1>Error 403</h1>
+				  <p> Acceso denegado</p>
+				</div>
+			</div>
+				
+			</div><!-- END CARD BODY -->
+			
+		</div>
+	</div>
+</body>
+</html>

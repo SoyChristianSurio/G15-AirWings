@@ -34,3 +34,11 @@ public class ClienteEmpresa implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 }
+
+
+
+
+
+
+
+
