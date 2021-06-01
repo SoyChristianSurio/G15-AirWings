@@ -5,14 +5,16 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="${titulo}"></title>
+	<title th:text="${title}"></title>
 	<div th:replace="fragmentos/head::bootstrap"></div>
 
 </head>
 
 <body>
-	<div style="height: 5em; background-color: rgb(4, 37, 62);"></div>
-	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('ROLE_usuario')"></div>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('ROLE_admin')"></div>
+	<div th:replace="fragmentos/mensajes::alertas"></div>
+	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">
 		<div class="h1 text-wgreen-light">Regístrate</div>
@@ -20,9 +22,7 @@
 		<div class="card mb-3 mx-auto" style="max-width: 1000px;">
 			<div class="row g-0">
 			    
-		    <div class=" col-sm-4 col-3 m-auto pr-5">
-		    	<img th:src="@{/img/wings.png}" alt="..." class="w-100">
-		    </div>
+		    <div class=" col-sm-4 col-3 m-auto pr-5"><img th:src="@{/img/wings.png}" alt="..." class="w-100"></div>
 		    
 		    <div class="col-sm-12 col-md-7 pl-5">
 		    	<div class="card-body">
@@ -126,10 +126,10 @@
 							</tbody>
 						</table>
 					</form>
-		        <p class="card-text">
-		        	<small class="text-muted">¿Ya tienes cuenta?</small>
-		        	<a class="btn btn-link btn-sm wlink-green" th:href="@{/login}">Inicia Sesión</a>
-		        </p>
+			        <p class="card-text">
+			        	<small class="text-muted">¿Ya tienes cuenta?</small>
+			        	<a class="btn btn-link btn-sm wlink-green" th:href="@{/login}">Inicia Sesión</a>
+			        </p>
 		      </div>
 		    </div>
  		 </div>

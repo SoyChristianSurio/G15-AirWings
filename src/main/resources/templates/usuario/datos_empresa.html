@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html   
+		xmlns:th="https://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${title}"></title>
+	
+	<div th:replace="fragmentos/head::bootstrap"></div>
+
+</head>
+
+<!-- sec:authorize="hasRole('ROLE_nombre')"-->
+<body>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('user')"></div>
+	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+	<div th:replace="fragmentos/mensajes::alertas"></div>
+	
+	<div class="container">
+		<div class="col-12 p-2">
+			<div class="card p-3 shadow-sm mb-3">			
+	        	<h2 class="card-title wtext-green-light">Mis Datos</h2>
+	        	<p class="card-text">
+	        		rellena los siguientes campos para actualizar el registro de datos de la empresa
+	        		<small class="text-secondary text-italic">Todos los campos son obligatorios</small>
+	        	</p>
+		    </div>  
+	        <form th:action="@{/usuario/empresa/datos}" th:object="${empresa}" th:method="post" name="myform">		        	
+				<div class="row">
+					<div class="col-lg-6 border border-rounded shadow-sm bg-white mb-2">
+					
+						<div class="row py-3">
+							
+								<div class="wtext-green-light col-md-10">
+									<div class="form-group">
+										<label class="small">Nombre de Empresa*</label>
+										<input type="text" th:field="*{nombre}"
+										class="form-control form-control-sm"
+										autofocus/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('nombre')}" 
+										th:errors="*{nombre}">
+									</small>
+								</div>
+								<div class="wtext-green-light col-8">
+									<div class="form-group">
+										<label class="small">Nombre de Contacto</label>
+										<input type="text" th:field="*{nombreContacto}"
+										class="form-control form-control-sm"/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('nombreContacto')}" 
+										th:errors="*{nombreContacto}">
+									</small>
+								</div>
+								<div class="wtext-green-light col-12">
+									<div class="form-group">
+										<label class="small">Dirección</label>
+										<input type="text" th:field="*{direccion}"
+										class="form-control form-control-sm"/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('direccion')}" 
+										th:errors="*{direccion}">
+									</small>
+								</div>
+							
+							
+								<div class="wtext-green-light col-md-6">
+									<div class="form-group mt-1">
+										<label class="small">NIT</label>
+										<input type="text" th:field="*{nit}"
+										class="form-control form-control-sm"/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('nit')}" 
+										th:errors="*{nit}">
+									</small>
+								</div>
+								<div class="wtext-green-light col-md-6">
+									<div class="form-group mt-1">
+										<label class="small">NIC</label>
+										<input type="text" th:field="*{nic}"
+										class="form-control form-control-sm"/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('nic')}" 
+										th:errors="*{nic}">
+									</small>
+								</div>
+								
+							
+						</div>
+					
+					
+					</div>
+				
+				
+					<div class="col-lg-6 border shadow-sm bg-white">
+					
+						<div class="row py-3">
+							<tr>
+								<div class="wtext-green-light col-8">
+									<div class="form-group">
+										<label class="small">Numero de viajero Frecuente*</label>
+										<input type="text" th:field="*{numeroViajero}"
+										class="form-control form-control-sm"
+										onkeyup="quitarEspacios('numeroViajero')"
+										autofocus/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('numeroViajero')}" 
+										th:errors="*{numeroViajero}">
+									</small>
+								</div>								
+							</tr>
+							
+							<tr>
+								<div class="wtext-green-light col-8">
+									<div class="form-group">
+										<label class="small">teléfono fijo*</label>
+										<input type="text" th:field="*{telefonoFijo}"
+										class="form-control form-control-sm"
+										onkeyup="quitarEspacios('telefonoFijo')"
+										autofocus/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('telefonoFijo')}" 
+										th:errors="*{telefonoFijo}">
+									</small>
+								</div>								
+							</tr>
+							
+							<tr>
+								<div class="wtext-green-light col-8">
+									<div class="form-group">
+										<label class="small">teléfono movil*</label>
+										<input type="text" th:field="*{telefonoMovil}"
+										class="form-control form-control-sm"
+										onkeyup="quitarEspacios('telefonoMovil')"
+										autofocus/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('telefonoMovil')}" 
+										th:errors="*{telefonoMovil}">
+									</small>
+								</div>								
+							</tr>
+						</div>
+					
+					</div>
+					
+					<div class="col-12 text-center my-3">
+						<button type="submit"
+								class="btn btn-sm wbtn-outline-green w-75"
+								onclick="document.getElementById('myform').formSubmit()">Guardar</button>
+					</div>
+				</div>
+			</form>	      
+	    </div>
+	</div>
+	
+</body>
+</html>	

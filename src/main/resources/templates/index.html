@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="${titulo}"></title>
+	<title th:text="${title}"></title>
 	
 	<div th:replace="fragmentos/head::bootstrap"></div>
 
@@ -13,7 +13,9 @@
 
 <body>
 	
-	<div th:replace="fragmentos/navbar::user"></div>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('user')"></div>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('admin')"></div>
+	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">
 		<div class="h1">Página principal</div>

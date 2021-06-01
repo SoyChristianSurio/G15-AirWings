@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class TipoDocumento implements Serializable {
+public class EstadoCivil implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -20,5 +20,4 @@ public class TipoDocumento implements Serializable {
 	private Long id;
 	@NotBlank
 	private String nombre;
-	private String descripcion;
 }
