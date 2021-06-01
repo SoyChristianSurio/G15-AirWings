@@ -104,6 +104,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
+	@Transactional
 	public String savePersona(PersonaAutoEdit persona) {
 		ClienteNatural cn;
 		Usuario u = usuarioDao.findById(persona.getUsuarioId()).orElse(null);
@@ -137,14 +138,25 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public EmpresaAutoEdit getEmpresaAutoEdit(ClienteEmpresa ce) {
-		// TODO Auto-generated method stub
-		return null;
+		EmpresaAutoEdit e = new EmpresaAutoEdit();
+		e.setUsuarioId(ce.getUsuario().getId());
+		e.setNic(ce.getNic());
+		e.setNit(ce.getNit());
+		e.setTelefonoFijo(ce.getTelefonoFijo());
+		e.setTelefonoMovil(ce.getTelefonoMovil());
+		e.setNombre(ce.getNombre());
+		e.setNombreContacto(ce.getNombreContacto());
+		e.setNumeroViajero(ce.getNumeroViajero());
+		e.setDireccion(ce.getDireccion());
+		
+		return e;
 	}
 
 	@Override
 	public String saveEmpresa(EmpresaAutoEdit empresa) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

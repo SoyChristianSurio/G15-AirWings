@@ -102,12 +102,7 @@ public class MainController {
 	
 	@PostMapping("registro")
 	public String registroUsuarioP(@Valid @ModelAttribute("usuario")UsuarioRegistrable myUsuario, BindingResult result, Model model, RedirectAttributes flash) {
-		System.out.println("es persona: "+myUsuario.getPersona()); 	// BORRAR, SOLO PARA PRUEBAS
-		System.out.println("username: "+myUsuario.getUsername());	// BORRAR, SOLO PARA PRUEBAS
-		System.out.println("pass1: "+myUsuario.getPass());			// BORRAR, SOLO PARA PRUEBAS
-		System.out.println("pass2: "+myUsuario.getPassConfirm());	// BORRAR, SOLO PARA PRUEBAS
-		System.out.println("email: "+myUsuario.getEmail());			// BORRAR, SOLO PARA PRUEBAS
-		System.out.println("_________________________");			// BORRAR, SOLO PARA PRUEBAS
+
 		if(!myUsuario.getPass().contentEquals(myUsuario.getPassConfirm())) {
 			model.addAttribute("passError", "Las contraseñas no coinciden");
 		}
@@ -123,28 +118,6 @@ public class MainController {
 		
 		return "redirect:/login";
 	}
-	
-//	@GetMapping("usuario/completarRegistro")
-//	public String completarRegistroPersona(Model model, Principal principal, Authentication auth) {
-//		
-//		model.addAttribute("persona", new ClienteNatural());
-//		model.addAttribute("title","datos de persona");
-//		model.addAttribute("info", "Antes de continuar, debe completar el registro");
-//		return "usuario/datos_persona";
-//		
-//	}
-//	@PostMapping("usuario/completarRegistro")
-//	public String completarRegistroPersonaP(@Valid @ModelAttribute("persona")ClienteNatural usuario, BindingResult result, Model model) {
-//		if(result.hasErrors()) {
-//			model.addAttribute("title","datos de persona");
-//			return "usuario/datos_persona";
-//		}
-//		model.addAttribute("persona", new ClienteNatural());
-//		
-//		model.addAttribute("info", "Antes de continuar, debe completar el registro");
-//		return "redirect:/";
-//		
-//	}
 	
 	public boolean hasRol(String rol) {
 		SecurityContext context = SecurityContextHolder.getContext();

@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.airwings.app.model.DAO.usuario.EstadoCivilDao;
 import com.airwings.app.model.DAO.usuario.TipoDocumentoDao;
+import com.airwings.app.model.DTO.usuario.EmpresaAutoEdit;
 import com.airwings.app.model.DTO.usuario.PersonaAutoEdit;
 import com.airwings.app.model.entity.usuario.Usuario;
 import com.airwings.app.services.usuario.UsuarioService;
@@ -32,15 +34,18 @@ public class UsuarioController {
 	@Autowired
 	TipoDocumentoDao tdDao;
 	//##################################################################################################################
+	@Secured({"ROLE_user"})
 	@GetMapping("/inicio")
-	public String inicioUsuario(Model model, Principal principal, Authentication auth) {
+	public String inicioUsuario(Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
 		if(principal==null) return "redirect:/login";						//si no hay sesión redirecciona al login
 		Usuario usuario = usuarioService.findByUsername(auth.getName());	//recuperar de la base al usuario logeado (a veces es util)
 		
+		/* 	si el registro de datos	no está completo, redirigir según tipo de cliente. */
 		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-		if(!usuario.getRegistroCompleto()) {											// 	si el registro de datos 
-			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";	// 	no está completo, redirigir
-			else return "redirect:/usuario/empresa/datos";								//  según tipo de cliente.
+		if(!usuario.getRegistroCompleto()) {											 
+			flash.addFlashAttribute("warning","Completa la información antes de empezar");
+			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";	
+			else return "redirect:/usuario/empresa/datos";								
 		}//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 		
 		
@@ -55,13 +60,15 @@ public class UsuarioController {
 	}
 	
 	//##################################################################################################################
+	@Secured({"ROLE_user"})
 	@GetMapping("/persona/datos")
 	public String AutoEditPersona(Model model, Principal principal, Authentication auth) {
-		
 		Usuario usuario = usuarioService.findByUsername(auth.getName());
 		
+		if(!usuario.getClienteNatural()) return "redirect:/usuario/empresa/datos";
+		
 		if(usuario.getRegistroCompleto()) {
-			model.addAttribute("persona", usuarioService.getPersonaAutoEdit( usuario.getNatural()));
+			model.addAttribute("persona", usuarioService.getPersonaAutoEdit( usuario.getNatural() ));
 		}
 		else model.addAttribute("persona", new PersonaAutoEdit());		
 		model.addAttribute( "tiposDocumento", tdDao.findAll());
@@ -94,39 +101,36 @@ public class UsuarioController {
 	}
 	
 	//##################################################################################################################
+	@Secured({"ROLE_user"})
 	@GetMapping("/empresa/datos")
 	public String AutoEditEmpresa(Model model, Principal principal, Authentication auth) {
-		
 		Usuario usuario = usuarioService.findByUsername(auth.getName());
 		
+		if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";
+		
 		if(usuario.getRegistroCompleto()) {
-			model.addAttribute("persona", usuarioService.getPersonaAutoEdit( usuario.getNatural()));
-		}
-		else model.addAttribute("persona", new PersonaAutoEdit());		
-		model.addAttribute( "tiposDocumento", tdDao.findAll());
-		model.addAttribute( "estadosCivil", ecDao.findAll() );
+			model.addAttribute("empresa", usuarioService.getEmpresaAutoEdit( usuario.getEmpresa()));
+		}else model.addAttribute("empresa", new EmpresaAutoEdit());
 		
-		model.addAttribute("personaCl"," ");
+		model.addAttribute("empresaCl"," ");
 		model.addAttribute("menuDatos", " ");
-		model.addAttribute( "title", "datos de persona");
+		model.addAttribute( "title", "datos de la empresa");
 		
-		return "usuario/datos_persona";
+		return "usuario/datos_empresa";
 	}
 	@PostMapping("/empresa/datos")
-	public String AutoEditEmpresaP( @Valid @ModelAttribute("empresa")PersonaAutoEdit persona, BindingResult result, 
+	public String AutoEditEmpresaP( @Valid @ModelAttribute("empresa")EmpresaAutoEdit empresa, BindingResult result, 
 									Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
 		
 		Usuario usuario = usuarioService.findByUsername(auth.getName());
-		persona.setUsuarioId(usuario.getId());
+		empresa.setUsuarioId(usuario.getId());
 
 		if(result.hasErrors()) {
-			model.addAttribute( "tiposDocumento", tdDao.findAll());
-			model.addAttribute( "estadosCivil", ecDao.findAll() );
-			model.addAttribute( "title", "datos de persona");
-			return "usuario/datos_persona";
+			model.addAttribute( "title", "datos de la empresa");
+			return "usuario/datos_empresa";
 		}
 		
-		String msg= usuarioService.savePersona(persona);
+		String msg= usuarioService.saveEmpresa(empresa);
 		model.addAttribute("success",msg);
 		
 		return "usuario/inicio";

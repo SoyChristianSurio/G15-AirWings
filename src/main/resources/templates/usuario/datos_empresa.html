@@ -5,7 +5,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title th:text="${titulo}"></title>
+	<title th:text="${title}"></title>
 	
 	<div th:replace="fragmentos/head::bootstrap"></div>
 
@@ -23,178 +23,108 @@
 	        	<h2 class="card-title wtext-green-light">Mis Datos</h2>
 	        	<p class="card-text">
 	        		rellena los siguientes campos para actualizar el registro de datos de la empresa
-	        		<small class="text-secondary">los campos con (*) son obligatorios</small>
+	        		<small class="text-secondary text-italic">Todos los campos son obligatorios</small>
 	        	</p>
 		    </div>  
-	        <form th:action="@{/usuario/persona/datos}" th:object="${persona}" th:method="post" name="myform">		        	
+	        <form th:action="@{/usuario/empresa/datos}" th:object="${empresa}" th:method="post" name="myform">		        	
 				<div class="row">
-					<div class="col-lg-6">
-					<table class="table  border shadow-sm bg-white">
-						<tbody>
-							<tr>
-								<td class="wtext-green-light">
+					<div class="col-lg-6 border border-rounded shadow-sm bg-white mb-2">
+					
+						<div class="row py-3">
+							
+								<div class="wtext-green-light col-md-10">
 									<div class="form-group">
-										<label class="small">Primer nombre*</label>
-										<input type="text" th:field="*{pNombre}"
+										<label class="small">Nombre de Empresa*</label>
+										<input type="text" th:field="*{nombre}"
 										class="form-control form-control-sm"
 										autofocus/>
 									</div>
 									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('pNombre')}" 
-										th:errors="*{pNombre}">
+										th:if="${#fields.hasErrors('nombre')}" 
+										th:errors="*{nombre}">
 									</small>
-								</td>
-								<td class="wtext-green-light">
+								</div>
+								<div class="wtext-green-light col-8">
 									<div class="form-group">
-										<label class="small">Segundo nombre</label>
-										<input type="text" th:field="*{sNombre}"
+										<label class="small">Nombre de Contacto</label>
+										<input type="text" th:field="*{nombreContacto}"
 										class="form-control form-control-sm"/>
 									</div>
 									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('sNombre')}" 
-										th:errors="*{sNombre}">
+										th:if="${#fields.hasErrors('nombreContacto')}" 
+										th:errors="*{nombreContacto}">
 									</small>
-									
-								</td>
-								<td class="col-0 col-md-2 col-lg-3"></td>
-							</tr>
-							<tr>
-								<td class="wtext-green-light">
+								</div>
+								<div class="wtext-green-light col-12">
+									<div class="form-group">
+										<label class="small">Dirección</label>
+										<input type="text" th:field="*{direccion}"
+										class="form-control form-control-sm"/>
+									</div>
+									<small
+										class="form-text text-danger"
+										th:if="${#fields.hasErrors('direccion')}" 
+										th:errors="*{direccion}">
+									</small>
+								</div>
+							
+							
+								<div class="wtext-green-light col-md-6">
 									<div class="form-group mt-1">
-										<label class="small">Primer Apellido*</label>
-										<input type="text" th:field="*{pApellido}"
+										<label class="small">NIT</label>
+										<input type="text" th:field="*{nit}"
 										class="form-control form-control-sm"/>
 									</div>
 									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('pApellido')}" 
-										th:errors="*{pApellido}">
+										th:if="${#fields.hasErrors('nit')}" 
+										th:errors="*{nit}">
 									</small>
-								</td>
-								<td class="wtext-green-light">
+								</div>
+								<div class="wtext-green-light col-md-6">
 									<div class="form-group mt-1">
-										<label class="small">Segundo Apellido</label>
-										<input type="text" th:field="*{sApellido}"
+										<label class="small">NIC</label>
+										<input type="text" th:field="*{nic}"
 										class="form-control form-control-sm"/>
 									</div>
 									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('sApellido')}" 
-										th:errors="*{sApellido}">
+										th:if="${#fields.hasErrors('nic')}" 
+										th:errors="*{nic}">
 									</small>
-								</td>
-								<td class="col-0 col-md-2 col-lg-3"> </td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<table class="table  border shadow-sm bg-white">
-						<tbody>
-							<tr>
-								<td>
-									<div class="form-group">
-										<label class="small wtext-green-light">Documento*</label>											
-										<select th:field="*{documentoId}" class="form-control form-control-sm wselect" >
-											<option value="">-- Tipo de documento --</option>
-											<option th:each="td : ${tiposDocumento}" th:text="${td.nombre}" th:value="${td.id}"> </option>
-										</select>
-										<small
-											class=" form-text text-danger"
-											th:if="${#fields.hasErrors('documentoId')}"
-											th:errors="*{documentoId}"></small>
-									</div>
-								</td>
-								<td>
-									<div class="form-group">
-										<label for="usr" class="small wtext-green-light">Numero de Documento*</label>
-										<input type="text" th:field="*{numeroDocumento}"
-										class="form-control form-control-sm"/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('pApellido')}" 
-										th:errors="*{pApellido}">
-									</small>
-								</td>
+								</div>
 								
-							</tr>
-							<tr>
-								<td>
-									<div class="wtext-green-light">Sexo*</div>
-									<div class="form-group">
-							            <div class="form-check">
-							                <input type="radio" class="form-check-input" value="m" th:field="*{sexo}" checked>
-							                <label class="form-check-label small" for="sexo1">
-							                <i class="fas fa-mars fa-lg wtext-green-light"></i> Masculino</label>
-							            </div>
-							            <div class="form-check">
-							                <input type="radio" class="form-check-input" value="f" th:field="*{sexo}">
-							                <label class="form-check-label small" for="sexo2">
-							                <i class="fas fa-venus fa-lg text-danger"></i> Femenino</label>
-							            </div>
-							        </div>
-									<small
-										class=" form-text text-danger"
-										th:if="${#fields.hasErrors('sexo')}" 
-										th:errors="*{sexo}">
-									</small>
-								</td>
-								<td>
-									<div class="form-group">
-										<label class="wtext-green-light">Estado Civil*</label>											
-										<select th:field="*{estadoCivilId}" class="form-control form-control-sm wselect" >
-											<option value="">-- Estado Civil --</option>
-											<option th:each="ec : ${estadosCivil}" th:text="${ec.nombre}" th:value="${ec.id}"></option>
-										</select>
-										<small
-											class=" form-text text-danger"
-											th:if="${#fields.hasErrors('estadoCivilId')}"
-											th:errors="*{estadoCivilId}"></small>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+							
+						</div>
+					
+					
 					</div>
 				
 				
-					<div class="col-lg-6">
-					<table class="table  border shadow-sm bg-white">
-						<tbody>
+					<div class="col-lg-6 border shadow-sm bg-white">
+					
+						<div class="row py-3">
 							<tr>
-								<td class="col-4">
-									<div class="form-group mt-1  wtext-green-light">
-										<label for="fechaNacimiento" class="small">Fecha de Nacimiento*</label>
-										<input type="date" class="form-control form-control-sm" id="fechaNacimiento" th:field="*{fechaNacimiento}" placeholder="yyyy/MM/dd" >
-									</div>
-									<small
-										class=" form-text text-danger"
-										th:if="${#fields.hasErrors('fechaNacimiento')}" 
-										th:errors="*{fechaNacimiento}">
-									</small>
-								</td>								
-							</tr>
-							<tr>
-								<td class="wtext-green-light">
+								<div class="wtext-green-light col-8">
 									<div class="form-group">
 										<label class="small">Numero de viajero Frecuente*</label>
-										<input type="text" th:field="*{numViajero}"
+										<input type="text" th:field="*{numeroViajero}"
 										class="form-control form-control-sm"
-										onkeyup="quitarEspacios('numViajero')"
+										onkeyup="quitarEspacios('numeroViajero')"
 										autofocus/>
 									</div>
 									<small
 										class="form-text text-danger"
-										th:if="${#fields.hasErrors('numViajero')}" 
-										th:errors="*{numViajero}">
+										th:if="${#fields.hasErrors('numeroViajero')}" 
+										th:errors="*{numeroViajero}">
 									</small>
-								</td>								
+								</div>								
 							</tr>
 							
 							<tr>
-								<td class="wtext-green-light">
+								<div class="wtext-green-light col-8">
 									<div class="form-group">
 										<label class="small">teléfono fijo*</label>
 										<input type="text" th:field="*{telefonoFijo}"
@@ -207,11 +137,11 @@
 										th:if="${#fields.hasErrors('telefonoFijo')}" 
 										th:errors="*{telefonoFijo}">
 									</small>
-								</td>								
+								</div>								
 							</tr>
 							
 							<tr>
-								<td class="wtext-green-light">
+								<div class="wtext-green-light col-8">
 									<div class="form-group">
 										<label class="small">teléfono movil*</label>
 										<input type="text" th:field="*{telefonoMovil}"
@@ -224,13 +154,13 @@
 										th:if="${#fields.hasErrors('telefonoMovil')}" 
 										th:errors="*{telefonoMovil}">
 									</small>
-								</td>								
+								</div>								
 							</tr>
-						</tbody>
-					</table>
+						</div>
+					
 					</div>
 					
-					<div class="col-12 text-center mb-5">
+					<div class="col-12 text-center my-3">
 						<button type="submit"
 								class="btn btn-sm wbtn-outline-green w-75"
 								onclick="document.getElementById('myform').formSubmit()">Guardar</button>
