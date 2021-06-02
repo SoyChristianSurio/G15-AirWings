@@ -30,7 +30,7 @@
 	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 	    
 	    <ul class="navbar-nav mb-2 mb-lg-0">
-<!-- ##########################################################################################################################-->	        
+        
 	    	<li class="nav-item">
 	        	<a class="nav-link" th:classappend="${menuHome!=null}? 'active'" aria-current="page" th:href="@{/usuario/inicio}">Reserva de boletos</a>
 	        </li>
@@ -41,7 +41,7 @@
 	        </li>
 	        
 	        <li class="nav-item">
-	          <a class="nav-link" href="#">Compras</a>
+	        	<a class="nav-link" href="#">MisCompras</a>
 	        </li>
 	        
 	        <li class="nav-item">
@@ -73,6 +73,10 @@
 	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
 </div>
 
+<!-- ##########################################################################################################################-->	
+<!-- ################################          BARRA DE NAVEGACIÓN PARA ADMINISTRADORES       #################################-->
+<!-- ##########################################################################################################################-->	 
+
 <div th:fragment="admin"  th:remove="tag">
 	<nav class="navbar navbar-expand-lg navbar-dark position-relative" style="background-color: rgb(6, 37, 62);">
 	  	<div class="container-fluid" style="background-color: rgb(4, 37, 62);">
@@ -81,52 +85,127 @@
 	      		<span class="navbar-toggler-icon"></span>
 	    	</button>
 				     	
-				    	<li class="dropstart btn btn-menu" sec:authorize="isAuthenticated()">
-				        	<a 	class="nav-link dropdown-toggle btn wbtn-outline-green mt-0" 
-				          		href="#" id="navbarDropdown" 
-				          		role="button" data-bs-toggle="dropdown" 
-				          		aria-expanded="false"
-				          		th:text="${#authentication.getPrincipal().getUsername()}">
-				 			</a>
-					        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-					          	<li><a class="dropdown-item" href="#">Enlace 1</a></li>
-					            <li><a class="dropdown-item" href="#">Enlace 2</a></li>
-					            <li><hr class="dropdown-divider"></li>
-					            <li>
-					            	<form th:action="@{/logout}" th:method="post" id="formLogout">
-					            		<button class="dropdown-item" onclick="document.getElementById('formLogout').submit();">
-					            			<i class="fas fa-sign-out-alt"></i><span> Cerrar Sesión </span>
-					            		</button>
-					            	</form>
-					            </li>
-					        </ul>
-				        </li>
-				    
-	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-	    
-	    <ul class="navbar-nav mb-2 mb-lg-0">
-<!-- ##########################################################################################################################-->	        
-	    	<li class="nav-item">
-	        	<a class="nav-link active" aria-current="page" href="#">Administración</a>
+	    	<li class="dropstart btn btn-menu" sec:authorize="isAuthenticated()">
+	        	<a 	class="nav-link dropdown-toggle btn wbtn-outline-green mt-0" 
+	          		href="#" id="navbarDropdown" 
+	          		role="button" data-bs-toggle="dropdown" 
+	          		aria-expanded="false"
+	          		th:text="${#authentication.getPrincipal().getUsername()}">
+	 			</a>
+		        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          	<li><a class="dropdown-item" href="#">Enlace 1</a></li>
+		            <li><a class="dropdown-item" href="#">Enlace 2</a></li>
+		            <li><hr class="dropdown-divider"></li>
+		            <li><form th:action="@{/logout}" th:method="post" id="formLogout">
+		            		<button class="dropdown-item" onclick="document.getElementById('formLogout').submit();">
+		            			<i class="fas fa-sign-out-alt"></i><span> Cerrar Sesión </span>
+		            		</button>
+		            	</form>
+		            </li>
+		        </ul>
 	        </li>
-	        
-	        <li class="nav-item">
-	        	<a class="nav-link" href="#">Link</a>
-	        </li>
-	        
-	        
-	        <li class="nav-item">
-	          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-	        </li>
-	      </ul>
-	      
-	      <a class="btn wbtn-outline-green" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>        
-	      
+			  
+	    	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			    <ul class="navbar-nav mb-2 mb-lg-0">
+		       
+			    	<li class="nav-item">
+			        	<a class="nav-link active" aria-current="page" href="#">Administración</a>
+			        </li>
+			        <!--//////////////////////// BOTONES DE LA NAV BAR PARA ADMIN GENERAL//////////////////////-->  
+			        <li class="nav-item dropdown"  sec:authorize="hasRole('admin')"> <!--### ADMIN ###-->
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            Usuarios
+				        </a>
+				        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						    <li><a class="dropdown-item" href="#">Personas</a></li>
+						    <li><a class="dropdown-item" href="#">Empresas</a></li>
+						    <li><a class="dropdown-item" href="#">Todos</a></li>
+						    <li><hr class="dropdown-divider"></li>
+						    <li><a class="dropdown-item" href="#">Roles</a></li>
+				        </ul>
+			        </li>
+			        
+			        <li class="nav-item dropdown" sec:authorize="hasRole('admin')">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            Aerolineas
+				        </a>
+				        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						    <li><a class="dropdown-item" href="#">Aerolineas</a></li>
+						    <li><a class="dropdown-item" href="#">Aviones</a></li>
+						    <li><a class="dropdown-item" href="#">Vuelos</a></li>
+						    <li><a class="dropdown-item" href="#">Viajes</a></li>
+						    
+				        </ul>
+			        </li>
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin')">
+			        	<a class="nav-link" href="#">Aeropuertos</a>
+			        </li>
+			        
+			        
+			        <li class="nav-item dropdown" sec:authorize="hasRole('admin')">
+				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				            Parametrizables
+				        </a>
+				        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+						    <li><a class="dropdown-item" href="#">Tipos de Documento</a></li>
+						    <li><a class="dropdown-item" href="#">Estado Civil</a></li>
+						    <li><a class="dropdown-item" href="#">Pises</a></li>
+						    <li><a class="dropdown-item" href="#">Tipos de Avión</a></li>
+						    <li><a class="dropdown-item" href="#">Clases de Asiento</a></li>
+						    <li><a class="dropdown-item" href="#">Redes Sociales</a></li>
+						    <li><a class="dropdown-item" href="#">Estado de vuelo</a></li>
+				        </ul>
+			        </li>
+			        
+			        <!--//////////////////////// BOTONES DE LA NAV BAR PARA ADMIN AEROLINEA //////////////////////-->  
+			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        	<a class="nav-link" href="#">Datos</a>
+			        </li>
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        	<a class="nav-link" href="#">Vuelos</a>
+			        </li>
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        	<a class="nav-link" href="#">Viajes</a>
+			        </li>
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        	<a class="nav-link" href="#">Aviones</a>
+			        </li>
+			        
+			        <!--/////////////////////// BOTONES DE LA NAV BAR PARA ADMIN AEROPUERTO //////////////////////-->  
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin_aeropuertos')">
+			        	<a class="nav-link" href="#">Datos</a>
+			        </li>
+			        
+			        <li class="nav-item" sec:authorize="hasRole('admin_aeropuertos')">
+			        	<a class="nav-link" href="#">Hangares</a>
+			        </li>
+			        
+			    </ul>
+		      	<a class="btn wbtn-outline-green" th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>  
+	    	</div>
 	    </div>
-
-	    
-	    </div>
-	  
 	</nav>
 	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
