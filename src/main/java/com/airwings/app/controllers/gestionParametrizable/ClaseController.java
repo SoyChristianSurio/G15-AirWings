@@ -1,5 +1,5 @@
 
-package com.airwings.app.controllers.clase;
+package com.airwings.app.controllers.gestionParametrizable;
 
 import com.airwings.app.model.entity.avion.Clase;
 import com.airwings.app.services.avion.ClaseService;

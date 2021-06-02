@@ -1,4 +1,4 @@
-package com.airwings.app.controllers.asiento;
+package com.airwings.app.controllers.gestionAerolineas;
 
 import com.airwings.app.model.entity.avion.Asiento;
 import com.airwings.app.services.avion.AsientoService;
