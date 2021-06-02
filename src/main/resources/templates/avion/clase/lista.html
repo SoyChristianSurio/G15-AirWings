@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" 
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
+<head>
         <title>Lista Clase</title>
         <meta charset="UTF-8">
     <div th:replace="fragmentos/head::bootstrap"></div>
-
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div th:replace="fragmentos/navbar::user"></div>
+    
+    <div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
     <div class="container-sm">
 
         <div class="col-md-12 mx-auto my-3">
@@ -49,10 +49,9 @@
                                     <td>[[${clase.nombre}]]</td>
 
                                     <td class="text-center">
-                                        <a href="" class="btn btn-primary btn-edit btn-sm"
-                                           data-placement="bottom" title="Editar"><i class='fas fa-edit'></i></a>
-                                        <a href=""class="btn btn-danger btn-delete btn-sm"
-                                           data-placement="bottom" title="Eliminar"><i class='fas fa-trash'></i></a>
+                                        <a  class="btn btn-primary btn-sm link-detail"  th:href="@{/avion/clase/editar/}+${clase.id}" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-delete btn-sm link-danger2" th:href="@{/avion/clase/vista/eliminar/}+${clase.id}"
+                                           data-placement="bottom" title="Eliminar"><i class="fas fa-trash"></i></a>
                                     </td>                                                              
                                 </tr>
                             </tbody>
@@ -96,6 +95,22 @@
         </div>
     </div>
 
+    <div id="modal-edit" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-delete" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
     <footer th:replace="fragmentos/footer :: footer"></footer>
 
 
@@ -135,6 +150,22 @@
         $(function () {
         $('[data-toggle="tooltip"]').tooltip()
         })  
+
+
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $(".link-detail").on("click", function(e){
+        e.preventDefault();
+        $("#modal-edit").modal("show").find(".modal-content").load($(this).attr("href"));
+        });
+
+        $(".link-danger2").on("click", function(e){
+        e.preventDefault();
+        $("#modal-delete").modal("show").find(".modal-content").load($(this).attr("href"));
+        });
+
+        });
 
 
     </script>
