@@ -97,7 +97,7 @@ public class UsuarioController {
 		String msg= usuarioService.savePersona(persona);
 		model.addAttribute("success",msg);
 		
-		return "usuario/inicio";
+		return "usuario/inicio_usuario";
 	}
 	
 	//##################################################################################################################
@@ -132,7 +132,9 @@ public class UsuarioController {
 		
 		String msg= usuarioService.saveEmpresa(empresa);
 		model.addAttribute("success",msg);
+		model.addAttribute("empresaCl", "");
+		model.addAllAttributes(null)
 		
-		return "usuario/inicio";
+		return "usuario/inicio_usuario";
 	}
 }
