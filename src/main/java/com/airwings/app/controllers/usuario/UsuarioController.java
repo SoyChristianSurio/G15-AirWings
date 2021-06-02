@@ -132,6 +132,7 @@ public class UsuarioController {
 		
 		String msg= usuarioService.saveEmpresa(empresa);
 		model.addAttribute("success",msg);
+		model.addAttribute("empresaCl", "");
 		
 		return "usuario/inicio_usuario";
 	}
