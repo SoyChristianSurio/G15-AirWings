@@ -35,4 +35,24 @@ public class ClaseController {
         claseService.guardar(clase);
         return "redirect:/avion/clase/lista";
     }
+    
+    @GetMapping("/avion/clase/editar/{id}")
+    public String editar(Clase clase, Model model){
+        clase=claseService.encontrarClase(clase);
+        model.addAttribute("clase", clase);
+        return "avion/clase/edit_modal";
+    }
+    
+    @GetMapping("/avion/clase/vista/eliminar/{id}")
+    public String eliminarVista(Clase clase, Model model){
+        clase=claseService.encontrarClase(clase);
+        model.addAttribute("clase", clase);
+        return "avion/clase/delete_modal";
+    }
+    
+    @GetMapping("/avion/clase/eliminar/{id}")
+    public String eliminar(Clase clase){
+        claseService.eliminar(clase);
+        return "redirect:/avion/clase/lista";
+    }
 }
