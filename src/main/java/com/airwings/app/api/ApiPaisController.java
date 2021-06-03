@@ -9,7 +9,7 @@ import com.airwings.app.services.CiudadService;
 import com.airwings.app.services.PaisService;
 
 @RestController
-public class PaisController {
+public class ApiPaisController {
 	
 	@Autowired
 	private PaisService paisService;

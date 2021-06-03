@@ -25,15 +25,14 @@
             <br>
             <div align="left">
                 <button type="button" class="btn btn-success wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
-                    <span>Agregar
-                        clase</span>
+                    <span>Agregar clase</span>
                 </button>
 
             </div>
             <div th:if="${clases != null and !clases.empty}">
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-striped table-bordered col-sm-12" >
+                    <div class="">
+                        <table id="datatable" class="table table-striped table-bordered w-100" >
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
