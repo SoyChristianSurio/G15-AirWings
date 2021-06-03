@@ -3,6 +3,10 @@ insert into public.rol (nombre) values('ROLE_user');
 insert into public.rol (nombre) values('ROLE_aerolinea_admin');
 insert into public.rol (nombre) values('ROLE_aeropuerto_admin');
 
+insert into pais (nombre, codigo) values('El Salvador','ESA');
+insert into pais (nombre, codigo) values('España','ESP');
+insert into pais (nombre, codigo) values('Estados Unidos','USA');
+
 insert into tipo_documento (nombre, descripcion) values ('DUI','Documento único de identidad');
 insert into tipo_documento (nombre, descripcion) values ('NIT','Numero de identidad Tributaria');
 insert into tipo_documento (nombre, descripcion) values ('NIC','Numero de identificación de Contrato');

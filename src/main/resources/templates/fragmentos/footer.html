@@ -1,11 +1,14 @@
-<!DOCTYPE html>
-<footer th:fragment="footer" class="bg-warning text-white mt-2 p-2">
+<footer th:fragment="footer" class="bg-secondary shadow fixed-bottom b-0 d-inline-flex">
 
-    <div class="container">
-        <div class="col">
-            <p class="lead text-center">
-                <span> bases &copy;<a href="http://www.globalmentoring.com.mx" target=" _blank">bad.com.sv</a></span>
-            </p>
+    
+        <div class="align-self-middle m-2">
+        	<img th:src="@{/img/spring-boot-icon-large.png}" alt="..."  style="width: 50px;">
+        	<span>Powered by SpringBoot</span>
+        </div>	
+        
+        <div class="text-white align-self-center ms-5">
+            <span> bases &copy;<a href="http://www.globalmentoring.com.mx" target=" _blank">bad.com.sv</a></span>
         </div>
-    </div>
+        
+    
 </footer>
