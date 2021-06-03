@@ -1,0 +1,18 @@
+
+<input type="hidden" name="idPersona" th:field="${clase.id}"/>
+<div class="modal-header">
+    <h4 class="modal-title">Eliminar Clase</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <p>
+            ¿Está seguro de querer eliminar la clase: [[${clase.nombre}]]?
+        </p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar </button>
+    <a  class="btn btn-danger" th:href="@{/avion/clase/eliminar/}+${clase.id}">Si, estoy seguro.</a>
+</div>
+
