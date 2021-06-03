@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.validation.Errors;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @Slf4j
 public class ClaseController {
@@ -28,11 +29,12 @@ public class ClaseController {
     @PostMapping("/avion/clase/crear")
     //@valid Persona persona, Errors errores ---- siempre deben de estar juntos
     //si se quiere añadir otro parametro, debe ir despues
-    public String guardar(@Valid Clase clase, Errors errores){
+    public String guardar(@Valid Clase clase, Errors errores, RedirectAttributes ra){
         if(errores.hasErrors()){
             return "/avion/clase/lista";
         }
         claseService.guardar(clase);
+        ra.addFlashAttribute("success", "Clase guardada con éxito.");
         return "redirect:/avion/clase/lista";
     }
     
@@ -51,8 +53,9 @@ public class ClaseController {
     }
     
     @GetMapping("/avion/clase/eliminar/{id}")
-    public String eliminar(Clase clase){
+    public String eliminar(Clase clase, RedirectAttributes ra){
         claseService.eliminar(clase);
+        ra.addFlashAttribute("success", "Clase eliminada con éxito.");
         return "redirect:/avion/clase/lista";
     }
 }

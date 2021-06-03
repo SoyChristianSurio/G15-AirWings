@@ -10,6 +10,7 @@
 <body>
     
     <div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+    <div th:replace="fragmentos/mensajes::alertas"></div>
     <div class="container-sm">
 
         <div class="col-md-12 mx-auto my-3">
