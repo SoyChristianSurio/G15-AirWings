@@ -70,6 +70,7 @@ public class PaisController {
 			model.addAttribute("newPais", new Pais());
 			return "/parametrizables/pais/lista";
 		}
+		pais.getCiudades();
 		paisService.save(pais);
 		flash.addFlashAttribute("info","TRREMENEEEDO Editado con éxito");
 		return "redirect:/gestion/pais/lista";

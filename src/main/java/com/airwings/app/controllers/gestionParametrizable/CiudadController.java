@@ -57,6 +57,9 @@ public class CiudadController {
 	@PostMapping("/guardar")
 	public String guardar(@Valid @ModelAttribute("newCiudad")Ciudad ciudad, BindingResult result, @PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
 		System.out.println("Crear nombre de pais:"+paisService.findById(id).getNombre());
+		System.out.println("nombre de ciudad:"+ciudad.getNombre());
+		System.out.println("nombre de ciudad:"+ciudad.getId());
+		
 		if(result.hasErrors()) {
 			model.addAttribute("pais", paisService.findById(id));
 			model.addAttribute("errorCrear","");
@@ -71,6 +74,8 @@ public class CiudadController {
 	@PostMapping("/editar")
 	public String editar(@Valid @ModelAttribute("myCiudad")Ciudad ciudad, BindingResult result, @PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
 		System.out.println("Editar nombre de pais:"+paisService.findById(id).getNombre());
+		System.out.println("nombre de ciudad:"+ciudad.getNombre());
+		System.out.println("nombre de ciudad:"+ciudad.getId());
 		if(result.hasErrors()) {
 			model.addAttribute("pais", paisService.findById(id));
 			model.addAttribute("newCiudad", new Ciudad());
@@ -84,7 +89,9 @@ public class CiudadController {
 	
 	@PostMapping("/eliminar")
 	public String eliminar(@ModelAttribute("myPais")Ciudad ciudad, BindingResult result, @PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
-		System.out.println("Editar nombre de pais:"+paisService.findById(id).getNombre());		
+		System.out.println("Eliminar nombre de pais:"+paisService.findById(id).getNombre());	
+		System.out.println("nombre de ciudad:"+ciudad.getNombre());
+		System.out.println("nombre de ciudad:"+ciudad.getId());
 		model.addAttribute("pais", paisService.findById(id));
 		model.addAttribute("newCiudad", new Ciudad());
 		model.addAttribute("delCiudad","");

@@ -76,6 +76,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{/gestion/pais/guardar}" th:object="${newPais}" method="POST"  id="form_add">
+                    <input type="hidden" th:field="*{id}" value=""/>
                     <div class="modal-header">
                         <div>
                         	<h4 class="modal-title mx-auto wtext-green">Agregar nuevo País</h4>
@@ -123,7 +124,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
 				<form th:action="@{/gestion/pais/editar}" th:object="${myPais}" method="POST"  id="form_add">
-                    <input type="hidden" th:field="*{id}"/>
+                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
                     <div class="modal-header">
                         <div>
                         	<h4 class="modal-title wtext-green-light">Editar País</h4>

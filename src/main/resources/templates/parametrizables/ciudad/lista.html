@@ -73,7 +73,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{'/gestion/ciudad/p/'+${pais.id}+'/guardar'}" th:object="${newCiudad}" method="POST"  id="form_add">
-                    
+                    <input type="hidden" th:field="*{id}" value=""/>
                     <div class="modal-header">
                         <div>
                         	<h4 class="modal-title mx-auto wtext-green">Agregar nueva Ciudad</h4>
