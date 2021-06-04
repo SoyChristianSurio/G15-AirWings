@@ -1,14 +1,14 @@
-<form th:action="@{/avion/clase/crear}" th:object="${clase}" method="POST">
-    <input type="hidden" name="idPersona" th:field="${clase.id}"/>
+<form th:action="@{/avion/tipoAvion/crear}" th:object="${tipoAvion}" method="POST">
+    <input type="hidden" name="id" th:field="${tipoAvion.id}"/>
     <div class="modal-header">
-        <h4 class="modal-title">Editar Clase</h4>
+        <h4 class="modal-title">Editar Tipo Avión</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
         <div class="form-group">
 
-            <label>Nombre de Clase</label>                            
-            <input type="text" class="form-control" name="nombre" th:field="${clase.nombre}"  required="true"/>
+            <label>Nombre de Tipo Avión</label>                            
+            <input type="text" class="form-control" name="nombre" th:field="${tipoAvion.nombre}"  required="true"/>
         </div>
     </div>
     <div class="modal-footer">
