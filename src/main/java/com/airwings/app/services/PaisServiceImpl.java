@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.airwings.app.model.DAO.CiudadDao;
 import com.airwings.app.model.DAO.PaisDao;
+import com.airwings.app.model.entity.Ciudad;
 import com.airwings.app.model.entity.Pais;
 
 @Service
@@ -12,6 +14,8 @@ public class PaisServiceImpl implements PaisService {
 
 	@Autowired
 	private PaisDao paisDao;
+	@Autowired
+	CiudadDao ciudadDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -34,6 +38,11 @@ public class PaisServiceImpl implements PaisService {
 	@Override
 	@Transactional
 	public void deleteById(Long id) {
+		Pais p = paisDao.findById(id).orElse(null);
+		if(p==null) return;
+		for(Ciudad c:p.getCiudades()) {
+			ciudadDao.delete(c);
+		}
 		paisDao.deleteById(id);
 	}
 

@@ -8,7 +8,8 @@
 
 <body>
 	
-	<div th:replace="fragmentos/navbar::user"></div>
+	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+	<div th:replace="fragmentos/navbar::user" sec:authorize="hasAnyRole({'user'})"></div>
 	
 	<div class="container align-middle">
 		<div class="card text-center mt-5">
@@ -24,6 +25,7 @@
 			</div><!-- END CARD BODY -->
 			
 		</div>
+		<footer th:replace="fragmentos/footer :: footer"></footer>
 	</div>
 </body>
 </html>
