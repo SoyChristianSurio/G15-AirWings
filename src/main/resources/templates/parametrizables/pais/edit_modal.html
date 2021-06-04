@@ -1,0 +1,38 @@
+<form th:action="@{/gestion/pais/guardar}" th:object="${myPais}" method="POST">
+    <input type="hidden" th:field="*{id}"/>
+    <div class="modal-header">
+        <h4 class="modal-title">Editar País</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+			<label class="small">Nombre</label>
+			<input type="text" th:field="*{nombre}"
+			class="form-control form-control-sm" pattern=".{1,}"
+			autofocus required/>
+		</div>
+		<small
+			class="form-text text-danger"
+			th:if="${errorNombre}" 
+			th:text="${errorNombre}">
+		</small>
+		
+		<div class="form-group">
+			<label class="small">Código</label>
+			<input type="text" th:field="*{codigo}"
+			class="form-control form-control-sm"
+			pattern=".{1,}" required/>
+		</div>
+		<small
+			class="form-text text-danger"
+			th:if="${errorCodigo}" 
+			th:text="${errorCodigo}">
+		</small>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+        <button type="submit" class="btn btn-primary">Agregar <i class="fa fa-plus-circle"></i></button>
+    </div>
+</form>
+
+

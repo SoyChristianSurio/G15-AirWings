@@ -30,6 +30,6 @@ public class Pais implements Serializable {
 	private String codigo;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "pais", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Ciudad> ciudades;
 }
