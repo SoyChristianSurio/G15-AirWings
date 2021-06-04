@@ -33,8 +33,14 @@ public class ClaseController {
         if(errores.hasErrors()){
             return "/avion/clase/lista";
         }
+        String msg;
+        if(clase.getId()!=null){
+            msg="Clase actualizada con éxito.";
+        } else {
+            msg="Clase creada con éxito.";
+        }
         claseService.guardar(clase);
-        ra.addFlashAttribute("success", "Clase guardada con éxito.");
+        ra.addFlashAttribute("success",msg);
         return "redirect:/avion/clase/lista";
     }
     

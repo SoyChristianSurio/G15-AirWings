@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" 
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
+    <head>
         <title>Lista Clase</title>
         <meta charset="UTF-8">
     <div th:replace="fragmentos/head::bootstrap"></div>
     <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 <body>
-    
+
     <div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+    <div th:replace="fragmentos/mensajes::alertas"></div>
     <div class="container-sm">
 
         <div class="col-md-12 mx-auto my-3">
             <div class="card">
-                <div class="card-header bg-info">
-                    <div class="row justify-content-between">
-                        <h5 class="card-title  float-left" style="color: white">Clases registradas</h5>
-
+                <div class="card-header bg-light d-flex justify-content-between">
+                    <div class="h4 text-secondary d-inline-block my-1">
+                        Clases registradas
+                    </div>
+                    <div class="d-inline-block align-self-middle">
+                        <button type="button" class="btn btn-success wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
+                            <span>Agregar clase</span>
+                        </button>
 
                     </div>
                 </div>
             </div>
             <br>
-            <div align="left">
-                <button type="button" class="btn btn-success wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
-                    <span>Agregar clase</span>
-                </button>
-
-            </div>
             <div th:if="${clases != null and !clases.empty}">
                 <div class="card-body">
                     <div class="">
