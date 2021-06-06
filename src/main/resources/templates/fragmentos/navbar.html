@@ -135,7 +135,7 @@
 			        </li>
 			        
 			        <li class="nav-item" sec:authorize="hasRole('admin')">
-			        	<a class="nav-link" href="#">Aeropuertos</a>
+			        	<a class="nav-link" th:href="@{/gestion/aeropuerto/lista}">Aeropuertos</a>
 			        </li>
 			        
 			        
@@ -155,29 +155,29 @@
 			        </li>
 			        
 			        <!--//////////////////////// BOTONES DE LA NAV BAR PARA ADMIN AEROLINEA //////////////////////-->  
-			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        <li class="nav-item" sec:authorize="hasRole('aerolinea_admin')">
 			        	<a class="nav-link" href="#">Datos</a>
 			        </li>
 			        
-			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        <li class="nav-item" sec:authorize="hasRole('aerolinea_admin')">
 			        	<a class="nav-link" href="#">Vuelos</a>
 			        </li>
 			        
-			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        <li class="nav-item" sec:authorize="hasRole('aerolinea_admin')">
 			        	<a class="nav-link" href="#">Viajes</a>
 			        </li>
 			        
-			        <li class="nav-item" sec:authorize="hasRole('admin_aerolinea')">
+			        <li class="nav-item" sec:authorize="hasRole('aerolinea_admin')">
 			        	<a class="nav-link" href="#">Aviones</a>
 			        </li>
 			        
 			        <!--/////////////////////// BOTONES DE LA NAV BAR PARA ADMIN AEROPUERTO //////////////////////-->  
 			        
-			        <li class="nav-item" sec:authorize="hasRole('admin_aeropuertos')">
+			        <li class="nav-item" sec:authorize="hasRole('aeropuerto_admin')">
 			        	<a class="nav-link" href="#">Datos</a>
 			        </li>
 			        
-			        <li class="nav-item" sec:authorize="hasRole('admin_aeropuertos')">
+			        <li class="nav-item" sec:authorize="hasRole('aeropuerto_admin')">
 			        	<a class="nav-link" href="#">Hangares</a>
 			        </li>
 			        

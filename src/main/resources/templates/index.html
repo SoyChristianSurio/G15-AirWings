@@ -14,7 +14,7 @@
 <body>
 	
 	<div th:replace="fragmentos/navbar::user" sec:authorize="hasRole('user')"></div>
-	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasRole('admin')"></div>
+	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'aerolinea_admin','aeropuerto_admin','admin'})"></div>
 	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">
