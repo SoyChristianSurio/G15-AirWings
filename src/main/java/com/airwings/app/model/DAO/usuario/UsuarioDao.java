@@ -1,6 +1,9 @@
 package com.airwings.app.model.DAO.usuario;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.airwings.app.model.entity.usuario.Usuario;
@@ -9,4 +12,16 @@ import com.airwings.app.model.entity.usuario.Usuario;
 public interface UsuarioDao extends JpaRepository<Usuario, Long>{
 
 	public Usuario findByUsername(String username);
+	
+	@Query(value = "SELECT * from allRolAeropAdmin()", nativeQuery = true)
+	public List<Usuario> allRolAeropAdmin();
+	
+	@Query(value = "SELECT * from allAdminNotOfAerop(?1)", nativeQuery = true)
+	public List<Usuario> allAdminNotOfAerop(Long id);
+	
+	@Query(value = "SELECT * from allAdminOfAerop(?1)", nativeQuery = true)
+	public List<Usuario> allAdminOfAerop(Long id);
+	
+	@Query(value = "SELECT * from findUserAdminOfAerop(?1,?2)", nativeQuery = true)
+	public Usuario findUserAdminOfAerop(Long userId, Long aeropId);
 }

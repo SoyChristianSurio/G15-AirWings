@@ -24,6 +24,7 @@ public class PaisController {
 	@Autowired
 	PaisService paisService;
 	
+
 	@Secured("ROLE_admin")
 	@GetMapping("/lista")
 	public String lista(Model model ) {

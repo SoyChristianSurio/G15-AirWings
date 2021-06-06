@@ -33,6 +33,10 @@ public class MainController {
 	
 	@GetMapping
 	public String inicio(Model model, Principal principal, Authentication auth) {
+		for(Usuario u: usuarioService.findAllAdminNotOfAerop((long) 1)) {
+			System.out.println(u.getUsername()+" "+u.getId());
+		}
+		
 		if(principal==null) return "redirect:/login";
 		Usuario usuario = usuarioService.findByUsername(auth.getName());
 		
@@ -43,14 +47,14 @@ public class MainController {
 			return "index";
 		}
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Inicio admin de aerolinea
-		if(hasRol("ROLE_admin_aerolinea")) {
+		if(hasRol("ROLE_aerolinea_admin")) {
 			model.addAttribute("title", "administración de aerolinea");
-			return "inicio_aerolinea";
+			return "index";
 		}
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Inicio admin de aeropuerto
-		if(hasRol("ROLE_admin_aeropuerto")) {
-			model.addAttribute("title", "administración de aerolinea");
-			return "inicio_aeropuerto";
+		if(hasRol("ROLE_aeropuerto_admin")) {
+			model.addAttribute("title", "administración de aeropuerto");
+			return "index";
 		}
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Inicio usuario normal
 		
@@ -58,7 +62,6 @@ public class MainController {
 			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";
 			else return "redirect:/usuario/empresa/datos";
 		}
-		
 		
 		if(hasRol("ROLE_user")) {
 			model.addAttribute("title", "inicio");

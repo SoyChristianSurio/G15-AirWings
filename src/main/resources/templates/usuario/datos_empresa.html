@@ -29,74 +29,70 @@
 	        <form th:action="@{/usuario/empresa/datos}" th:object="${empresa}" th:method="post" name="myform">		        	
 				<div class="row">
 					<div class="col-lg-6 border border-rounded shadow-sm bg-white mb-2">
-					
 						<div class="row py-3">
-							
-								<div class="wtext-green-light col-md-10">
-									<div class="form-group">
-										<label class="small">Nombre de Empresa*</label>
-										<input type="text" th:field="*{nombre}"
-										class="form-control form-control-sm"
-										autofocus/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('nombre')}" 
-										th:errors="*{nombre}">
-									</small>
+							<div class="wtext-green-light col-md-10">
+								<div class="form-group">
+									<label class="small">Nombre de Empresa*</label>
+									<input type="text" th:field="*{nombre}"
+									class="form-control form-control-sm"
+									autofocus/>
 								</div>
-								<div class="wtext-green-light col-8">
-									<div class="form-group">
-										<label class="small">Nombre de Contacto</label>
-										<input type="text" th:field="*{nombreContacto}"
-										class="form-control form-control-sm"/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('nombreContacto')}" 
-										th:errors="*{nombreContacto}">
-									</small>
+								<small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('nombre')}" 
+									th:errors="*{nombre}">
+								</small>
+							</div>
+							<div class="wtext-green-light col-8">
+								<div class="form-group">
+									<label class="small">Nombre de Contacto</label>
+									<input type="text" th:field="*{nombreContacto}"
+									class="form-control form-control-sm"/>
 								</div>
-								<div class="wtext-green-light col-12">
-									<div class="form-group">
-										<label class="small">Dirección</label>
-										<input type="text" th:field="*{direccion}"
-										class="form-control form-control-sm"/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('direccion')}" 
-										th:errors="*{direccion}">
-									</small>
+								<small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('nombreContacto')}" 
+									th:errors="*{nombreContacto}">
+								</small>
+							</div>
+							<div class="wtext-green-light col-12">
+								<div class="form-group">
+									<label class="small">Dirección</label>
+									<input type="text" th:field="*{direccion}"
+									class="form-control form-control-sm"/>
 								</div>
-							
-							
-								<div class="wtext-green-light col-md-6">
-									<div class="form-group mt-1">
-										<label class="small">NIT</label>
-										<input type="text" th:field="*{nit}"
-										class="form-control form-control-sm"/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('nit')}" 
-										th:errors="*{nit}">
-									</small>
+								<small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('direccion')}" 
+									th:errors="*{direccion}">
+								</small>
+							</div>
+						
+						
+							<div class="wtext-green-light col-md-6">
+								<div class="form-group mt-1">
+									<label class="small">NIT</label>
+									<input type="text" th:field="*{nit}"
+									class="form-control form-control-sm"/>
 								</div>
-								<div class="wtext-green-light col-md-6">
-									<div class="form-group mt-1">
-										<label class="small">NIC</label>
-										<input type="text" th:field="*{nic}"
-										class="form-control form-control-sm"/>
-									</div>
-									<small
-										class="form-text text-danger"
-										th:if="${#fields.hasErrors('nic')}" 
-										th:errors="*{nic}">
-									</small>
+								<small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('nit')}" 
+									th:errors="*{nit}">
+								</small>
+							</div>
+							<div class="wtext-green-light col-md-6">
+								<div class="form-group mt-1">
+									<label class="small">NIC</label>
+									<input type="text" th:field="*{nic}"
+									class="form-control form-control-sm"/>
 								</div>
-								
-							
+								<small
+									class="form-text text-danger"
+									th:if="${#fields.hasErrors('nic')}" 
+									th:errors="*{nic}">
+								</small>
+							</div>
 						</div>
 					
 					

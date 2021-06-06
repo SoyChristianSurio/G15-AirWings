@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html   
+		xmlns:th="https://www.thymeleaf.org" 
+		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+	<meta charset="UTF-8" />
+	<title th:text="${titulo}"></title>
+	
+	<div th:replace="fragmentos/head::bootstrap"></div>
+	
+</head>
+
+<!-- sec:authorize="hasRole('ROLE_nombre')"-->
+<body>
+	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+	<div th:replace="fragmentos/mensajes::alertas"></div>
+	
+	<div class="container">
+		<div class="col-12 p-2 mt-3">
+			<div class="card p-3 shadow-sm mb-3">			
+	        	<h2 class="card-title wtext-green-light">[[${title}]] Aeropuerto [[${myAerop.nombre}]]</h2>
+	        	<p class="card-text">
+	        		rellena los siguientes campos
+	        		<small class="text-secondary"></small>
+	        	</p>
+		    </div>  
+		        <form th:action="@{/gestion/aeropuerto/guardar2}" th:object="${myAerop}" th:method="post" name="myform">
+		        	<input type="hidden" th:field="*{nombre}"/>
+		        	<input type="hidden" th:field="*{codigo}"/>
+		        	<input type="hidden" th:field="*{paisId}"/>
+					<div class="row col-12 mx-auto justify-content-center mb-5">
+						<div class="col-lg-6 border border-rounded shadow-sm bg-white mb-2 mx-1">
+							<div class="row py-3">
+								
+								<div class="wtext-green-light col-10 col-sm-7">
+									<div class="form-group">
+										<label class="small">Número de Bahias</label>
+										<input type="number" th:field="*{numeroBahia}" class="form-control form-control-sm" min="1"/>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('numeroBahia')}" th:errors="*{numeroBahia}"></small>
+								</div>
+							
+								<div class="wtext-green-light col-10 col-sm-7">
+									<div class="form-group">
+										<label class="small">Capcidad de aviones (hangares)</label>
+										<input type="number" th:field="*{capacidad}" class="form-control form-control-sm" min="1"/>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('capacidad')}" th:errors="*{capacidad}"></small>
+								</div>
+								
+								<div class="form-group">
+									<label class="small wtext-green-light">Ciudad (de [[${pais}]])</label>											
+									<select th:field="*{paisId}" class="form-control form-control-sm wselect paisId" >
+										<option value="">-- elegir pais --</option>
+										<option th:each="c : ${paises}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+									</select>
+									<small class=" form-text text-danger" th:if="${#fields.hasErrors('ciudadId')}" th:errors="*{ciudadId}"></small>
+								</div>
+								
+								<div class="form-group">
+									<label class="small wtext-green-light">Ciudad</label>											
+									<select th:field="*{ciudadId}" class="form-control form-control-sm wselect" >
+										<option value="">-- elegir ciudad --</option>
+									</select>
+									<small class=" form-text text-danger" th:if="${#fields.hasErrors('ciudadId')}" th:errors="*{ciudadId}"></small>
+								</div>
+							</div>
+						</div>
+					
+					
+						<div class="col-lg-5 border border-rounded shadow-sm bg-white mb-2 mx-1">
+						
+							<div class="row py-3">
+								<div class="wtext-green-light col-12 col-sm-8">
+									
+									<div class="form-group">
+										<label class="small">Nombre de Responsable</label>
+										<input type="text" th:field="*{nombreResponsable}" class="form-control form-control-sm"/>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('nombreResponsable')}" th:errors="*{nombreResponsable}"></small>
+								
+									<div class="wtext-green-light col-8">
+										<div class="form-group">
+											<label class="small">teléfono</label>
+											<input type="text" th:field="*{telefono}" class="form-control form-control-sm"/>
+										</div>
+									</div>
+									<small class="form-text text-danger" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></small>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col-12 text-center my-3">
+							<button type="submit"
+									class="btn btn-sm wbtn-outline-green w-75"
+									onclick="document.getElementById('myform').formSubmit()">Guardar</button>
+						</div>
+					</div>
+				</form>	      
+	    </div>
+	</div>
+	<footer th:replace="fragmentos/footer :: footer"></footer>
+	<div th:replace="fragmentos/datatables :: cdn"></div>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		console.log("ready");
+		$('.paisId').on('change', function(){
+			var countryId = $(this).val();
+			console.log("cambio");
+			$.ajax({
+				type: 'GET',
+				url: '/api/ciudad/' + countryId,
+				success: function(result) {
+					
+					var s = '';
+					for(var i = 0; i < result.length; i++) {
+						s += '<option value="' + result[i].id + '">' + result[i].nombre + '</option>';
+					}
+					$('#ciudadId').html(s);
+				}
+			});
+		});
+	
+	});
+	</script>
+</body>
+</html>	

@@ -156,9 +156,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public String saveEmpresa(EmpresaAutoEdit empresa) {
-		
 		return null;
 	}
 
+	@Override
+	public List<Usuario> findAllRolAeropAdmin() {
+		return usuarioDao.allRolAeropAdmin();
+	}
+
+	@Override
+	public List<Usuario> findAllAdminNotOfAerop(Long id) {
+		return usuarioDao.allAdminNotOfAerop(id);
+	}
+
+	@Override
+	public List<Usuario> findAllAdminOfAerop(Long id) {
+		return usuarioDao.allAdminOfAerop(id);
+	}
+
+	@Override
+	public Usuario findUserAdminOfAerop(Long userId, Long aeropId) {
+		return usuarioDao.findUserAdminOfAerop(userId, aeropId);
+	}
 	
 }

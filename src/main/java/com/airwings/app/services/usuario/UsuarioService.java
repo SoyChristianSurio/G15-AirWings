@@ -22,4 +22,9 @@ public interface UsuarioService {
 	public String savePersona(PersonaAutoEdit persona);
 	public String saveEmpresa(EmpresaAutoEdit empresa);
 	
+	public List<Usuario> findAllRolAeropAdmin();
+	public List<Usuario> findAllAdminNotOfAerop(Long id);
+	public List<Usuario> findAllAdminOfAerop(Long id);
+	public Usuario findUserAdminOfAerop(Long userId, Long aeropId);
+	
 }
