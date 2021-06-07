@@ -13,7 +13,7 @@
 
 <!-- sec:authorize="hasRole('ROLE_nombre')"-->
 <body>
-	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'admin_aerolinea','admin_aeropuerto','admin'})"></div>
+	<div th:replace="fragmentos/navbar::admin" sec:authorize="hasAnyRole({'aerolinea_admin','aeropuerto_admin','admin'})"></div>
 	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">

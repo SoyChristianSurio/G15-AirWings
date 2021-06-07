@@ -33,6 +33,8 @@ public class Aerolinea implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pais pais;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Ciudad ciudad;
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Avion> aviones;
 }
