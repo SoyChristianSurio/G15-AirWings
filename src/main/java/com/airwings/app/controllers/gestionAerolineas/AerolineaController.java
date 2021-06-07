@@ -70,7 +70,7 @@ public class AerolineaController {
 		model.addAttribute("msgDelete", adminAeropService.findAllByAeropuerto(aeropService.findById(id)).size()+" administradores dejarán de serlo");
 		return "/aeropuerto/lista";
 	}
-	*/
+	*/ 
 	
 	@PostMapping("/guardar")
 	public String guardar(@Valid @ModelAttribute("newAerol")AerolineaDto aerol, BindingResult result, Model model, RedirectAttributes flash) {
