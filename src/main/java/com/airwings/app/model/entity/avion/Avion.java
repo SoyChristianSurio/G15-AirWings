@@ -27,6 +27,7 @@ public class Avion implements Serializable {
 	
 	private Long id;
 	
+	private String codigo;
 	private String modelo;
 	private String marca;
 	
