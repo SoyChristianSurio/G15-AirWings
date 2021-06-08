@@ -50,8 +50,6 @@ public class AerolineaController {
 		model.addAttribute("newAerol", new AerolineaDto());
 		return "/aerolinea/lista";
 	}
-
-	
 	
 	@GetMapping("/editar/{id}")
 	public String guardar(@PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
@@ -63,21 +61,21 @@ public class AerolineaController {
 		model.addAttribute("myAerol", a);
 		model.addAttribute("paises", paisService.findAll());
 		model.addAttribute("ciudadese", paisService.findById( a.getPaisId() ).getCiudades());
-		model.addAttribute("aerops", aerolService.findAll());
-		model.addAttribute("newAerop", new AerolineaDto());
+		model.addAttribute("aerols", aerolService.findAll());
+		model.addAttribute("newAerol", new AerolineaDto());
 		return "/aerolinea/lista";
 	}
-	/*
+	
 	@GetMapping("/eliminar/{id}")
 	public String eliminar(@PathVariable(name = "id")Long id, Model model) {
-		model.addAttribute("delAerop", aeropService.findById(id));
-		model.addAttribute("aerops", aeropService.findAll());
+		model.addAttribute("delAerol", aerolService.findById(id));
+		model.addAttribute("aerols", aerolService.findAll());
 		model.addAttribute("paises", paisService.findAll());		
-		model.addAttribute("newAerop", new AeropuertoDto2());
-		model.addAttribute("msgDelete", adminAeropService.findAllByAeropuerto(aeropService.findById(id)).size()+" administradores dejarán de serlo");
-		return "/aeropuerto/lista";
+		model.addAttribute("newAerol", new AerolineaDto());
+		model.addAttribute("msgDelete", adminAerolService.findAllByAerolinea(aerolService.findById(id)).size()+" administradores dejarán de serlo");
+		return "/aerolinea/lista";
 	}
-	*/ 
+	 
 	
 	@PostMapping("/guardar")
 	public String guardar(@Valid @ModelAttribute("newAerol")AerolineaDto aerol, BindingResult result, Model model, RedirectAttributes flash) {
@@ -110,20 +108,20 @@ public class AerolineaController {
 		flash.addFlashAttribute("info","Editado con éxito");
 		return "redirect:/gestion/aerolinea/lista";
 	}
-	/*
+	
 	@PostMapping("/eliminar")
-	public String eliminar(@ModelAttribute("myAerop")AeropuertoDto2 aerop, Model model, RedirectAttributes flash) {
-		System.out.println("Crear:"+aerop.getCodigo()+" "+aerop.getNombre()+" "+aerop.getPaisId());
-		model.addAttribute("aerops", aeropService.findAll());
+	public String eliminar(@ModelAttribute("myAerol")AerolineaDto aerol, Model model, RedirectAttributes flash) {
+		System.out.println("Crear:"+aerol.getCodigo()+" "+aerol.getNombreCorto()+" "+aerol.getPaisId());
+		model.addAttribute("aerols", aerolService.findAll());
 		model.addAttribute("paises", paisService.findAll());		
-		model.addAttribute("newAerop", new AeropuertoDto2());
+		model.addAttribute("newAerol", new AerolineaDto());
 		System.out.println("Eliminando aeropuerto");
 		
-		aeropService.deleteById(aerop.getId());
-		flash.addFlashAttribute("warning","TRREMENEEEDO Eliminado con éxito");
-		return "redirect:/gestion/aeropuerto/lista";
+		aerolService.deleteById(aerol.getId());
+		flash.addFlashAttribute("warning","Eliminado con éxito");
+		return "redirect:/gestion/aerolinea/lista";
 	}
-	*/
+	
 	@GetMapping("/{id}/admins")
 	public String admins(@PathVariable("id")Long id, Model model) {
 		model.addAttribute("adminsal", usuarioService.findAllAdminNotOfAerol(id));
@@ -150,7 +148,7 @@ public class AerolineaController {
 	}
 	@GetMapping("/{id}/deladmin/{ida}")
 	public String desasignarAdmin(@PathVariable("id")Long id, @PathVariable("ida")Long ida, Model model, RedirectAttributes flash) {
-		adminAerolService.deleteById(adminAerolService.getRegistroAdminAerop(ida, id));
+		adminAerolService.deleteById(adminAerolService.getRegistroAdminAerol(ida, id));
 		
 		flash.addFlashAttribute("warning","Se eliminó un administrador a esta aerolinea");
 		return "redirect:/gestion/aerolinea/"+id+"/admins";

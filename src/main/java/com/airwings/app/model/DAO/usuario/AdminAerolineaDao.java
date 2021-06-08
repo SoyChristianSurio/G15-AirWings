@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.airwings.app.model.entity.Aeropuerto;
+import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
 
 @Repository
@@ -16,5 +16,5 @@ public interface AdminAerolineaDao extends JpaRepository<AdminAerolinea, Long> {
 	@Transactional(readOnly = true)
 	public Long getIdRegistroAdminAerol(Long userId, Long aeropId);
 	
-	public List<AdminAerolinea> findAllByAerolinea(Aeropuerto aerop);
+	public List<AdminAerolinea> findAllByAerolinea(Aerolinea aerol);
 }

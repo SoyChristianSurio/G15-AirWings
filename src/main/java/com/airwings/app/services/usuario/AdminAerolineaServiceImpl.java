@@ -3,10 +3,13 @@ package com.airwings.app.services.usuario;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.airwings.app.model.DAO.usuario.AdminAerolineaDao;
+import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
 
+@Service
 public class AdminAerolineaServiceImpl implements AdminAerolineaService{
 
 	@Autowired
@@ -33,8 +36,13 @@ public class AdminAerolineaServiceImpl implements AdminAerolineaService{
 	}
 
 	@Override
-	public Long getRegistroAdminAerop(Long ida, Long id) {
+	public Long getRegistroAdminAerol(Long ida, Long id) {
 		return adminAerolDao.getIdRegistroAdminAerol(ida, id);
+	}
+
+	@Override
+	public List<AdminAerolinea> findAllByAerolinea(Aerolinea a) {
+		return adminAerolDao.findAllByAerolinea(a);
 	}
 
 }

@@ -21,7 +21,7 @@
 		 <div class="wtext-green-light h2 mb-3">
 		 <div class="col">[[${aerol.nombreLargo}]] -</div> <div class="col">[[${aerol.pais.nombre}]]/<span class="small">[[${aerol.ciudad.nombre}]]</span></div>
 		 </div>
-            <div class="card">
+            <div class="card  mb-5">
                 <div class="card-header bg-light d-flex justify-content-between">
                     <div class="h4 text-secondary d-inline-block my-1">
                         Administradores de Aerolinea disponibles
@@ -63,7 +63,7 @@
 	                    </table>
 	                </div>
             	</div>
-                <div class="text-secondary h5 text-center p-4" th:if="${adminsal == null or adminsal.empty}">
+                <div class="text-secondary h5 text-center p-4 " th:if="${adminsal == null or adminsal.empty}">
 			    	No hay usuarios con el rol de <span class="wtext-green">Administrador de Aerolinea</span> disponibles
 			    </div>
             </div>
