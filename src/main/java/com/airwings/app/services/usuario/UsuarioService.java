@@ -24,7 +24,10 @@ public interface UsuarioService {
 	
 	public List<Usuario> findAllRolAeropAdmin();
 	public List<Usuario> findAllAdminNotOfAerop(Long id);
+	public List<Usuario> findAllAdminNotOfAerol(Long id);
 	public List<Usuario> findAllAdminOfAerop(Long id);
+	public List<Usuario> findAllAdminOfAerol(Long id);
 	public Usuario findUserAdminOfAerop(Long userId, Long aeropId);
+	public Usuario findUserAdminOfAerol(Long userId, Long aeropId);
 	
 }

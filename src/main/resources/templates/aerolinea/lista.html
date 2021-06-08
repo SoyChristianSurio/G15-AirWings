@@ -110,7 +110,7 @@
 								<option value="">-- elegir pais --</option>
 								<option th:each="c : ${paises}" th:text="${c.nombre}" th:value="${c.id}"> </option>
 							</select>
-							<small class=" form-text text-danger" th:if="${#fields.hasErrors('ciudadId')}" th:errors="*{ciudadId}"></small>
+							<small class=" form-text text-danger" th:if="${#fields.hasErrors('paisId')}" th:errors="*{paisId}"></small>
 						</div>
 						
 						<div class="form-group">
@@ -160,7 +160,7 @@
                     <div class="modal-body">
                         <div class="form-group">
 							<label class="small wtext-green-light">Nombre</label> 
-							<input type="text" th:field="*{nombre}" class="form-control form-control-sm" autofocus/>
+							<input type="text" th:field="*{nombreLargo}" class="form-control form-control-sm" autofocus/>
 						</div>
 						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
 						

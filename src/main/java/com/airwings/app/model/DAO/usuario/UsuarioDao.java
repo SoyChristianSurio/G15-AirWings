@@ -18,10 +18,18 @@ public interface UsuarioDao extends JpaRepository<Usuario, Long>{
 	
 	@Query(value = "SELECT * from allAdminNotOfAerop(?1)", nativeQuery = true)
 	public List<Usuario> allAdminNotOfAerop(Long id);
+	@Query(value = "SELECT * from allAdminNotOfAerol(?1)", nativeQuery = true)
+	public List<Usuario> allAdminNotOfAerol(Long id);
 	
 	@Query(value = "SELECT * from allAdminOfAerop(?1)", nativeQuery = true)
 	public List<Usuario> allAdminOfAerop(Long id);
+	@Query(value = "SELECT * from allAdminOfAerol(?1)", nativeQuery = true)
+	public List<Usuario> allAdminOfAerol(Long id);
 	
 	@Query(value = "SELECT * from findUserAdminOfAerop(?1,?2)", nativeQuery = true)
 	public Usuario findUserAdminOfAerop(Long userId, Long aeropId);
+	@Query(value = "SELECT * from findUserAdminOfAerol(?1,?2)", nativeQuery = true)
+	public Usuario findUserAdminOfAerol(Long userId, Long aeropId);
+	
+	
 }

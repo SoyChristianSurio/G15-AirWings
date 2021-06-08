@@ -160,23 +160,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public List<Usuario> findAllRolAeropAdmin() {
-		return usuarioDao.allRolAeropAdmin();
-	}
+	public List<Usuario> findAllRolAeropAdmin() {return usuarioDao.allRolAeropAdmin();}
 
 	@Override
-	public List<Usuario> findAllAdminNotOfAerop(Long id) {
-		return usuarioDao.allAdminNotOfAerop(id);
-	}
+	public List<Usuario> findAllAdminNotOfAerop(Long id) {return usuarioDao.allAdminNotOfAerop(id);}
+	@Override
+	public List<Usuario> findAllAdminNotOfAerol(Long id) {return usuarioDao.allAdminNotOfAerol(id);}
+	
+	@Override
+	public List<Usuario> findAllAdminOfAerop(Long id) {return usuarioDao.allAdminOfAerop(id);}
+	@Override
+	public List<Usuario> findAllAdminOfAerol(Long id) {return usuarioDao.allAdminOfAerol(id);}
 
 	@Override
-	public List<Usuario> findAllAdminOfAerop(Long id) {
-		return usuarioDao.allAdminOfAerop(id);
-	}
-
+	public Usuario findUserAdminOfAerop(Long userId, Long aeropId) {return usuarioDao.findUserAdminOfAerop(userId, aeropId);}
 	@Override
-	public Usuario findUserAdminOfAerop(Long userId, Long aeropId) {
-		return usuarioDao.findUserAdminOfAerop(userId, aeropId);
-	}
+	public Usuario findUserAdminOfAerol(Long userId, Long aeropId) {return usuarioDao.findUserAdminOfAerol(userId, aeropId);}
 	
 }
