@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.airwings.app.model.DAO.AerolineaDao;
 import com.airwings.app.model.DTO.aerolinea.AerolineaDto;
 import com.airwings.app.model.entity.Aerolinea;
+import com.airwings.app.model.entity.usuario.AdminAerolinea;
+import com.airwings.app.services.usuario.AdminAerolineaService;
 
 @Service
 public class AerolineaServiceImpl implements AerolineaService {
@@ -18,6 +20,8 @@ public class AerolineaServiceImpl implements AerolineaService {
 	PaisService paisService;
 	@Autowired
 	CiudadService ciudadService;
+	@Autowired
+	AdminAerolineaService adminAerolService;
 	
 	@Override
 	public List<Aerolinea> findAll() {
@@ -36,6 +40,10 @@ public class AerolineaServiceImpl implements AerolineaService {
 
 	@Override
 	public void deleteById(Long id) {
+		Aerolinea aerol = aerolDao.findById(id).orElse(null); 
+		for(AdminAerolinea adm: adminAerolService.findAllByAerolinea(aerol)) {
+			adminAerolService.deleteById(adm.getId());
+		}
 		aerolDao.deleteById(id);		
 	}
 

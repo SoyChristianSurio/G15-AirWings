@@ -1,5 +1,6 @@
 body{
 	background-color: rgb(245, 245, 245);
+	padding-top: 72px;
 }
 
 .btn-menu{
@@ -7,6 +8,10 @@ body{
 	top:0px;
 	right:5px;
 }
+.fecha{
+	position: relative;
+	top:80px;
+	right:5px;}
 
 .wbtn-outline-green,.wbtn-outline-green:focus{
 	background-color: white;
@@ -57,6 +62,7 @@ body{
 
 .bg-white{ background-color: rgb(255, 255, 255);}
 .bg-green-light{ background-color: rgb(0, 128, 128);}
+
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -73,9 +79,11 @@ input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
 select:focus,
+.form-control:focus,
+.btn:focus,
 .uneditable-input:focus {   
   border-color: rgb(0, 128, 128);
-  box-shadow: 0 0px 0px rgb(0, 128, 128)  inset, 0 0 5px rgb(58, 114, 137);
+  box-shadow: 0 0px 0px rgb(0, 128, 128) inset, 0 0 5px rgb(58, 114, 137) ;
   outline: 0 none;
 }
 

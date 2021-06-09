@@ -48,7 +48,11 @@ public class AeropuertoController {
 	}
 	
 	@GetMapping("/editar/{id}")
-	public String guardar(@PathVariable(name = "id")Long id, Model model) {
+	public String guardar(@PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
+		if( aeropService.findById(id)==null ) {
+			flash.addFlashAttribute("warning"," No existe ese aeropuerto");
+			return "redirect:/gestion/aerolinea/lista";
+		}		
 		AeropuertoDto2 a = aeropService.findById(id).toAeropuertoDto2();
 		model.addAttribute("myAerop", a);
 		model.addAttribute("paises", paisService.findAll());
@@ -59,7 +63,11 @@ public class AeropuertoController {
 	}
 	
 	@GetMapping("/eliminar/{id}")
-	public String eliminar(@PathVariable(name = "id")Long id, Model model) {
+	public String eliminar(@PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
+		if( aeropService.findById(id)==null ) {
+			flash.addFlashAttribute("warning"," No existe ese aeropuerto");
+			return "redirect:/gestion/aerolinea/lista";
+		}	
 		model.addAttribute("delAerop", aeropService.findById(id));
 		model.addAttribute("aerops", aeropService.findAll());
 		model.addAttribute("paises", paisService.findAll());		

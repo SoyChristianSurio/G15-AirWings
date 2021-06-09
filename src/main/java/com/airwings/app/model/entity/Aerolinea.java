@@ -11,8 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.airwings.app.model.DTO.aerolinea.AerolineaDto;
 import com.airwings.app.model.entity.avion.Avion;
+import com.airwings.app.model.entity.usuario.AdminAerolinea;
 
 import lombok.Data;
 
@@ -29,12 +33,32 @@ public class Aerolinea implements Serializable {
 	private String nombreLargo;
 	private String nombreCorto;
 	private String representante;
+	
+	@Temporal(TemporalType.DATE)
 	private Date fechaFundacion;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "aerolinea")
+	private List<AdminAerolinea> admins;	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pais pais;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Ciudad ciudad;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "aerolinea")
 	private List<Avion> aviones;
+	
+	public AerolineaDto toAerolineaDto() {
+		AerolineaDto a = new AerolineaDto();
+		a.setId(id);
+		a.setCodigo(codigo);
+		a.setNombreCorto(nombreCorto);
+		a.setNombreLargo(nombreLargo);
+		a.setRepresentante(representante);
+		a.setFechaFundacion(fechaFundacion);
+		a.setPaisId(pais.getId());
+		a.setCiudadId(ciudad.getId());
+		return a;
+	}
 }
