@@ -1,5 +1,8 @@
 package com.airwings.app.controllers.gestionAerolineas;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.airwings.app.model.DTO.aerolinea.AerolineaDto;
-import com.airwings.app.model.DTO.aeropuerto.AeropuertoDto2;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
-import com.airwings.app.model.entity.usuario.AdminAeropuerto;
-import com.airwings.app.model.entity.usuario.Usuario;
 import com.airwings.app.services.AerolineaService;
-import com.airwings.app.services.AeropuertoService;
-import com.airwings.app.services.CiudadService;
 import com.airwings.app.services.PaisService;
 import com.airwings.app.services.usuario.AdminAerolineaService;
-import com.airwings.app.services.usuario.AdminAeropuertoService;
 import com.airwings.app.services.usuario.UsuarioService;
 
 @Controller
@@ -48,6 +45,7 @@ public class AerolineaController {
 		model.addAttribute("aerols", aerolService.findAll());
 		model.addAttribute("paises", paisService.findAll());		
 		model.addAttribute("newAerol", new AerolineaDto());
+		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 		return "/aerolinea/lista";
 	}
 	
@@ -55,6 +53,7 @@ public class AerolineaController {
 	public String guardar(@PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
 		if( aerolService.findById(id)==null ) {
 			flash.addFlashAttribute("warning"," No existe esa aerolinea");
+			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 			return "redirect:/gestion/aerolinea/lista";
 		}
 		AerolineaDto a = aerolService.findById(id).toAerolineaDto();
@@ -63,6 +62,7 @@ public class AerolineaController {
 		model.addAttribute("ciudadese", paisService.findById( a.getPaisId() ).getCiudades());
 		model.addAttribute("aerols", aerolService.findAll());
 		model.addAttribute("newAerol", new AerolineaDto());
+		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 		return "/aerolinea/lista";
 	}
 	
@@ -73,6 +73,7 @@ public class AerolineaController {
 		model.addAttribute("paises", paisService.findAll());		
 		model.addAttribute("newAerol", new AerolineaDto());
 		model.addAttribute("msgDelete", adminAerolService.findAllByAerolinea(aerolService.findById(id)).size()+" administradores dejarán de serlo");
+		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 		return "/aerolinea/lista";
 	}
 	 
@@ -85,6 +86,7 @@ public class AerolineaController {
 			model.addAttribute("paises", paisService.findAll());
 			if(aerol.getPaisId()!=null)model.addAttribute("ciudades", paisService.findById(aerol.getPaisId()).getCiudades());
 			model.addAttribute("errorCrear","");
+			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 			return "/aerolinea/lista";
 		}
 		System.out.println("guardando nueva aerolinea");
@@ -101,6 +103,7 @@ public class AerolineaController {
 			model.addAttribute("newAerol", new AerolineaDto());
 			model.addAttribute("paises", paisService.findAll());
 			if(aerol.getPaisId()!=null)model.addAttribute("ciudades", paisService.findById(aerol.getPaisId()).getCiudades());
+			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 			return "/aerolinea/lista";
 		}
 		System.out.println("Editando aeropuerto");
@@ -111,12 +114,8 @@ public class AerolineaController {
 	
 	@PostMapping("/eliminar")
 	public String eliminar(@ModelAttribute("myAerol")AerolineaDto aerol, Model model, RedirectAttributes flash) {
-		System.out.println("Crear:"+aerol.getCodigo()+" "+aerol.getNombreCorto()+" "+aerol.getPaisId());
-		model.addAttribute("aerols", aerolService.findAll());
-		model.addAttribute("paises", paisService.findAll());		
-		model.addAttribute("newAerol", new AerolineaDto());
+		System.out.println("Crear:"+aerol.getCodigo()+" "+aerol.getNombreCorto()+" "+aerol.getPaisId());		
 		System.out.println("Eliminando aeropuerto");
-		
 		aerolService.deleteById(aerol.getId());
 		flash.addFlashAttribute("warning","Eliminado con éxito");
 		return "redirect:/gestion/aerolinea/lista";
@@ -127,6 +126,7 @@ public class AerolineaController {
 		model.addAttribute("adminsal", usuarioService.findAllAdminNotOfAerol(id));
 		model.addAttribute("aerol", aerolService.findById(id) );
 		model.addAttribute("aerolAdmins", usuarioService.findAllAdminOfAerol(id));
+		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 		return "/aerolinea/admins";
 	}
 	

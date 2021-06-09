@@ -1,5 +1,6 @@
 body{
 	background-color: rgb(245, 245, 245);
+	padding-top: 72px;
 }
 
 .btn-menu{
@@ -7,6 +8,10 @@ body{
 	top:0px;
 	right:5px;
 }
+.fecha{
+	position: relative;
+	top:80px;
+	right:5px;}
 
 .wbtn-outline-green,.wbtn-outline-green:focus{
 	background-color: white;

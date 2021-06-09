@@ -218,7 +218,7 @@
     </div>
 
     <div id="modal-delete" class="modal fade" th:if="${delAerol}">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 				<form th:action="@{/gestion/aerolinea/eliminar}" th:object="${delAerol}" method="POST">
 					<input type="hidden" th:field="*{id}"/>
