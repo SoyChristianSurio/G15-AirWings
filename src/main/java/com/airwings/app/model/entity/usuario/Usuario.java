@@ -24,7 +24,7 @@ public class Usuario implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Rol rol;
 	private String username;
-	private String contraseña;
+	private String contrasena;
 	private String correo;
 	private Integer contadorBloqueo;
 	private Boolean bloqueado;
