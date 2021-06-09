@@ -75,7 +75,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		u.setBloqueado(false);
 		u.setUsername(usuario.getUsername());
 		u.setClienteNatural(usuario.getPersona());
-		u.setContraseña(passEncoder.encode(usuario.getPass()));
+		u.setContrasena(passEncoder.encode(usuario.getPass()));
 		u.setCorreo(usuario.getEmail());
 		u.setRegistroCompleto(false);
 		u.setRol(rolDao.findByNombre("ROLE_user"));

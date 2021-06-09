@@ -11,12 +11,14 @@
 </head>
 
 <body>
-	<div style="height: 5em; background-color: rgb(4, 37, 62);"></div>
-	<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
+	<div class="fixed-top">
+		<div style="height: 4em; background-color: rgb(4, 37, 62);"></div>
+		<div style="height: 0.5em; background-color: rgb(189, 1, 19);"></div>
+	</div>
 	<div th:replace="fragmentos/mensajes::alertas"></div>
 	<div class="container">
 		<div class="h1 text-secondary">Air Wings</div>
-		<div class="card mt-3 mx-auto" style="max-width: 540px;">
+		<div class="card mt-3 mx-auto col-8" style="max-width: 540px;">
 			
 			<div class="row g-0">
 			    
