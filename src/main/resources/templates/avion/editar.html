@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html xmlns:th="https://www.thymeleaf.org" 
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <title>Formulario Avión</title>
+        <title>Editar Avión</title>
         <meta charset="UTF-8">
     <div th:replace="fragmentos/head::bootstrap"></div>
 </head>
@@ -16,7 +15,7 @@
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between">
                     <div class="h4 text-secondary d-inline-block my-1">
-                        Avion Crear
+                        Avion Editar
                     </div>
                     <div class="d-inline-block align-self-middle">
                         <a type="button" class="btn btn-success wbtn-green" th:href="@{/avion/lista}"><i class="fas fa-redo-alt"></i>
@@ -29,39 +28,67 @@
             <br>
             <div class="container-sm">
                 <form  th:action="@{/avion/crear}" th:object="${avion}" method="POST">
+                    <input type="hidden" name="id" th:field="${avion.id}"/>
                     <div class="mb-3">
                         <label for="codigo" class="form-label">Codigo de Avión</label>
-                        <input type="text" class="form-control" id="codigo" name="codigo" required="true">                   
+                        <input type="text" class="form-control" th:field="*{codigo}" required="true">                   
                     </div>                
                     <div class="mb-3">
                         <label for="marca" class="form-label">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca" required="true">                   
+                        <input type="text" class="form-control" th:field="*{marca}" required="true">                   
                     </div>
                     <div class="mb-3">
                         <label for="modelo" class="form-label">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" required="true">                   
+                        <input type="text" class="form-control" th:field="*{modelo}" required="true">                   
                     </div>
 
                     <div class="mb-3">
                         <label for="aerolinea" class="form-label">Aerolinea</label>
-                        <select id="aerolinea" name="aerolinea" class="form-control" >
+                        <select th:name="aerolinea" class="form-control" >
+                            <option th:text="*{aerolinea.nombreCorto}"th:value="*{aerolinea.id}"> </option>
                             <option value="">-- seleccione --</option>
-                            <option th:each="aerolinea : ${aerolineas}" th:text="${aerolinea.nombreCorto}" th:value="${aerolinea.id}"> </option>
+                            <div th:each="aerolinea : ${aerolineas}">
+                                <div th:if="${avion.aerolinea != aerolinea}">
+                                    <option th:text="${aerolinea.nombreCorto}" th:value="${aerolinea.id}"> </option> 
+                                </div>
+                            </div>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="tipoAvion" class="form-label">Tipo de Avión</label>
-                        <select id="tipo" name="tipo" class="form-control" >
+                        <select th:name="tipo" class="form-control" >
+                            <option th:text="*{tipo.nombre}"th:value="*{tipo.id}"></option>
                             <option value="">-- seleccione --</option>
-                            <option th:each="tipoAvion : ${tipoAviones}" th:text="${tipoAvion.nombre}" th:value="${tipoAvion.id}"> </option>
+                            <div th:each="tipoAvion : ${tipoAviones}">
+                                <div th:if="${avion.tipo != tipoAvion}">
+                                    <option th:text="${tipoAvion.nombre}" th:value="${tipoAvion.id}"> </option> 
+                                </div>
+                            </div>
                         </select>
                     </div>
 
-                    <div th:if="${clases != null and !clases.empty}">
-                        <div class="mb-3" th:each="clase : ${clases}">
-                            <div class="form-check">
 
+                    <div th:each="claseS : ${avion.asientos}">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" th:name="clase+${claseS.clase.id}" checked="true">
+                            <label class="form-check-label" for="nombre">
+                                [[${claseS.clase.nombre}]]
+                            </label>
+                        </div>
+                        <label for="cantidadAsiento" class="form-label">Cantidad del Asiento</label>
+                        <input type="number" class="form-control"  th:name="ca+${claseS.clase.id}" th:value="${claseS.cantidadAsiento}" >
+
+                        <label for="precioAsiento" class="form-label">Precio Asiento</label>
+                        <input type="number" step="any" min="0" class="form-control" th:name="p+${claseS.clase.id}" th:value="${claseS.precioAsiento}">
+
+                    </div>
+
+                    <div th:if="${clasesGenerales2 != null and !clasesGenerales2.empty}">
+                        <div class="mb-3" th:each="clase : ${clasesGenerales2}">
+
+
+                            <div class="form-check">
                                 <input class="form-check-input" type="checkbox" th:name="clase+${clase.id}">
                                 <label class="form-check-label" for="nombre">
                                     [[${clase.nombre}]]
@@ -72,8 +99,13 @@
 
                             <label for="precioAsiento" class="form-label">Precio Asiento</label>
                             <input type="number" step="any" min="0" class="form-control" th:id="p+${clase.id}" th:name="p+${clase.id}" >
+
+
+
                         </div>
                     </div>
+
+
                     <button type="submit" align="center" class="btn btn-primary">Agregar <i class="fa fa-plus-circle"></i></button>
                 </form>
             </div>

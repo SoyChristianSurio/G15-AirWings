@@ -8,7 +8,7 @@ import java.util.List;
 public interface AvionService {
     public List<Avion> listaAvion();
     
-    public void guardar(Avion avion);
+    public Avion guardar(Avion avion);
     
     public void eliminar(Avion avion);
     
