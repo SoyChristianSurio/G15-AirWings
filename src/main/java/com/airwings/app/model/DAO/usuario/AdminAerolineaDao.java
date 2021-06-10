@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
+import com.airwings.app.model.entity.usuario.Usuario;
 
 @Repository
 public interface AdminAerolineaDao extends JpaRepository<AdminAerolinea, Long> {
@@ -17,4 +18,5 @@ public interface AdminAerolineaDao extends JpaRepository<AdminAerolinea, Long> {
 	public Long getIdRegistroAdminAerol(Long userId, Long aeropId);
 	
 	public List<AdminAerolinea> findAllByAerolinea(Aerolinea aerol);
+	public List<AdminAerolinea> findAllByUsuario(Usuario u);
 }

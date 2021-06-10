@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
+import com.airwings.app.model.entity.usuario.Usuario;
 
 public interface AdminAerolineaService {
 	
@@ -13,5 +14,7 @@ public interface AdminAerolineaService {
 	public void deleteById(Long id);
 	public Long getRegistroAdminAerol(Long ida, Long id);
 	public List<AdminAerolinea> findAllByAerolinea(Aerolinea a);
+	public List<AdminAerolinea> findAllByUsuario(Usuario u);
+	
 	
 }

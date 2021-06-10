@@ -23,9 +23,31 @@ insert into ciudad (nombre, pais_id) values('Nueva York',3 );
 insert into tipo_documento (nombre, descripcion) values ('DUI','Documento único de identidad');
 insert into tipo_documento (nombre, descripcion) values ('NIT','Numero de identidad Tributaria');
 insert into tipo_documento (nombre, descripcion) values ('NIC','Numero de identificación de Contrato');
-
+     
 insert into estado_civil (nombre) values ('Soltero');
 insert into estado_civil (nombre) values ('Casado');
+
+insert into estado_vuelo (nombre) values ('Disponible');
+insert into estado_vuelo (nombre) values ('Lleno');
+insert into estado_vuelo (nombre) values ('Finalizado');
+insert into estado_vuelo (nombre) values ('Cancelado');
+
+insert into clase (nombre) values('Económica');
+insert into clase (nombre) values('Turista');
+insert into clase (nombre) values('Ejecutiva');
+insert into clase (nombre) values('Primera Clase');
+
+insert into social_network (nombre) values('Facebook');
+insert into social_network (nombre) values('Twitter');
+insert into social_network (nombre) values('Instagram');
+insert into social_network (nombre) values('youtube');
+
+insert into tipo_avion (nombre) values ('comercial');
+insert into tipo_avion (nombre) values ('carga');
+insert into tipo_avion (nombre) values ('Turístico');
+insert into tipo_avion (nombre) values ('militar');
+
+
 
 Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('admin', 1, '$2a$10$tLizco88QqRv80R/l1IHZubLLhS8rKlXRoSbxg0MJWUU784TuY0f6','Admin@mail.com',NULL,false);
 
@@ -42,6 +64,12 @@ Insert into aerolinea (codigo, fecha_fundacion, nombre_corto, nombre_largo, repr
 
 Insert into admin_aeropuerto (aeropuerto_id, usuario_id) VALUES (1, 3);
 Insert into admin_aerolinea (aerolinea_id, usuario_id) VALUES (1, 5);
+
+
+
+
+
+
 
 create or replace function allRolAeropAdmin () returns table (	id bigint, bloqueado boolean, cliente_natural boolean, contador_bloqueo integer, contrasena character varying(255),	correo varchar(255), registro_completo boolean,	username varchar(255), rol_id bigint) language plpgsql as $$ begin	return query select u.* from usuario u join rol r on (u.rol_id=r.id) where r.nombre='ROLE_aeropuerto_admin'; end;$$;
 

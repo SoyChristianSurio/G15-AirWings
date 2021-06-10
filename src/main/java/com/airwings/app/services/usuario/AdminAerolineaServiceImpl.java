@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.airwings.app.model.DAO.usuario.AdminAerolineaDao;
 import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
+import com.airwings.app.model.entity.usuario.Usuario;
 
 @Service
 public class AdminAerolineaServiceImpl implements AdminAerolineaService{
@@ -43,6 +44,11 @@ public class AdminAerolineaServiceImpl implements AdminAerolineaService{
 	@Override
 	public List<AdminAerolinea> findAllByAerolinea(Aerolinea a) {
 		return adminAerolDao.findAllByAerolinea(a);
+	}
+
+	@Override
+	public List<AdminAerolinea> findAllByUsuario(Usuario u) {
+		return adminAerolDao.findAllByUsuario(u);
 	}
 
 }

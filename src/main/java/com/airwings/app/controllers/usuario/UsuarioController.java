@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -60,12 +61,19 @@ public class UsuarioController {
 	}
 	
 	//##################################################################################################################
-	@Secured({"ROLE_user"})
-	@GetMapping("/persona/datos")
-	public String AutoEditPersona(Model model, Principal principal, Authentication auth) {
-		Usuario usuario = usuarioService.findByUsername(auth.getName());
-		
-		if(!usuario.getClienteNatural()) return "redirect:/usuario/empresa/datos";
+	@Secured({"ROLE_user","ROLE_admin"})
+	@GetMapping({"/persona/datos","/persona/datos/{id}"})
+	public String AutoEditPersona(@PathVariable (name = "id", required = false)Long id, Model model, Principal principal, Authentication auth) {
+		Usuario usuario;
+		if(id==null) {usuario = usuarioService.findByUsername(auth.getName());}
+		else {
+			usuario = usuarioService.findById(id);
+			model.addAttribute("adminEditing",id);}
+			
+		if(!usuario.getClienteNatural()) {
+			if(id==null) {return "redirect:/usuario/empresa/datos";}
+			else {return "redirect:/usuario/empresa/datos/"+id;}
+		}
 		
 		if(usuario.getRegistroCompleto()) {
 			model.addAttribute("persona", usuarioService.getPersonaAutoEdit( usuario.getNatural() ));
@@ -80,11 +88,16 @@ public class UsuarioController {
 		
 		return "usuario/datos_persona";
 	}
-	@PostMapping("/persona/datos")
+	@PostMapping({"/persona/datos","/persona/datos/{id}"})
 	public String AutoEditPersonaP( @Valid @ModelAttribute("persona")PersonaAutoEdit persona, BindingResult result, 
-									Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
+									@PathVariable (name = "id", required = false)Long id,Model model, 
+									Principal principal, Authentication auth, RedirectAttributes flash) {
+		Usuario usuario;
+		if(id==null) {usuario = usuarioService.findByUsername(auth.getName());}
+		else {
+			usuario = usuarioService.findById(id);
+			model.addAttribute("adminEditing",id);}
 		
-		Usuario usuario = usuarioService.findByUsername(auth.getName());
 		persona.setUsuarioId(usuario.getId());
 
 		if(result.hasErrors()) {
@@ -96,17 +109,24 @@ public class UsuarioController {
 		
 		String msg= usuarioService.savePersona(persona);
 		model.addAttribute("success",msg);
-		
-		return "usuario/inicio_usuario";
+		if(id==null) return "usuario/inicio_usuario";
+		else return "redirect:/gestion/usuario/";
 	}
 	
 	//##################################################################################################################
-	@Secured({"ROLE_user"})
-	@GetMapping("/empresa/datos")
-	public String AutoEditEmpresa(Model model, Principal principal, Authentication auth) {
-		Usuario usuario = usuarioService.findByUsername(auth.getName());
+	@Secured({"ROLE_user","ROLE_admin"})
+	@GetMapping({"/empresa/datos","/empresa/datos/{id}"})
+	public String AutoEditEmpresa(@PathVariable (name = "id", required = false)Long id, Model model, Principal principal, Authentication auth) {
+		Usuario usuario;
+		if(id==null) {usuario = usuarioService.findByUsername(auth.getName());}
+		else {
+			usuario = usuarioService.findById(id);
+			model.addAttribute("adminEditing",id);}
 		
-		if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";
+		if(usuario.getClienteNatural()) {
+			if(id==null) {return "redirect:/usuario/persona/datos";}
+			else {return "redirect:/usuario/persona/datos/"+id;}
+		}
 		
 		if(usuario.getRegistroCompleto()) {
 			model.addAttribute("empresa", usuarioService.getEmpresaAutoEdit( usuario.getEmpresa()));
@@ -118,11 +138,15 @@ public class UsuarioController {
 		
 		return "usuario/datos_empresa";
 	}
-	@PostMapping("/empresa/datos")
+	@PostMapping({"/empresa/datos","/empresa/datos/{id}"})
 	public String AutoEditEmpresaP( @Valid @ModelAttribute("empresa")EmpresaAutoEdit empresa, BindingResult result, 
-									Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
-		
-		Usuario usuario = usuarioService.findByUsername(auth.getName());
+									@PathVariable (name = "id", required = false)Long id, Model model, 
+									Principal principal, Authentication auth, RedirectAttributes flash) {
+		Usuario usuario;
+		if(id==null) {usuario = usuarioService.findByUsername(auth.getName());}
+		else {
+			usuario = usuarioService.findById(id);
+			model.addAttribute("adminEditing",id);}
 		empresa.setUsuarioId(usuario.getId());
 
 		if(result.hasErrors()) {
@@ -134,6 +158,7 @@ public class UsuarioController {
 		model.addAttribute("success",msg);
 		model.addAttribute("empresaCl", "");
 		
-		return "usuario/inicio_usuario";
+		if(id==null) return "usuario/inicio_usuario";
+		else return "redirect:/gestion/usuario/";
 	}
 }

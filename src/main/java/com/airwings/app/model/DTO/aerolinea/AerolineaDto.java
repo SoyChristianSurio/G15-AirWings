@@ -12,14 +12,13 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.airwings.app.model.entity.Pais;
 
 import lombok.Data;
 
 @Data
 public class AerolineaDto {
 	private Long id;	
-	@Pattern(regexp = "^[A-Za-a]{3}$",message = "Deben ser 3 letras")
+	@Pattern(regexp = "^[A-Za-z]{3}$",message = "Deben ser 3 letras")
 	private String codigo;
 	@NotBlank
 	private String nombreLargo;

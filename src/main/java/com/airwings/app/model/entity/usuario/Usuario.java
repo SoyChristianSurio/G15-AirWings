@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.airwings.app.model.DTO.usuario.UsuarioRegistrable;
+
 import lombok.Data;
 
 @Entity
@@ -36,4 +38,17 @@ public class Usuario implements Serializable{
 	
 	@OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private ClienteEmpresa empresa;
+	
+	public UsuarioRegistrable getUsuarioRegistrable() {
+		UsuarioRegistrable u =new UsuarioRegistrable();
+		u.setId(id);
+		u.setUsername(username);
+		u.setPass(contrasena);
+		u.setPassConfirm(contrasena);
+		u.setPersona(clienteNatural);
+		u.setEmail(correo);
+		u.setRolId(rol.getId());
+		
+		return u;
+	}
 }
