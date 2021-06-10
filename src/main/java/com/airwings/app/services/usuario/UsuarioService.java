@@ -29,5 +29,6 @@ public interface UsuarioService {
 	public List<Usuario> findAllAdminOfAerol(Long id);
 	public Usuario findUserAdminOfAerop(Long userId, Long aeropId);
 	public Usuario findUserAdminOfAerol(Long userId, Long aeropId);
+	public Usuario save(UsuarioRegistrable usuario);
 	
 }

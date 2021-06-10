@@ -106,14 +106,22 @@ public class MainController {
 	@PostMapping("registro")
 	public String registroUsuarioP(@Valid @ModelAttribute("usuario")UsuarioRegistrable myUsuario, BindingResult result, Model model, RedirectAttributes flash) {
 
-		if(!myUsuario.getPass().contentEquals(myUsuario.getPassConfirm())) {
-			model.addAttribute("passError", "Las contraseñas no coinciden");
-		}
 		
 		if(result.hasErrors()) {
 			model.addAttribute("title", "registro");
 			return "registro";
+		}		
+		if(myUsuario.getPersona()==null) {
+			model.addAttribute("clienteError", "seleccione uno");
+			model.addAttribute("title", "registro");
+			return "registro";
 		}
+		if(!myUsuario.getPass().contentEquals(myUsuario.getPassConfirm())) {
+			model.addAttribute("title", "registro");
+			model.addAttribute("passError", "Las contraseñas no coinciden");
+			return "registro";			
+		}
+		
 		String infoUser = "Usuario; "+myUsuario.getUsername();
 		usuarioService.registrar(myUsuario);
 		flash.addFlashAttribute("info", infoUser);

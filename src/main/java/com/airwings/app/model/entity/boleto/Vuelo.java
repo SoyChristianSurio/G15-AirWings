@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.airwings.app.model.entity.Aeropuerto;
 import com.airwings.app.model.entity.avion.Avion;
@@ -24,12 +26,13 @@ public class Vuelo implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	private Long id;	
 	private String codigo;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaDespegue;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechaAterrizaje;
-	private Date duracion;
+	private Long duracion;
 	private Double distancia;
 	private Double precio;
 	

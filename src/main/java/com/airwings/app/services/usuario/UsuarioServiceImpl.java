@@ -15,6 +15,8 @@ import com.airwings.app.model.DAO.usuario.UsuarioDao;
 import com.airwings.app.model.DTO.usuario.EmpresaAutoEdit;
 import com.airwings.app.model.DTO.usuario.PersonaAutoEdit;
 import com.airwings.app.model.DTO.usuario.UsuarioRegistrable;
+import com.airwings.app.model.entity.usuario.AdminAerolinea;
+import com.airwings.app.model.entity.usuario.AdminAeropuerto;
 import com.airwings.app.model.entity.usuario.ClienteEmpresa;
 import com.airwings.app.model.entity.usuario.ClienteNatural;
 import com.airwings.app.model.entity.usuario.Usuario;
@@ -33,7 +35,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	EstadoCivilDao ecDao;
 	@Autowired
 	TipoDocumentoDao tdDao;
-	
+	@Autowired
+	AdminAerolineaService admAerolService;
+	@Autowired
+	AdminAeropuertoService admAeropService;
 	@Autowired
 	RolDao rolDao;
 	
@@ -80,6 +85,33 @@ public class UsuarioServiceImpl implements UsuarioService{
 		u.setRegistroCompleto(false);
 		u.setRol(rolDao.findByNombre("ROLE_user"));
 		
+		return usuarioDao.save(u);
+	}
+	
+	
+	@Override
+	@Transactional
+	public Usuario save(UsuarioRegistrable usuario) {
+		Usuario u = usuarioDao.findById(usuario.getId()).orElse(null);
+		if(u==null) return null;
+		
+		u.setUsername(usuario.getUsername());
+		u.setClienteNatural(usuario.getPersona());
+		u.setCorreo(usuario.getEmail());
+		
+		if(u.getRol().getId()!=usuario.getRolId()) {
+			if(u.getRol().getNombre()=="ROLE_aerolinea_admin") {
+				for(AdminAerolinea adm: admAerolService.findAllByUsuario(u)) {
+					admAerolService.deleteById(adm.getId());
+				}
+			}
+			if(u.getRol().getNombre()=="ROLE_aeropuerto_admin") {
+				for(AdminAeropuerto adm: admAeropService.findAllByUsuario(u)) {
+					admAeropService.deleteById(adm.getId());
+				}
+			}
+		}
+		u.setRol(rolDao.findById(usuario.getRolId()).orElse(null));
 		return usuarioDao.save(u);
 	}
 

@@ -103,8 +103,8 @@
 								        </div>
 										<small
 											class=" form-text text-danger"
-											th:if="${#fields.hasErrors('persona')}" 
-											th:errors="*{persona}">
+											th:if="${clienteError}" 
+											th:text="${clienteError}">
 										</small>
 									</td>									
 								</tr>

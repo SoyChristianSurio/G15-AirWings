@@ -47,17 +47,25 @@
                                 <td>[[${u.username}]]</td>								
 								
                                 <td class="">
-                                    <a  class="btn btn-primary btn-sm link-detail mb-1"  
-                                    	th:href="@{/gestion/aerolinea/editar/}+${u.id}" 
+                                    <a  class="btn btn-primary btn-sm link-detail mb-1" th:if="${u.clienteNatural!=null}" 
+                                    	th:href="@{/usuario/persona/datos/}+${u.id}" 
                                     	title="Editar Datos"><i class="fas fa-edit"></i></a>
+                                    <a  class="btn wbtn-green btn-sm link-detail mb-1"
+                                    	th:href="@{'/gestion/usuario/editar/'+${u.id}}" 
+                                    	title="Editar Usuario"><i class="fas fa-user-edit"></i></a>
+                                    
                                     
                                     <a  class="btn btn-danger btn-delete btn-sm link-danger2 mb-1"  
                                     	th:href="@{/gestion/aerolinea/eliminar/}+${u.id}" 
-                                    	title="Eliminar Aerolinea"><i class="fas fa-trash"></i></a>
+                                    	title="Eliminar usuario"><i class="fas fa-trash"></i></a>
                                     	
-                                    <a  class="btn wbtn-green btn-sm mb-1"  
-                                    	th:href="@{'/gestion/aerolinea/'+${u.id}+'/admins'}" 
-                                    	title="Gestionar administradores"><i class="fas fa-user-cog"></i> (  ) </a>
+                                    <a  class="btn btn-warning btn-sm mb-1" th:if="${!u.bloqueado}" 
+                                    	th:href="@{'/gestion/usuario/lock/'+${u.id}}" 
+                                    	title="blockear usuario"><i class="fas wtext-green fa-arrow-circle-down fa-lg"></i></a>
+                                    <a  class="btn btn-info btn-sm mb-1"  th:if="${u.bloqueado}"
+                                    	th:href="@{'/gestion/usuario/unlock/'+${u.id}}" 
+                                    	title="desblockear usuario"><i class="fas text-muted fa-arrow-circle-up fa-lg"></i></a>
+                                    
                                 </td>                                                              
                             </tr>
                         </tbody>
@@ -71,6 +79,96 @@
 
         </div>
     </div>
+    
+    <div id="modal-edit" class="modal fade" th:if="${myUser}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+				<form th:action="@{/gestion/usuario/editar}" th:object="${myUser}" method="POST"  id="form_add">
+                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+                    <input type="hidden" th:field="*{pass}" th:value="*{pass}"/>
+                    <input type="hidden" th:field="*{passConfirm}" th:value="*{pass}"/>
+                    <div class="modal-header">
+                        <div>
+                        	<h4 class="modal-title wtext-green-light">Editar Usuario</h4>
+                        	<small class="text-muted"> todos los campos son obligatorios</small>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        
+                        <div class="form-group wtext-green-light">
+                        	<label class="small">Username</label>
+							<input type="text" th:field="*{username}" class="form-control form-control-sm"/> 
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+						</div>
+						
+						<div class="form-group wtext-green-light">
+                        	<label class="small">Email</label>
+							<input type="text" th:field="*{email}" class="form-control form-control-sm"/>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+						</div>
+						
+						<div class="form-group form-check-inline col-12">
+				            <div class="form-check form-check-inline">
+				                <input type="radio" class="form-check-input" value="1" th:field="*{persona}">
+				                <label class="form-check-label" for="persona1">Persona</label>
+				            </div>
+				            <div class="form-check form-check-inline">
+				                <input type="radio" class="form-check-input" value="0" th:field="*{persona}">
+				                <label class="form-check-label" for="persona2">Empresa</label>
+				            </div>
+				            <div class="form-check form-check-inline">
+				                <input type="radio" class="form-check-input" value="" th:field="*{persona}">
+				                <label class="form-check-label" for="persona3">Tipo Admin</label>
+				            </div>
+				            <small class=" form-text text-danger" th:if="${clienteError}" th:errors="${clienteError}"></small>
+				        </div>
+						<div class="form-group">
+							<label class="small wtext-green-light">Rol</label>											
+							<select th:field="*{rolId}" class="form-control form-control-sm wselect ciudadId" >
+								<option value="">-- elegir Rol --</option>
+								<option th:if="${roles}" th:each="c : ${roles}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+							</select>
+							<small class=" form-text text-danger" th:if="${errorRol}" th:text="*{errorRol}"></small>
+						</div>
+						
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+                        <button type="submit" class="btn wbtn-green-light">Guardar <i class="fas fa-save"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-delete" class="modal fade" th:if="${delUser}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+				<form th:action="@{/gestion/pais/eliminar}" th:object="${delPais}" method="POST">
+				<input type="hidden" th:field="*{id}"/>
+				<div class="modal-header">
+                    <div>
+                    	<h4 class="modal-title mx-auto text-danger">¿Eliminar Pais?</h4>
+                    	<small class="text-muted">el país se eliminará</small>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Una vez eliminado, el país no se recuperará.
+                    <span class="text-danger"> Se eliminaran [[${delPais.getCiudades.size()}]] ciudades </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+                    <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-minus-circle"></i></button>
+                </div>
+                
+				</form>
+            </div>
+        </div>
+    </div>
+    
 
     <footer th:replace="fragmentos/footer :: footer"></footer>
 	<div th:replace="fragmentos/datatables :: cdn"></div>
@@ -89,7 +187,7 @@
 		$('.ciudadIde').html(s);}});});});</script>
 		
 	<script th:if="${errorCrear}"> $(document).ready(function(){$("#add_Modal").modal("show");});</script>
-    <script th:if="${myAerol}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
-    <script th:if="${delAerol}"> $(document).ready(function(){$("#modal-delete").modal("show");});</script>
+    <script th:if="${myUser}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
+    <script th:if="${delUser}"> $(document).ready(function(){$("#modal-delete").modal("show");});</script>
 </body>
 </html>
