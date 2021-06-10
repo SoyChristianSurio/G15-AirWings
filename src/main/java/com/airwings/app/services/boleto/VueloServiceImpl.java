@@ -58,12 +58,19 @@ public class VueloServiceImpl implements VueloService {
 		Date da = df.parse(""+v.getFechaAterrizaje()+" "+v.getHoraAterrizaje());
 		long diffInMillies = da.getTime() - dd.getTime();
 		Long minutos = TimeUnit.MINUTES.convert(diffInMillies,TimeUnit.MILLISECONDS);
+		
+		
 		Vuelo vu;
-		if(vueloDao.findById(v.getId())==null) vu = new Vuelo();
-		else vu = vueloDao.findById(v.getId()).orElse(null);
+		if(v.getId()==null) {
+			vu = new Vuelo();
+		} 
+		else {
+			vu = vueloDao.findById(v.getId()).orElse(null);
+			
+		}
 			
 		
-		vu.setId(v.getId());
+		
 		vu.setCodigo(v.getCodigo());
 		vu.setFechaDespegue(dd);
 		vu.setFechaAterrizaje(da);

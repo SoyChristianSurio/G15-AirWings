@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" 
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-        <title>Lista de Aerolíneas</title>
+        <title>Lista de Usuarios</title>
         <meta charset="UTF-8">
 	    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     	<div th:replace="fragmentos/head::bootstrap"></div>
@@ -17,11 +17,11 @@
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between">
                     <div class="h4 text-secondary d-inline-block my-1">
-                        Aerolíneas Registradas
+                        Usuarios Registrados
                     </div>
                     <div class="d-inline-block align-self-middle">
 		                <button type="button" class="btn wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
-		                	<span>Agregar Aerolínea</span>
+		                	<span>Agregar Usuarios</span>
 		            	</button>
             		</div>
                 </div>

@@ -50,13 +50,12 @@ public class VueloController {
 	
 	@PostMapping("/al/{id}/guardar")
 	public String guardar(@Valid @ModelAttribute("newVuelo")VueloDto vuelo, BindingResult result, @PathVariable(name="id")Long idAl, Model model) throws ParseException {
+		vuelo.setId(null);
+		System.out.println(vuelo.getCodigo());
+		System.out.println(vuelo.getId());
 		
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");		
-		Date dd = df.parse(""+vuelo.getFechaDespegue()+" "+vuelo.getHoraDespegue());
-		Date da = df.parse(""+vuelo.getFechaAterrizaje()+" "+vuelo.getHoraAterrizaje());
-		long diffInMillies = da.getTime() - dd.getTime();
-		System.out.println(dd+" -- "+da);	
-		System.out.println(TimeUnit.MINUTES.convert(diffInMillies,TimeUnit.MILLISECONDS));
+		System.out.println(vuelo.getFechaAterrizaje());
+		System.out.println(vuelo.getFechaDespegue());
 		
 		if(result.hasErrors()) {
 			model.addAttribute("aerolinea", aerolService.findById(idAl));
@@ -66,6 +65,7 @@ public class VueloController {
 			return "vuelo/vuelo_lista";
 		}
 		
+	
 		vueloService.save(vuelo);
 		
 		

@@ -76,6 +76,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form th:action="@{'/gestion/vuelo/al/'+${aerolinea.id}+'/guardar'}" th:object="${newVuelo}" method="POST"  id="form_add">
+                    <input type="hidden" th:field="*{id}" value="">
                     <div class="modal-header">
                         <div>
                         	<h4 class="modal-title mx-auto wtext-green">Agregar Vuelo</h4>
@@ -163,7 +164,7 @@
 								<label class="small wtext-green-light">Avion designado</label>											
 								<select th:field="*{avionId}" class="form-control form-control-sm wselect paisId" >
 									<option value="">-- elegir Avión --</option>
-									<option th:each="c : ${aviones}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+									<option th:each="c : ${aviones}" th:text="${c.codigo}" th:value="${c.id}"> </option>
 								</select>
 								<small class=" form-text text-danger" th:if="${#fields.hasErrors('avionId')}" th:errors="*{avionId}"></small>
 							</div>
