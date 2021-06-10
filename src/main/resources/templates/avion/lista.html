@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between">
                     <div class="h4 text-secondary d-inline-block my-1">
-                        Aviones registradas
+                        Aviones registrados
                     </div>
                     <div class="d-inline-block align-self-middle">
                         <a type="button" class="btn btn-success wbtn-green" th:href="@{/avion/crear}"><i class="fas fa-plus"></i>
@@ -35,7 +35,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col"></th>
-                                    <th scope="col" >Nombre</th>                                 
+                                    <th scope="col" >Codigo</th>                                 
+                                    <th scope="col" >Marca</th>                                 
+                                    <th scope="col" >Modelo</th>                                 
                                     <th scope="col">Acciones</th>                                
                                 </tr>
                             </thead>
@@ -44,11 +46,13 @@
 
                                 <tr th:each="avion, contador : ${aviones}">
                                     <td></td>
-                                    <td>[[${avion.nombre}]]</td>
+                                    <td>[[${avion.codigo}]]</td>
+                                    <td>[[${avion.marca}]]</td>
+                                    <td>[[${avion.modelo}]]</td>
 
                                     <td class="text-center">
-                                        <a  class="btn btn-primary btn-sm link-detail"  th:href="@{/avion/clase/editar/}+${clase.id}" title="Editar"><i class="fas fa-edit"></i></a>
-                                        <a class="btn btn-danger btn-delete btn-sm link-danger2" th:href="@{/avion/clase/vista/eliminar/}+${clase.id}"
+                                        <a  class="btn btn-primary btn-sm link-detail" th:href="@{/avion/editar/}+ ${avion.id}"  title="Editar"><i class="fas fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-delete btn-sm link-danger2" 
                                            data-placement="bottom" title="Eliminar"><i class="fas fa-trash"></i></a>
                                     </td>                                                              
                                 </tr>

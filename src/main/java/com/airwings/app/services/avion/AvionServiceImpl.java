@@ -21,8 +21,8 @@ public class AvionServiceImpl implements AvionService {
 
     @Override
     @Transactional
-    public void guardar(Avion avion) {
-        avionDao.save(avion);
+    public Avion guardar(Avion avion) {
+        return avionDao.save(avion);
     }
 
     @Override
