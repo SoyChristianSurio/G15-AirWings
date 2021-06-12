@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.airwings.app.model.DTO.aerolinea.AerolineaDto;
+import com.airwings.app.model.entity.Aerolinea;
+import com.airwings.app.model.entity.boleto.Viaje;
 import com.airwings.app.model.entity.usuario.AdminAerolinea;
 import com.airwings.app.services.AerolineaService;
 import com.airwings.app.services.PaisService;
+import com.airwings.app.services.boleto.ViajeService;
 import com.airwings.app.services.usuario.AdminAerolineaService;
 import com.airwings.app.services.usuario.UsuarioService;
 
@@ -32,8 +35,8 @@ public class AerolineaController {
 	AerolineaService aerolService;
 	@Autowired
 	PaisService paisService;
-//	@Autowired
-//	CiudadService ciudadService;
+	@Autowired
+	ViajeService viajeService;
 	@Autowired
 	UsuarioService usuarioService;
 	@Autowired
@@ -76,7 +79,6 @@ public class AerolineaController {
 		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
 		return "/aerolinea/lista";
 	}
-	 
 	
 	@PostMapping("/guardar")
 	public String guardar(@Valid @ModelAttribute("newAerol")AerolineaDto aerol, BindingResult result, Model model, RedirectAttributes flash) {
@@ -146,12 +148,54 @@ public class AerolineaController {
 		flash.addFlashAttribute("success","Se agregó un nuevo administrador a esta aerolinea");
 		return "redirect:/gestion/aerolinea/"+id+"/admins";
 	}
+	
 	@GetMapping("/{id}/deladmin/{ida}")
 	public String desasignarAdmin(@PathVariable("id")Long id, @PathVariable("ida")Long ida, Model model, RedirectAttributes flash) {
 		adminAerolService.deleteById(adminAerolService.getRegistroAdminAerol(ida, id));
 		
 		flash.addFlashAttribute("warning","Se eliminó un administrador a esta aerolinea");
 		return "redirect:/gestion/aerolinea/"+id+"/admins";
+	}
+	
+//#######################################################################################################################################
+	
+	@GetMapping({"/ges/{id}"})
+	public String gesLista(@PathVariable(name = "id")Long id, Model model) {
+		Aerolinea a = aerolService.findById(id);
+		model.addAttribute("aerol",a);
+		model.addAttribute("myAerol",a.toAerolineaDto());
+		model.addAttribute("viajes",viajeService.findAllByAerolinea(a));
+		model.addAttribute("paises", paisService.findAll());
+		model.addAttribute("ciudades", paisService.findById( a.getPais().getId() ).getCiudades());
+		model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
+		return "/aerolinea/gestion";
+	}
+	
+	@PostMapping("/ges/editar")
+	public String gesEditar(@Valid @ModelAttribute("myAerol")AerolineaDto aerol, BindingResult result, Model model, RedirectAttributes flash) {
+		System.out.println("Crear:"+aerol.getCodigo()+" "+aerol.getNombreCorto()+" "+aerol.getPaisId());
+		if(result.hasErrors()) {			
+			Aerolinea a = aerolService.findById(aerol.getId());
+			model.addAttribute("aerol",a);
+			model.addAttribute("paises", paisService.findAll());
+			if(aerol.getPaisId()!=null)model.addAttribute("ciudades", paisService.findById(aerol.getPaisId()).getCiudades());
+			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
+			return "/aerolinea/gestion";
+		}
+		System.out.println("Editando aeropuerto");
+		aerolService.save(aerol);
+		flash.addFlashAttribute("info","Editado con éxito");
+		return "redirect:/gestion/aerolinea/ges/"+aerol.getId();
+	}
+	
+	@GetMapping({"/ges/{id}/addViaje"})
+	public String gesAddViaje(@PathVariable(name = "id")Long id, Model model) {
+		Aerolinea a = aerolService.findById(id);
+		Viaje viaje = new Viaje();
+		viaje.setAerolinea(a);
+		viajeService.guardar(viaje);
+		
+		return "redirect:/gestion/aerolinea/ges/"+a.getId();
 	}
 	
 }

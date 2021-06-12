@@ -1,6 +1,7 @@
 package com.airwings.app.services.boleto;
 
 import com.airwings.app.model.DAO.boleto.ViajeDao;
+import com.airwings.app.model.entity.Aerolinea;
 import com.airwings.app.model.entity.boleto.Viaje;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,15 @@ public class ViajeServiceImpl implements ViajeService {
     public Viaje encontrarViaje(Viaje viaje) {
         return viajeDao.findById(viaje.getId()).orElse(null);
     }
+
+	@Override
+	public List<Viaje> findAllByAerolinea(Aerolinea a) {
+		return viajeDao.findAllByAerolinea(a);
+	}
+
+	@Override
+	public Viaje findById(Long id) {
+		return viajeDao.findById(id).orElse(null);
+	}
 
 }

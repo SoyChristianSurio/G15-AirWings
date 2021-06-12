@@ -25,6 +25,8 @@ public class VueloServiceImpl implements VueloService {
     AeropuertoService aeropService;
     @Autowired
     AvionService avionService;
+    @Autowired
+    ViajeService viajeService;
 
     @Override
     @Transactional(readOnly = true)
@@ -78,7 +80,15 @@ public class VueloServiceImpl implements VueloService {
 		vu.setDestino(aeropService.findById(v.getAeropDestinoId()));
 		vu.setAvion(avionService.findById(v.getAvionId()));
 		
+		if(v.getViaje()!=null) vu.setViaje(viajeService.findById(v.getViaje()));
+		
 		return vueloDao.save(vu);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Vuelo> findAllByAerolinea(Long id) {
+		return vueloDao.findAllByAerolinea(id);
 	}
 
 }

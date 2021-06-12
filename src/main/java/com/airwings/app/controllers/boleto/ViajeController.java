@@ -18,11 +18,12 @@ import com.airwings.app.model.DTO.vuelo.VueloDto;
 import com.airwings.app.services.AerolineaService;
 import com.airwings.app.services.AeropuertoService;
 import com.airwings.app.services.avion.AvionService;
+import com.airwings.app.services.boleto.ViajeService;
 import com.airwings.app.services.boleto.VueloService;
 
 @Controller
-@RequestMapping("gestion/vuelo")
-public class VueloController {
+@RequestMapping("gestion/viaje")
+public class ViajeController {
 	
 	@Autowired
 	AerolineaService aerolService;
@@ -32,29 +33,33 @@ public class VueloController {
 	AvionService avionService;
 	@Autowired
 	VueloService vueloService;
+	@Autowired
+	ViajeService viajeService;
 	
 	
-	@GetMapping("/al/{idAl}/lista")
-	public String listar(@PathVariable(name = "idAl")Long idAl, Model model) {
+	@GetMapping("/{id}/vuelo")
+	public String listar(@PathVariable(name = "id")Long idVj, Model model) {
+		if(viajeService.findById(idVj)==null) return "redirect:/";
 		model.addAttribute("newVuelo", new VueloDto());
-		model.addAttribute("aerolinea", aerolService.findById(idAl));
-		model.addAttribute("vuelos", vueloService.findAllByAerolinea(idAl));
-		
-		return "vuelo/vuelo_lista";
+		model.addAttribute("myViaje",viajeService.findById(idVj));
+		model.addAttribute("aerops",aeropService.findAll());
+		model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
+		return "aerolinea/gestion_viaje";
 	}
 	
-	@PostMapping("/al/{id}/guardar")
-	public String guardar(@Valid @ModelAttribute("newVuelo")VueloDto vuelo, BindingResult result, @PathVariable(name="id")Long idAl, Model model) throws ParseException {
+	@PostMapping("/{id}/guardar")
+	public String guardar(@Valid @ModelAttribute("newVuelo")VueloDto vuelo, BindingResult result, @PathVariable(name="id")Long idVj, Model model) throws ParseException {
 		vuelo.setId(null);
+		vuelo.setViaje(idVj);
 		if(result.hasErrors()) {
-			model.addAttribute("aerolinea", aerolService.findById(idAl));
+			model.addAttribute("myViaje",viajeService.findById(idVj));
 			model.addAttribute("aerops",aeropService.findAll());
-			model.addAttribute("aviones", avionService.findAllByAerolinea(aerolService.findById(idAl)) );
+			model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
 			model.addAttribute("errorCrear","");
-			return "vuelo/vuelo_lista";
+			return "aerolinea/gestion_viaje";
 		}
 		vueloService.save(vuelo);
 		
-		return "redirect:/gestion/vuelo/al/"+idAl+"/lista";
+		return "redirect:/gestion/viaje/"+idVj+"/vuelo";
 	}
 }
