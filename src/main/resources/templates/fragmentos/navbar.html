@@ -123,18 +123,11 @@
 				        </ul>
 			        </li>
 			        
-			        <li class="nav-item dropdown" sec:authorize="hasRole('admin')">
-				        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				            Aerolineas
-				        </a>
-				        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-						    <li><a class="dropdown-item" th:href="@{/gestion/aerolinea/lista}">Aerolineas</a></li>
-							<li><a class="dropdown-item" th:href="@{/avion/lista}">Aviones</a></li>
-						    <li><a class="dropdown-item" href="#">Vuelos</a></li>
-						    <li><a class="dropdown-item" href="#">Viajes</a></li>
-						    
-				        </ul>
+			        <li class="nav-item" sec:authorize="hasRole('admin')">
+			        	<a class="nav-link" th:href="@{/gestion/aerolinea/lista}">Aerolinea</a>
+			        </li>
+			        <li class="nav-item" sec:authorize="hasRole('admin')">
+			        	<a class="nav-link" th:href="@{/avion/lista}">Aviones</a>
 			        </li>
 			        
 			        <li class="nav-item" sec:authorize="hasRole('admin')">

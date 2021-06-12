@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org" 
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-        <title>Lista de Aerolíneas</title>
+        <title>Gestion de Aerolíneas</title>
         <meta charset="UTF-8">
 	    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
     	<div th:replace="fragmentos/head::bootstrap"></div>
@@ -16,52 +16,48 @@
         <div class="col-md-12 mx-auto my-3">
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between">
-                    <div class="h4 text-secondary d-inline-block my-1">
-                        Aerolíneas Registradas
+                    <div class="h4 text-secondary d-inline-block mt-3">
+                       [[${aerol.nombreLargo}]]
                     </div>
-                    <div class="d-inline-block align-self-middle">
-		                <button type="button" class="btn wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
-		                	<span>Agregar Aerolínea</span>
+                    
+            		<div class="card-header bg-light d-flex justify-content-between" style="width: 205px;">
+		            	<button type="button" class="btn wbtn-green-light ml-1" data-bs-toggle="modal" data-bs-target="#editA_Modal"><i class="fas fa-edit"></i>
+		                	<span> Editar</span>
 		            	</button>
-            		</div>
+		            	<button type="button" class="btn wbtn-green mr-2" data-bs-toggle="modal" data-bs-target="#addV_Modal"><i class="fas fa-plus"></i>
+		                	<span> Viaje</span>
+		            	</button>
+		            </div>
                 </div>
             </div>
             <br>
             
-            <div class="card-body" th:if="${aerols != null and !aerols.empty}">
+            <div class="card-body" th:if="${viajes != null and !viajes.empty}">
+            	Viajes disponibles de la aerolinea
                 <div class="col-sm-12 col-md-10 col-lg-8 mx-auto  mb-5">
                     <table id="datatable" class="table table-sm table-striped table-bordered w-100" >
                         <thead>
                             <tr>
                                 <th scope="col" ></th>
                                 <th scope="col" >Id</th>
-                                <th scope="col" >Codigo</th>                                                                  
-                                <th scope="col" >Nombre Corto</th>                                   
+                                                                  
                                 <th scope="col" >Acciones</th>                                
                             </tr>
                         </thead>
                         <tbody class="col-sm-12">
-                            <tr th:each=" aerol : ${aerols}">
+                            <tr th:each=" v : ${viajes}">
                                 <td></td>
-                                <td>[[${aerol.id}]]</td>
-                                <td>[[${aerol.codigo}]]</td>								
-								<td><a class="btn btn-link" th:href="@{/gestion/aerolinea/ges/}+${aerol.id}">[[${aerol.nombreCorto}]]</a></td>
+                                <td>[[${v.id}]]</td>
+                                
                                 <td class="">
                                     <a  class="btn btn-primary btn-sm link-detail mb-1"  
-                                    	th:href="@{/gestion/aerolinea/editar/}+${aerol.id}" 
-                                    	title="Editar Datos"><i class="fas fa-edit"></i></a>
+                                    	th:href="@{'/gestion/viaje/'+${v.id}+'/vuelo'}" 
+                                    	title="Editar Vuelos"><i class="fas fa-edit"></i></a>
                                     
                                     <a  class="btn btn-danger btn-delete btn-sm link-danger2 mb-1"  
-                                    	th:href="@{/gestion/aerolinea/eliminar/}+${aerol.id}" 
+                                    	th:href="@{/gestion/viaje/eliminar/}+${v.id}" 
                                     	title="Eliminar Aerolinea"><i class="fas fa-trash"></i></a>
-                                    	
-                                    <a  class="btn wbtn-green btn-sm mb-1"  
-                                    	th:href="@{'/gestion/aerolinea/'+${aerol.id}+'/admins'}" 
-                                    	title="Gestionar administradores"><i class="fas fa-user-cog"></i> ( [[${aerol.admins.size()}]] ) </a>
                                     
-                                    <a  class="btn wbtn-green-light btn-sm mb-1"  
-                                    	th:href="@{'/gestion/vuelo/al/'+${aerol.id}+'/lista'}" 
-                                    	title="Gestionar Vuelos"><i class="fas fa-paper-plane"></i></a>
                                 </td>                                                              
                             </tr>
                         </tbody>
@@ -76,27 +72,54 @@
         </div>
     </div>
 
-	<div id="add_Modal" class="modal fade">
+	<div id="addV_Modal" class="modal fade" th:if="${myAerol}">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/gestion/aerolinea/guardar}" th:object="${newAerol}" method="POST"  id="form_add">
-                    <div class="modal-header">
+				
+                   	<div class="modal-header">
                         <div>
-                        	<h4 class="modal-title mx-auto wtext-green">Agregar Aerolinea</h4>
-                        	<small class="text-muted">todos los campos son obligatorios</small>
+                        	<h4 class="modal-title wtext-green-light">Agregar viaje</h4>
+                        	<small class="text-muted"> todos los campos son obligatorios</small>
                         </div>
-                        
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
                     <div class="modal-body">
+ 						¿Desea agregar un nuevo viaje a esta aerolinea?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+                        <a class="btn wbtn-green" th:href="@{'/gestion/aerolinea/ges/'+${aerol.id}+'/addViaje'}">Agregar <i class="fas fa-save"></i></a>
+                        
+                    </div>
+                
+            </div>
+        </div>
+    </div>
+	
+	
+	<div id="editA_Modal" class="modal fade" th:if="${myAerol}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+				<form th:action="@{/gestion/aerolinea/ges/editar}" th:object="${myAerol}" method="POST"  id="form_add">
+                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+                   	<div class="modal-header">
+                        <div>
+                        	<h4 class="modal-title wtext-green-light">Editar Aerolinea</h4>
+                        	<small class="text-muted"> todos los campos son obligatorios</small>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        
                         <div class="form-group">
 							<label class="small wtext-green-light">Nombre Largo</label> 
 							<input type="text" th:field="*{nombreLargo}" class="form-control form-control-sm" autofocus/>
 						</div>
 						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombreLargo')}" th:errors="*{nombreLargo}"></small>
-						
-						<div class="form-group">
+                        
+                        <div class="form-group">
 							<label class="small wtext-green-light">Nombre Corto</label> 
 							<input type="text" th:field="*{nombreCorto}" class="form-control form-control-sm" autofocus/>
 						</div>
@@ -141,79 +164,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
-                        <button type="submit" class="btn wbtn-green"> Guardar <i class="fas fa-chevron-circle-right"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-	
-	<div id="modal-edit" class="modal fade" th:if="${myAerol}">
-        <div class="modal-dialog">
-            <div class="modal-content">
-				<form th:action="@{/gestion/aerolinea/editar}" th:object="${myAerol}" method="POST"  id="form_add">
-                    <input type="hidden" th:field="*{id}" th:value="*{id}"/>
-                   	<div class="modal-header">
-                        <div>
-                        	<h4 class="modal-title wtext-green-light">Editar Aerolinea</h4>
-                        	<small class="text-muted"> todos los campos son obligatorios</small>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    
-                    <div class="modal-body">
-                        
-                        <div class="form-group">
-							<label class="small wtext-green-light">Nombre Largo</label> 
-							<input type="text" th:field="*{nombreLargo}" class="form-control form-control-sm" autofocus/>
-						</div>
-						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombreLargo')}" th:errors="*{nombreLargo}"></small>
-                        
-                        <div class="form-group">
-							<label class="small wtext-green-light">Nombre Corto</label> 
-							<input type="text" th:field="*{nombreCorto}" class="form-control form-control-sm" autofocus/>
-						</div>
-						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombreCorto')}" th:errors="*{nombreCorto}"></small>
-						
-						<div class="form-group">
-							<label class="small wtext-green-light">Código</label>
-							<input type="text" th:field="*{codigo}" class="form-control form-control-sm"/>
-						</div>
-						<small class="form-text text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small>
-						
-						<div class="form-group">
-							<label class="small wtext-green-light">País</label>											
-							<select th:field="*{paisId}" class="form-control form-control-sm wselect paisId" >
-								<option value="">-- elegir pais --</option>
-								<option th:each="c : ${paises}" th:text="${c.nombre}" th:value="${c.id}"> </option>
-							</select>
-							<small class=" form-text text-danger" th:if="${#fields.hasErrors('paisId')}" th:errors="*{paisId}"></small>
-						</div>
-						
-						<div class="form-group">
-							<label class="small wtext-green-light">Ciudad</label>											
-							<select th:field="*{ciudadId}" class="form-control form-control-sm wselect ciudadId" >
-								<option value="">-- elegir ciudad --</option>
-								<option th:if="${ciudadese}" th:each="c : ${ciudadese}" th:text="${c.nombre}" th:value="${c.id}"> </option>
-							</select>
-							<small class=" form-text text-danger" th:if="${#fields.hasErrors('ciudadId')}" th:errors="*{ciudadId}"></small>
-						</div>
-						
-						<div class="form-group">
-							<label class="small">Nombre de Respresentante</label>
-							<input type="text" th:field="*{representante}" class="form-control form-control-sm"/>
-						</div>
-						<small class="form-text text-danger" th:if="${#fields.hasErrors('representante')}" th:errors="*{representante}"></small>
-						
-						<div class="form-group mt-1  wtext-green-light">
-							<label class="small wtext-green-light">Fecha de Fundación</label>
-							<input type="date" class="form-control form-control-sm" th:field="*{fechaFundacion}" placeholder="yyyy-MM-dd" >
-						</div>
-						<small class=" form-text text-danger" th:if="${#fields.hasErrors('fechaFundacion')}" th:errors="*{fechaFundacion}"></small>
-						
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
                         <button type="submit" class="btn wbtn-green-light">Guardar <i class="fas fa-save"></i></button>
                     </div>
                 </form>
@@ -221,30 +171,6 @@
         </div>
     </div>
 
-    <div id="modal-delete" class="modal fade" th:if="${delAerol}">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-				<form th:action="@{/gestion/aerolinea/eliminar}" th:object="${delAerol}" method="POST">
-					<input type="hidden" th:field="*{id}"/>
-					<div class="modal-header">
-	                    <div>
-	                    	<h4 class="modal-title mx-auto text-danger">¿Eliminar Aerolinea?</h4>
-	                    	<small class="text-muted">La aerolínea <strong>[[${delAerol.nombreLargo}]]</strong> se eliminará y </small>
-	                    	<small th:if="${msgDelete}" class="text-muted">[[${msgDelete}]]</small>
-	                    </div>
-	                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	                </div>
-	                <div class="modal-body">
-	                    Una vez eliminada, la aerolinea<span class="text-danger"> no se recuperará. </span>
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
-	                    <button type="submit" class="btn btn-danger">Eliminar <i class="fa fa-minus-circle"></i></button>
-	                </div>
-				</form>
-            </div>
-        </div>
-    </div>
 
     <footer th:replace="fragmentos/footer :: footer"></footer>
 	<div th:replace="fragmentos/datatables :: cdn"></div>
@@ -263,7 +189,7 @@
 		$('.ciudadIde').html(s);}});});});</script>
 		
 	<script th:if="${errorCrear}"> $(document).ready(function(){$("#add_Modal").modal("show");});</script>
-    <script th:if="${myAerol}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
+    <script th:if="${errorEditar}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
     <script th:if="${delAerol}"> $(document).ready(function(){$("#modal-delete").modal("show");});</script>
 </body>
 </html>

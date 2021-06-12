@@ -98,14 +98,18 @@ public class UsuarioServiceImpl implements UsuarioService{
 		u.setUsername(usuario.getUsername());
 		u.setClienteNatural(usuario.getPersona());
 		u.setCorreo(usuario.getEmail());
-		
+		System.out.println("rol actual: "+u.getRol().getId());
+		System.out.println("rol nuevo: "+usuario.getRolId());
 		if(u.getRol().getId()!=usuario.getRolId()) {
-			if(u.getRol().getNombre()=="ROLE_aerolinea_admin") {
+			System.out.println("nombre: "+u.getRol().getNombre());
+			if(u.getRol().getId() == (long)3) {
+				System.out.println("cambiando de aerol admin");
 				for(AdminAerolinea adm: admAerolService.findAllByUsuario(u)) {
 					admAerolService.deleteById(adm.getId());
 				}
 			}
-			if(u.getRol().getNombre()=="ROLE_aeropuerto_admin") {
+			if(u.getRol().getId() == (long)4) {
+				System.out.println("cambiando de aerop admin");
 				for(AdminAeropuerto adm: admAeropService.findAllByUsuario(u)) {
 					admAeropService.deleteById(adm.getId());
 				}

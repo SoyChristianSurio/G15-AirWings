@@ -36,4 +36,6 @@ public class VueloDto {
 	private Long aeropDestinoId;
 	//@NotNull(message = "obligatorio")
 	private Long avionId;
+	
+	private Long viaje;
 }

@@ -59,15 +59,25 @@ Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloq
 Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('al2', 3, '$2a$10$jFOIUVg7qfSrvhkuTPrzb.KPr5eyAU.SNFKD92lrNJwuHNnw9axsS','aerol2@mail.com',NULL,false);
 Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('al3', 3, '$2a$10$wzZa6oRsBQfTjFEQkCke1OpUPdtoLYVhaeIQyKb3SfKumLEFfVl4O','aerol3@mail.com',NULL,false);
 
+
+
 Insert into aeropuerto (capacidad, codigo, nombre, nombre_responsable, numero_bahia, telefono, ciudad_id)	VALUES (2, '123-asd', 'Romero Airport', 'Jaime Eseman Escool', 2, '78784545', 1);
+Insert into aeropuerto (capacidad, codigo, nombre, nombre_responsable, numero_bahia, telefono, ciudad_id)	VALUES (5, '123-IBZ', 'Ibiza International Airport', 'Pancho Pantera', 4, '64754545', 4);
+Insert into aeropuerto (capacidad, codigo, nombre, nombre_responsable, numero_bahia, telefono, ciudad_id)	VALUES (5, '123-WSH', 'Wachinton Airport', 'Atahualpa Yupanqui', 4, '64754545', 3);
+
 Insert into aerolinea (codigo, fecha_fundacion, nombre_corto, nombre_largo, representante, ciudad_id, pais_id)	VALUES ('AQO', '2021-06-04', 'QueOnda', 'Aerolinea Que Onda', 'Official Gerrero', 5, 2);
+Insert into aerolinea (codigo, fecha_fundacion, nombre_corto, nombre_largo, representante, ciudad_id, pais_id)	VALUES ('YVI', '2019-02-28', 'Voa Airline', 'Sha me Vo Airlines', 'Nombre Genérico', 2, 2);
 
 Insert into admin_aeropuerto (aeropuerto_id, usuario_id) VALUES (1, 3);
 Insert into admin_aerolinea (aerolinea_id, usuario_id) VALUES (1, 5);
 
+INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-121', 'mercedez', 'Boeing-777', 1, 1);
+INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-131', 'FlashAir', 'Concord-D', 1, 1);
+INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-141', 'CAT', 'Pajaro-D-A0', 2, 1);
 
-
-
+INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 61, '2021-06-12 00:21:00', '2021-06-11 23:20:00', 75, 3, 3, 1, 1);
+INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 60, '2021-06-12 01:21:00' ,'2021-06-12 00:21:00', 85, 2, 2, 1, 3);
+INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 60, '2021-06-12 01:21:00' ,'2021-06-12 00:21:00', 85, 3, 2, 1, 3);
 
 
 

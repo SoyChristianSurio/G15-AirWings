@@ -17,26 +17,25 @@
             <div class="card">
                 <div class="card-header bg-light d-flex justify-content-between">
                     <div class="h4 text-secondary d-inline-block my-1">
-                        Vuelos de la aerolínea <strong>[[${aerolinea.nombreLargo}]]</strong>
+                        Viajes de la aerolínea <strong>[[${aerolinea.nombreLargo}]]</strong>
                     </div>
                     <div class="d-inline-block align-self-middle">
 		                <button type="button" class="btn wbtn-green" data-bs-toggle="modal" data-bs-target="#add_Modal"><i class="fas fa-plus"></i>
-		                	<span>Agregar Vuelo</span>
+		                	<span>Agregar Viaje</span>
 		            	</button>
             		</div>
                 </div>
             </div>
             <br>
             
-            <div class="card-body" th:if="${vuelos != null and !vuelos.empty}">
+            <div class="card-body" th:if="${viajes != null and !viajes.empty}">
                 <div class="col-sm-12 col-md-10 col-lg-8 mx-auto  mb-5">
                     <table id="datatable" class="table table-sm table-striped table-bordered w-100" >
                         <thead>
                             <tr>
                                 <th scope="col" ></th>
                                 <th scope="col" >Id</th>
-                                <th scope="col" >Origen</th>                                                                  
-                                <th scope="col" >Destino</th>                                                                  
+                                <th scope="col" >Username</th>                                                                  
                                                                    
                                 <th scope="col" >Acciones</th>                                
                             </tr>
@@ -45,15 +44,9 @@
                             <tr th:each=" u : ${vuelos}">
                                 <td></td>
                                 <td>[[${u.id}]]</td>
-                                <td>
-                                	<span class="wtext-green-light h6">[[${u.origen.ciudad.pais.codigo}]]</span> 
-                                	<small>[[${#dates.format(u.fechaDespegue, 'dd-MMMM-yyyy HH:mm')}]]</small>
-                                </td>								
-                                <td>
-                                	<span class="wtext-green-light h6">[[${u.destino.ciudad.pais.codigo}]]</span> 
-                                	<small>[[${#dates.format(u.fechaAterrizaje, 'dd-MMMM-yyyy HH:mm')}]]</small>
-                                </td>
-                               	<td class="">
+                                <td>[[${u.username}]]</td>								
+								
+                                <td class="">
                                     <a  class="btn btn-primary btn-sm link-detail mb-1"  
                                     	th:href="@{/gestion/aerolinea/editar/}+${u.id}" 
                                     	title="Editar Datos"><i class="fas fa-edit"></i></a>
@@ -72,7 +65,7 @@
                 </div>
             </div>
             
-            <div class="text-center p-2" th:if="${vuelos==null or vuelos.empty}">
+            <div class="text-center p-2" th:if="${users==null or users.empty}">
                 <span th:text="'Lista vacia'">Lista vacia</span>
             </div>
 

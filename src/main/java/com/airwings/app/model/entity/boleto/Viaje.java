@@ -1,7 +1,6 @@
 package com.airwings.app.model.entity.boleto;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,9 +8,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.airwings.app.model.DTO.vuelo.ViajeDto;
+import com.airwings.app.model.entity.Aerolinea;
 
 import lombok.Data;
 
@@ -25,16 +26,24 @@ public class Viaje implements Serializable {
 	private Long id;
 	
 	private Double precio;
-	private Date duracion;
+	private Long duracion;
 	private Integer escalas;
+	@ManyToOne
+	private Aerolinea aerolinea;
 	
-	@JoinTable(
-		name = "viaje_vuelo",
-		joinColumns = @JoinColumn(name="fk_viaje", nullable = false),
-		inverseJoinColumns = @JoinColumn(name="fk_vuelo", nullable = false)
-	)
-	@ManyToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "viaje")
 	private List<Vuelo> vuelos;
+	
+	public ViajeDto getViajeDto() {
+		ViajeDto v = new ViajeDto();
+		v.setId(id);
+		v.setPrecio(precio);
+		v.setDuracion(duracion);
+		for(Vuelo vu:vuelos) {
+			v.getVuelos().add(vu.getId());
+		}
+		return v;
+	}
 }
 
 
