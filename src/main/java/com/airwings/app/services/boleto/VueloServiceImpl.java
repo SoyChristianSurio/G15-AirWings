@@ -1,7 +1,9 @@
 package com.airwings.app.services.boleto;
 
+import com.airwings.app.model.DAO.boleto.ViajeVueloDao;
 import com.airwings.app.model.DAO.boleto.VueloDao;
 import com.airwings.app.model.DTO.vuelo.VueloDto;
+import com.airwings.app.model.entity.boleto.ViajeVuelo;
 import com.airwings.app.model.entity.boleto.Vuelo;
 import com.airwings.app.services.AeropuertoService;
 import com.airwings.app.services.avion.AvionService;
@@ -27,6 +29,8 @@ public class VueloServiceImpl implements VueloService {
     AvionService avionService;
     @Autowired
     ViajeService viajeService;
+    @Autowired
+    ViajeVueloDao viajeVueloDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -54,22 +58,20 @@ public class VueloServiceImpl implements VueloService {
 
 	@Override
 	public Vuelo save(VueloDto v) throws ParseException {
-		
+		/* Convertir las fechas de String a Date*/
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");		
 		Date dd = df.parse(""+v.getFechaDespegue()+" "+v.getHoraDespegue());
 		Date da = df.parse(""+v.getFechaAterrizaje()+" "+v.getHoraAterrizaje());
 		long diffInMillies = da.getTime() - dd.getTime();
 		Long minutos = TimeUnit.MINUTES.convert(diffInMillies,TimeUnit.MILLISECONDS);
-
+		
+		/*Convertir Vuelo de DTO a ENTITY*/
 		Vuelo vu;
-		if(v.getId()==null) {
-			vu = new Vuelo();
-		} 
+		if(v.getId()==null) {vu = new Vuelo();} 
 		else {
 			vu = vueloDao.findById(v.getId()).orElse(null);
 			vu.setId(v.getId());
 		}
-
 		vu.setCodigo(v.getCodigo());
 		vu.setFechaDespegue(dd);
 		vu.setFechaAterrizaje(da);
@@ -78,11 +80,18 @@ public class VueloServiceImpl implements VueloService {
 		vu.setPrecio(v.getPrecio());
 		vu.setOrigen(aeropService.findById(v.getAeropOrigenId()));	
 		vu.setDestino(aeropService.findById(v.getAeropDestinoId()));
-		vu.setAvion(avionService.findById(v.getAvionId()));
-		
+		vu.setAvion(avionService.findById(v.getAvionId()));		
 		if(v.getViaje()!=null) vu.setViaje(viajeService.findById(v.getViaje()));
+		vu=vueloDao.save(vu);
 		
-		return vueloDao.save(vu);
+		/*Crear el registro de VUELO-VIAJE*/
+		ViajeVuelo vv = new ViajeVuelo();
+		vv.setViaje( viajeService.findById(v.getViaje()) );
+		vv.setVuelo(vu);
+		vv.setCorrel( viajeVueloDao.findAllByViajeOrderByCorrelAsc(vv.getViaje()).size() + 1 );
+		viajeVueloDao.save(vv);
+		
+		return vu;
 	}
 
 	@Override

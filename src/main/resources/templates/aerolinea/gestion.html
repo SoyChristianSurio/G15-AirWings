@@ -40,6 +40,9 @@
                             <tr>
                                 <th scope="col" ></th>
                                 <th scope="col" >Id</th>
+                                <th scope="col" >precio</th>
+                                <th scope="col" >escalas</th>
+                                <th scope="col" >duración</th>
                                                                   
                                 <th scope="col" >Acciones</th>                                
                             </tr>
@@ -48,6 +51,9 @@
                             <tr th:each=" v : ${viajes}">
                                 <td></td>
                                 <td>[[${v.id}]]</td>
+                                <td>[[${v.precio}]]</td>
+                                <td>[[${v.escalas}]]</td>
+                                <td>[[${v.duracion}]]</td>
                                 
                                 <td class="">
                                     <a  class="btn btn-primary btn-sm link-detail mb-1"  

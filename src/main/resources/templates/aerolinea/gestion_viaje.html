@@ -33,7 +33,7 @@
             </div>
             <br>
             
-            <div class="card-body" th:if="${myViaje.vuelos != null and !myViaje.vuelos.empty}">
+            <div class="card-body" th:if="${vuelos != null and !vuelos.empty}">
                 <div class="col-sm-12 col-md-10 col-lg-8 mx-auto  mb-5">
                     <table id="datatable" class="table table-sm table-striped table-bordered w-100" >
                         <thead>
@@ -47,29 +47,28 @@
                             </tr>
                         </thead>
                         <tbody class="col-sm-12">
-                            <tr th:each=" v : ${myViaje.vuelos}">
+                            <tr th:each=" v : ${vuelos}">
                                 <td></td>
-                                <td>[[${v.id}]]</td>
+                                <td>[[${v.vuelo.id}]]</td>
                                 <td>
-                                	<span class="wtext-green-light h6">[[${v.origen.nombre}]]</span> 
-                                	<span class="wtext-green-light h6">[[${v.origen.ciudad.pais.codigo}]]</span> 
-                                	<small>[[${#dates.format(v.fechaDespegue, 'dd-MMMM-yyyy HH:mm')}]]</small>
+                                	<span class="wtext-green-light h6">[[${v.vuelo.origen.nombre}]]</span> 
+                                	<span class="wtext-green-light h6">[[${v.vuelo.origen.ciudad.pais.codigo}]]</span> 
+                                	<small>[[${#dates.format(v.vuelo.fechaDespegue, 'dd-MMMM-yyyy HH:mm')}]]</small>
                                 </td>								
                                 <td>
-                                	<span class="wtext-green-light h6">[[${v.destino.nombre}]]</span> 
-                                	<span class="wtext-green-light h6">[[${v.destino.ciudad.pais.codigo}]]</span> 
-                                	<small>[[${#dates.format(v.fechaAterrizaje, 'dd-MMMM-yyyy HH:mm')}]]</small>
+                                	<span class="wtext-green-light h6">[[${v.vuelo.destino.nombre}]]</span> 
+                                	<span class="wtext-green-light h6">[[${v.vuelo.destino.ciudad.pais.codigo}]]</span> 
+                                	<small>[[${#dates.format(v.vuelo.fechaAterrizaje, 'dd-MMMM-yyyy HH:mm')}]]</small>
                                 </td>
                                 
                                 <td class="">
                                     <a  class="btn btn-primary btn-sm link-detail mb-1"  
-                                    	th:href="@{'/gestion/viaje/'+${v.id}+'/vuelo'}" 
+                                    	th:href="@{'/gestion/viaje/'+${v.vuelo.id}+'/vuelo'}" 
                                     	title="Editar Vuelos"><i class="fas fa-edit"></i></a>
                                     
                                     <a  class="btn btn-danger btn-delete btn-sm link-danger2 mb-1"  
-                                    	th:href="@{/gestion/viaje/'+${myViaje.id}+'/vuelo/eliminar/'+${v.id}}" 
+                                    	th:href="@{/gestion/viaje/'+${myViaje.id}+'/vuelo/eliminar/'+${v.vuelo.id}}" 
                                     	title="Eliminar Aerolinea"><i class="fas fa-trash"></i></a>
-                                   
                                 </td>                                                              
                             </tr>
                         </tbody>
@@ -77,7 +76,7 @@
                 </div>
             </div>
             
-            <div class="text-center p-2" th:if="${myViaje.vuelos==null or myViaje.vuelos.empty}">
+            <div class="text-center p-2" th:if="${vuelos==null or vuelos.empty}">
                 <span th:text="'Lista vacia'">Lista vacia</span>
             </div>
 

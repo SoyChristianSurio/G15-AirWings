@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.airwings.app.model.DAO.boleto.ViajeVueloDao;
 import com.airwings.app.model.DTO.vuelo.VueloDto;
 import com.airwings.app.services.AerolineaService;
 import com.airwings.app.services.AeropuertoService;
@@ -35,6 +36,8 @@ public class ViajeController {
 	VueloService vueloService;
 	@Autowired
 	ViajeService viajeService;
+	@Autowired
+	ViajeVueloDao viajeVueloDao;
 	
 	
 	@GetMapping("/{id}/vuelo")
@@ -42,6 +45,7 @@ public class ViajeController {
 		if(viajeService.findById(idVj)==null) return "redirect:/";
 		model.addAttribute("newVuelo", new VueloDto());
 		model.addAttribute("myViaje",viajeService.findById(idVj));
+		model.addAttribute("vuelos", viajeVueloDao.findAllByViajeOrderByCorrelAsc( viajeService.findById(idVj) ) );
 		model.addAttribute("aerops",aeropService.findAll());
 		model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
 		return "aerolinea/gestion_viaje";
@@ -54,11 +58,13 @@ public class ViajeController {
 		if(result.hasErrors()) {
 			model.addAttribute("myViaje",viajeService.findById(idVj));
 			model.addAttribute("aerops",aeropService.findAll());
+			model.addAttribute("vuelos", viajeVueloDao.findAllByViajeOrderByCorrelAsc( viajeService.findById(idVj) ) );
 			model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
 			model.addAttribute("errorCrear","");
 			return "aerolinea/gestion_viaje";
 		}
 		vueloService.save(vuelo);
+		viajeService.actualizarViaje(viajeService.findById(idVj));
 		
 		return "redirect:/gestion/viaje/"+idVj+"/vuelo";
 	}

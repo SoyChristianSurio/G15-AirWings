@@ -31,4 +31,8 @@ public interface UsuarioService {
 	public Usuario findUserAdminOfAerol(Long userId, Long aeropId);
 	public Usuario save(UsuarioRegistrable usuario);
 	
+	public void updateContadorBloqueo(int intentosFallidos, String username);
+	void increaseFailedAttempts(Usuario user);
+	void resetFailedAttempts(String username);
+	void lock(Usuario user);
 }
