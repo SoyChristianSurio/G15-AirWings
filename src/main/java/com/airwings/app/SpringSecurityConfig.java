@@ -9,6 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.airwings.app.auth.handler.LoginFailureHandler;
+import com.airwings.app.auth.handler.LoginSuccessHandler;
 import com.airwings.app.services.JpaUserDetailsService;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -19,6 +21,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	private JpaUserDetailsService userDetailService;
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
+	@Autowired 
+	LoginSuccessHandler loginSuccessHandler;
+	@Autowired
+	LoginFailureHandler loginFailureHandler;
 	
 	@Bean
 	public BCryptPasswordEncoder encoder() {
@@ -34,7 +40,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.antMatchers("/gestion").hasAnyRole("ROLE_admin","ROLE_admin_aeropuerto")			//hasAnyRole, el string debe iniciar con "ROLE_"
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login").permitAll()
+		.formLogin()
+			.loginPage("/login")
+			.failureHandler(loginFailureHandler)
+            .successHandler(loginSuccessHandler)
+            .permitAll()
 		.and()
 		.logout().permitAll();
 	}

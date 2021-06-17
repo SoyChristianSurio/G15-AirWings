@@ -41,6 +41,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	AdminAeropuertoService admAeropService;
 	@Autowired
 	RolDao rolDao;
+	public static final int MAX_FAILED_ATTEMPTS = 3;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -212,5 +213,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario findUserAdminOfAerop(Long userId, Long aeropId) {return usuarioDao.findUserAdminOfAerop(userId, aeropId);}
 	@Override
 	public Usuario findUserAdminOfAerol(Long userId, Long aeropId) {return usuarioDao.findUserAdminOfAerol(userId, aeropId);}
+
+	@Override
+	public void updateContadorBloqueo(int intentosFallidos, String username) {
+		usuarioDao.updateContadorBloqueo(intentosFallidos, username);		
+	}
+	@Override
+	public void increaseFailedAttempts(Usuario user) {
+        int newFailAttempts = user.getContadorBloqueo() + 1;
+        usuarioDao.updateContadorBloqueo(newFailAttempts, user.getUsername());
+    }
+	
+	@Override
+    public void resetFailedAttempts(String username) {
+    	usuarioDao.updateContadorBloqueo(0, username);
+    }
+	
+	@Override
+    public void lock(Usuario user) {
+        user.setBloqueado(true);         
+        usuarioDao.save(user);
+    }
+	
 	
 }

@@ -88,7 +88,7 @@ public class MainController {
 		 *  con @RequestParam(name= "error") recuperamos el error en la variable String error. el required=false indica que no 
 		 *  siempre se espera dicho parametro (porque cuando no hay error, el parametro no existe). 
 		 */
-		if(error!=null) model.addAttribute("error", "No se pudo iniciar sesión: usuario o contraseña incorrectos");
+		if(error!=null) model.addAttribute("error", "No se pudo iniciar sesión".concat(error));
 		model.addAttribute("title", "Login");
 		return "login";
 	}

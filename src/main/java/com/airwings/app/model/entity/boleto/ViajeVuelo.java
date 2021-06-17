@@ -9,41 +9,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import com.airwings.app.model.DTO.vuelo.ViajeDto;
-import com.airwings.app.model.entity.Aerolinea;
-
 import lombok.Data;
 
 @Entity
 @Data
-public class Viaje implements Serializable {
+public class ViajeVuelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Double precio;
-	private Long duracion;
-	private Integer escalas;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Vuelo vueloOrigen;
+	private Vuelo vuelo;
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Vuelo vueloDestino;
-	
-	@ManyToOne
-	private Aerolinea aerolinea;
-	
-	public ViajeDto getViajeDto() {
-		ViajeDto v = new ViajeDto();
-		v.setId(id);
-		v.setPrecio(precio);
-		v.setDuracion(duracion);
-		return v;
-	}
+	private Viaje viaje;
+	private Integer correl;
 }
-
-
-
-
-

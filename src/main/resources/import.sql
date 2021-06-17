@@ -49,15 +49,15 @@ insert into tipo_avion (nombre) values ('militar');
 
 
 
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('admin', 1, '$2a$10$tLizco88QqRv80R/l1IHZubLLhS8rKlXRoSbxg0MJWUU784TuY0f6','Admin@mail.com',NULL,false);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado,contador_bloqueo) values ('admin', 1, '$2a$10$tLizco88QqRv80R/l1IHZubLLhS8rKlXRoSbxg0MJWUU784TuY0f6','Admin@mail.com',NULL,false, 0);
 
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('ap1', 4, '$2a$10$cBzQi.jtLwFfFej2EcUJRe6xkEiBNg8G6.0gaeIZPjNLjs53BSWwW','aerop1@mail.com',NULL,false);
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('ap2', 4, '$2a$10$BeU124NpNdqTbevRip2oJegwqYiovH7UMG9N9oElnv0LyKMMkdk2C','aerop2@mail.com',NULL,false);
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('ap3', 4, '$2a$10$43buC3qn.0Y8nFRp8FgJL.09IeFZn5dvRNBxhnrbxifxmqHtHZ1VG','aerop3@mail.com',NULL,false);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('ap1', 4, '$2a$10$cBzQi.jtLwFfFej2EcUJRe6xkEiBNg8G6.0gaeIZPjNLjs53BSWwW','aerop1@mail.com',NULL,false, 0);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('ap2', 4, '$2a$10$BeU124NpNdqTbevRip2oJegwqYiovH7UMG9N9oElnv0LyKMMkdk2C','aerop2@mail.com',NULL,false, 0);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('ap3', 4, '$2a$10$43buC3qn.0Y8nFRp8FgJL.09IeFZn5dvRNBxhnrbxifxmqHtHZ1VG','aerop3@mail.com',NULL,false, 0);
 
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('al1', 3, '$2a$10$PbD3OODWpcSLT/fEgpBp2ewPT.V1UyrEgq1cKlgD2lBD8gfJLsHDW','aerol1@mail.com',NULL,false);
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('al2', 3, '$2a$10$jFOIUVg7qfSrvhkuTPrzb.KPr5eyAU.SNFKD92lrNJwuHNnw9axsS','aerol2@mail.com',NULL,false);
-Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado) values ('al3', 3, '$2a$10$wzZa6oRsBQfTjFEQkCke1OpUPdtoLYVhaeIQyKb3SfKumLEFfVl4O','aerol3@mail.com',NULL,false);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('al1', 3, '$2a$10$PbD3OODWpcSLT/fEgpBp2ewPT.V1UyrEgq1cKlgD2lBD8gfJLsHDW','aerol1@mail.com',NULL,false, 0);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('al2', 3, '$2a$10$jFOIUVg7qfSrvhkuTPrzb.KPr5eyAU.SNFKD92lrNJwuHNnw9axsS','aerol2@mail.com',NULL,false, 0);
+Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('al3', 3, '$2a$10$wzZa6oRsBQfTjFEQkCke1OpUPdtoLYVhaeIQyKb3SfKumLEFfVl4O','aerol3@mail.com',NULL,true, 0);
 
 
 

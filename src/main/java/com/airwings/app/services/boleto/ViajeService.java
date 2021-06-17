@@ -17,4 +17,6 @@ public interface ViajeService {
     public Viaje findById(Long id);
     
     public List<Viaje> findAllByAerolinea(Aerolinea a); 
+    
+    public Viaje actualizarViaje(Viaje viaje);
 }
