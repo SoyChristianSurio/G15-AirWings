@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.airwings.app.model.entity.avion.Clase;
 import com.airwings.app.model.entity.usuario.Usuario;
 
 import lombok.Data;
@@ -24,11 +25,10 @@ public class Boleto implements Serializable {
 	private String codigo;
 	private Double precio;
 	private Integer cantidadMaletas;
+	private Clase clase;
+	@ManyToOne
+	private Viaje viaje;
 	
-	@ManyToOne
-	private Viaje viajeIda;
-	@ManyToOne
-	private Viaje viajeVuelta;
 	@ManyToOne
 	private Usuario cliente;
 }

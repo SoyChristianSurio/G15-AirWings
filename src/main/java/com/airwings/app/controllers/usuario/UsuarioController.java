@@ -1,6 +1,8 @@
 package com.airwings.app.controllers.usuario;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -22,7 +24,11 @@ import com.airwings.app.model.DAO.usuario.EstadoCivilDao;
 import com.airwings.app.model.DAO.usuario.TipoDocumentoDao;
 import com.airwings.app.model.DTO.usuario.EmpresaAutoEdit;
 import com.airwings.app.model.DTO.usuario.PersonaAutoEdit;
+import com.airwings.app.model.DTO.vuelo.ReservaDto;
+import com.airwings.app.model.entity.avion.Asiento;
+import com.airwings.app.model.entity.boleto.ViajeVuelo;
 import com.airwings.app.model.entity.usuario.Usuario;
+import com.airwings.app.services.boleto.BoletoService;
 import com.airwings.app.services.boleto.ViajeService;
 import com.airwings.app.services.usuario.UsuarioService;
 
@@ -40,6 +46,8 @@ public class UsuarioController {
 	ViajeService viajeService;
 	@Autowired
 	ViajeVueloDao viajeVueloDao;
+	@Autowired
+	BoletoService boletoService;
 	
 	//##################################################################################################################
 	@Secured({"ROLE_user"})
@@ -187,6 +195,12 @@ public class UsuarioController {
 			else return "redirect:/usuario/empresa/datos";								
 		}//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 		
+		List<Asiento> asientos = null;
+		for(ViajeVuelo vv: viajeService.findById(id).getVvuelos()) {
+			asientos = vv.getVuelo().getAvion().getAsientos();
+		}
+		model.addAttribute("newReserva", asientos);
+		model.addAttribute("viajeId", id);
 		
 		model.addAttribute("boletos", viajeService.listaViaje());
 		
@@ -200,5 +214,24 @@ public class UsuarioController {
 		model.addAttribute( "title", "Inicio");
 		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 		return "usuario/inicio_usuario";
+	}
+	
+	@GetMapping("/reservar/{id}/{idc}")
+	public String reservarR(@PathVariable(name = "id")Long id,@PathVariable(name = "idc")Long idc, Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
+		if(principal==null) return "redirect:/login";						//si no hay sesión redirecciona al login
+		Usuario usuario = usuarioService.findByUsername(auth.getName());	//recuperar de la base al usuario logeado (a veces es util)
+		
+		/* 	si el registro de datos	no está completo, redirigir según tipo de cliente. */
+		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		if(!usuario.getRegistroCompleto()) {											 
+			flash.addFlashAttribute("warning","Completa la información antes de empezar");
+			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";	
+			else return "redirect:/usuario/empresa/datos";								
+		}//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		
+		boletoService.comprarBoleto(id, usuario.getId(), idc);
+		flash.addFlashAttribute("success","Boleto reservado!!");
+		
+		return "redirect:/usuario/inicio";
 	}
 }

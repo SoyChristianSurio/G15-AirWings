@@ -13,4 +13,6 @@ public interface BoletoService {
     public void eliminar(Boleto boleto);
     
     public Boleto encontrarBoleto(Boleto boleto);
+    
+    public Boleto comprarBoleto(Long viajeId, Long usuarioId, Long claseId);
 }

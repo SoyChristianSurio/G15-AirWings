@@ -18,10 +18,16 @@
 	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">
-		<div class="h1">Página principal</div>
-		<p th:if="${info}">[[${info}]]</p>
+		<div class="h1 text-muted text-center mb-5">Sitio Administrativo</div>
+		<div class="jumbotron mt-4">
+		  <h1 class="display-4">Bienvenido a <span class="wtext-green-light">AirWings</span></h1>
+		  <p class="lead">Bienvenido al sitio administrativo de AirWings</p>
+		  <hr class="my-4">
+		  <p>Desde este sitio administrativo, podrá realizar el mantenimiento de los diferentes elementos tales como aerolineas, aeropuertos, usuarios, etc.</p>
+		  
+		</div>
 	</div>
-	<div th:replace="fragmentos/auth_info::info"></div>
+	
 	<footer th:replace="fragmentos/footer :: footer"></footer>
 </body>
 </html>	

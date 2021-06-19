@@ -37,4 +37,9 @@ public class ClaseServiceImpl implements ClaseService {
         return claseDao.findById(clase.getId()).orElse(null);
     }
 
+	@Override
+	public Clase findById(Long id) {
+		return claseDao.findById(id).orElse(null);
+	}
+
 }
