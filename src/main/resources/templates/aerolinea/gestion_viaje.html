@@ -63,11 +63,11 @@
                                 
                                 <td class="">
                                     <a  class="btn btn-primary btn-sm link-detail mb-1"  
-                                    	th:href="@{'/gestion/viaje/'+${v.vuelo.id}+'/vuelo'}" 
+                                    	th:href="@{'/gestion/viaje/'+${myViaje.id}+'/vuelo/'+${v.vuelo.id}}" 
                                     	title="Editar Vuelos"><i class="fas fa-edit"></i></a>
                                     
                                     <a  class="btn btn-danger btn-delete btn-sm link-danger2 mb-1"  
-                                    	th:href="@{/gestion/viaje/'+${myViaje.id}+'/vuelo/eliminar/'+${v.vuelo.id}}" 
+                                    	th:href="@{/}" 
                                     	title="Eliminar Aerolinea"><i class="fas fa-trash"></i></a>
                                 </td>                                                              
                             </tr>
@@ -77,9 +77,112 @@
             </div>
             
             <div class="text-center p-2" th:if="${vuelos==null or vuelos.empty}">
-                <span th:text="'Lista vacia'">Lista vacia</span>
+                <span th:text="'Este viaje no tien vuelos aún'"></span>
             </div>
 
+        </div>
+    </div>	
+	
+	
+	
+	<div id="addVu_Modal" class="modal fade" th:if="${myVuelo}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{'/gestion/viaje/'+${myViaje.id}+'/vuelo/'+${myVuelo.id}}" th:object="${myVuelo}" method="POST"  id="form_add">
+                    <input type="hidden" th:value="*{id}" th:field="*{id}" />
+                    <input type="hidden" th:value="*{viaje}" th:field="*{viaje}"/>
+                    <input type="hidden" th:value="*{avionId}" th:field="*{avionId}"/>
+                    
+                    <div class="modal-header">
+                        <div>
+                        	<h4 class="modal-title mx-auto wtext-green">Agregar Vuelo</h4>
+                        	<small class="text-muted">todos los campos son obligatorios</small>
+                        </div>
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        
+                        <div class="form-group">
+							<label class="small wtext-green-light">Código</label>
+							<input type="text" th:field="*{codigo}" class="form-control form-control-sm"/>
+						</div>
+						<small class="form-text text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></small>
+						
+						<div class="wtext-green mt-2 form-group">Despegue</div>
+                    	<div class="border border-secondary rounded p-2 row mx-2">
+	                    	<div class="form-group mt-1  wtext-green-light col" style="max-width: 170px;">
+								<label class="small wtext-green-light">Fecha</label>
+								<input type="date" class="form-control form-control-sm" th:field="*{fechaDespegue}" placeholder="yyyy-MM-dd" >
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('fechaDespegue')}" th:errors="*{fechaDespegue}"></small>
+							</div>
+							
+							
+							<div class="form-group mt-1  wtext-green-light col" style="max-width: 130px;">
+								<label class="small wtext-green-light">Hora</label>
+								<input type="time" class="form-control form-control-sm" th:field="*{horaDespegue}">
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('horaDespegue')}" th:errors="*{horaDespegue}"></small>
+							</div>
+							
+							
+							<div class="form-group">
+								<label class="small wtext-green-light">Aeropuerto Origen</label>											
+								<select th:field="*{aeropOrigenId}" class="form-control form-control-sm wselect paisId" >
+									<option value="">-- elegir Aeropuerto --</option>
+									<option th:each="c : ${aerops}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+								</select>
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('aeropOrigenId')}" th:errors="*{aeropOrigenId}"></small>
+							</div>
+                    	</div>
+                    	
+                    	<div class="wtext-green mt-2 form-group">Aterrizaje</div>
+                    	<div class="border border-secondary rounded p-2 row mx-2">
+	                    	<div class="form-group mt-1  wtext-green-light col" style="max-width: 170px;">
+								<label class="small wtext-green-light">Fecha</label>
+								<input type="date" class="form-control form-control-sm" th:field="*{fechaAterrizaje}" placeholder="yyyy-MM-dd" >
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('fechaAterrizaje')}" th:errors="*{fechaAterrizaje}"></small>
+							</div>
+							
+							
+							<div class="form-group mt-1  wtext-green-light col" style="max-width: 170px;">
+								<label class="small wtext-green-light">Hora <small>(formato 24h)</small></label>
+								<input type="time" class="form-control form-control-sm" th:field="*{horaAterrizaje}">
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('horaAterrizaje')}" th:errors="*{horaAterrizaje}"></small>
+							</div>
+							
+							<div class="form-group">
+								<label class="small wtext-green-light">Aeropuerto Destino</label>											
+								<select th:field="*{aeropDestinoId}" class="form-control form-control-sm wselect paisId" >
+									<option value="">-- elegir Aeropuerto --</option>
+									<option th:each="c : ${aerops}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+								</select>
+								<small class=" form-text text-danger" th:if="${#fields.hasErrors('aeropDestinoId')}" th:errors="*{aeropDestinoId}"></small>
+							</div>
+                    	</div>
+                    	
+                    	<div class="border border-secondary rounded p-2 row mx-2 mt-2">
+	                    	<div class="form-group" style="max-width: 170px;">
+								<label class="small wtext-green-light">distancia (millas)</label>
+								<input type="text" th:field="*{distancia}" class="form-control form-control-sm"/>
+								<small class="form-text text-danger"	 th:if="${#fields.hasErrors('distancia')}" th:errors="*{distancia}"></small>
+							</div>
+							
+							
+							<div class="form-group" style="max-width: 170px;">
+								<label class="small wtext-green-light">precio ($)</label>
+								<input type="text" th:field="*{precio}" class="form-control form-control-sm"/>
+								<small class="form-text text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></small>
+							</div>
+							
+                    	</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+                        <button type="submit" class="btn wbtn-green"> Guardar <i class="fas fa-chevron-circle-right"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>	
 	
@@ -211,6 +314,7 @@
 		
 	<script th:if="${errorCrear}"> $(document).ready(function(){$("#addV_Modal").modal("show");});</script>
     <script th:if="${errorEditar}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
+    <script th:if="${myVuelo}"> $(document).ready(function(){$("#addVu_Modal").modal("show");});</script>
     <script th:if="${delAerol}"> $(document).ready(function(){$("#modal-delete").modal("show");});</script>
 </body>
 </html>

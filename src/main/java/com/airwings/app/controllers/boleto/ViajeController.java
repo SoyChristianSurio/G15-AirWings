@@ -68,4 +68,34 @@ public class ViajeController {
 		
 		return "redirect:/gestion/viaje/"+idVj+"/vuelo";
 	}
+	
+	@GetMapping("/{idvj}/vuelo/{id}")
+	public String editar(@PathVariable(name = "idvj")Long idVj, @PathVariable(name = "id")Long idVu, Model model) {
+		if(viajeService.findById(idVj)==null) return "redirect:/";
+		model.addAttribute("newVuelo", new VueloDto());
+		model.addAttribute("myVuelo", vueloService.findById(idVu).getVueloDto());		
+		model.addAttribute("myViaje",viajeService.findById(idVj));
+		model.addAttribute("vuelos", viajeVueloDao.findAllByViajeOrderByCorrelAsc( viajeService.findById(idVj) ) );
+		model.addAttribute("aerops",aeropService.findAll());
+		model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
+		return "aerolinea/gestion_viaje";
+	}
+	
+	@PostMapping("/{idvj}/vuelo/{id}")
+	public String editarP(@Valid @ModelAttribute(name = "myVuelo")VueloDto myVuelo,  BindingResult result,  @PathVariable(name = "idvj")Long idVj, @PathVariable(name = "id")Long idVu, Model model) throws ParseException {
+		if(viajeService.findById(idVj)==null) return "redirect:/";
+		if(result.hasErrors()) {
+			model.addAttribute("newVuelo", new VueloDto());		
+			model.addAttribute("myViaje",viajeService.findById(idVj));
+			model.addAttribute("vuelos", viajeVueloDao.findAllByViajeOrderByCorrelAsc( viajeService.findById(idVj) ) );
+			model.addAttribute("aerops",aeropService.findAll());
+			model.addAttribute("aviones", avionService.findAllByAerolinea(viajeService.findById(idVj).getAerolinea()) );
+			return "aerolinea/gestion_viaje";
+		}
+		vueloService.save(myVuelo);
+		viajeService.actualizarViaje(viajeService.findById(idVj));
+		return "redirect:/gestion/viaje/"+idVj+"/vuelo";
+	}
+	
+	
 }

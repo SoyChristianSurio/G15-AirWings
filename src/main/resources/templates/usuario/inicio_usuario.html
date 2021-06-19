@@ -18,11 +18,117 @@
 	<div th:replace="fragmentos/mensajes::alertas"></div>
 	
 	<div class="container">
-		<div class="h1">Página principal</div>
+		<div class="h1">Página principal usuarioCliente</div>
 		
+		<div class="" th:if="${boletos}">
+			
+			<div class="h2 wtext-green-light center">Paquetes de viaje disponibles
+			</div>
+			
+			<div class="accordion col-lg-10" id="accordionExample">
+				
+				<div th:each="b:${boletos}" class="accordion-item">
+				    <h2 class="accordion-header" th:id="'headin'+${b.id}">
+				    	<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+				    			th:data-bs-target="'#collapse'+${b.id}" aria-expanded="false" 
+				    			th:aria-controls="'collapse'+${b.id}"
+				    			th:if="!b.vvuelos.empty or b.vvuelos!=null">
+				    			
+				    		 <div class="col-10">
+					    		 <div class="col-12 small py-1">
+						        	<span class="wtext-green fst-italic fw-bold mx-2 col-8">[[${b.aerolinea.nombreLargo}]] </span>					    		 	
+					        	 </div>
+					    		 
+					    		 <div class="col-12 small py-1">						        	 
+						        	 <div class="">
+						        	 	despegue en<span class="fw-bold wtext-green-light mx-2"> [[${b.vueloOrigen.origen.nombre}]]</span>
+						        	 	<span class="text-secondary"> [[${#dates.format(b.vueloOrigen.fechaDespegue, 'dd-MMMM-yyyy HH:mm')}]] </span>
+						        	 </div>
+						        	 <div class="">
+						        	 	aterrizaje en <span class="fw-bold wtext-green-light mx-2"> [[${b.vueloDestino.destino.nombre}]]</span>
+						        	 	<span class="text-secondary"> [[${#dates.format(b.vueloDestino.fechaAterrizaje, 'dd-MMMM-yyyy HH:mm')}]] </span>
+						        	 </div>
+						        	 <div class="d-inline-block me-4">
+						        	 	Vuelos <span class="fw-bold wtext-green-light mx-2"> [[${b.vvuelos.size()}]]</span>
+						        	 </div>
+						        	 <div class="d-inline-block me-4">
+						        	 	Precio <span class="fw-bold wtext-green-light"> [[${b.precio}]]</span> <span class="text-secondary tst-italic">(No incluye precio del asiento)</span>
+						        	 </div>
+					        	 </div>					        	 
+				    		 </div>
+				    		 
+				    	</button>
+				    </h2>
+				    <div th:id="'collapse'+${b.id}" class="accordion-collapse collapse" 
+				    	 th:aria-labelledby="'headin'+${b.id}" data-bs-parent="#accordionExample"  
+				    	 th:if="!b.vvuelos.empty or b.vvuelos!=null">
+				    	<div class="accordion-body">
+				        	<a class="btn wbtn-outline-green btn-sm col-4 ml-auto mb-2" th:href="@{'/usuario/reservar/'+${b.id}}">seleccionar asientos</a>
+				        	
+				        	<ul class="list-group">
+							  <li th:each="vv:${b.vvuelos}" class="list-group-item mb-2 border shadow">
+							  	 <div class="small d-inline-block me-4">
+					        	 	despegue en<span class="fw-bold wtext-green-light mx-2"> [[${vv.vuelo.origen.nombre}]]</span>
+					        	 	<span class="text-secondary"> [[${#dates.format(vv.vuelo.fechaDespegue, 'dd-MMMM-yyyy HH:mm')}]] </span>
+					        	 </div>
+					        	 <div class="small d-inline-block">
+					        	 	aterrizaje en <span class="fw-bold wtext-green-light mx-2"> [[${vv.vuelo.destino.nombre}]]</span>
+					        	 	<span class="text-secondary"> [[${#dates.format(vv.vuelo.fechaAterrizaje, 'dd-MMMM-yyyy HH:mm')}]] </span>
+					        	 </div>
+					        	 
+					        	 <div class="small d-block">
+					        	 	<div class="small d-inline-block me-3" th:each="va : ${vv.vuelo.vueloAsiento}">
+					        	 		 [[${va.asiento.clase.nombre}]]([[${va.disponible}]]): $[[${va.asiento.precioAsiento}]]
+					        	 	</div>
+					        	 </div>
+							  	
+							  </li>
+							</ul>
+				        </div>
+					</div>
+				</div>
+			</div>
 		
-		<p>[[${title}]]</p>
+		</div>
+		
+		<div id="reserva_Modal" class="modal fade" th:if="${newReserv}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form th:action="@{/gestion/aerolinea/guardar}" th:object="${newReserv}" method="POST"  id="form_add">
+                    <div class="modal-header">
+                        <div>
+                        	<h4 class="modal-title mx-auto wtext-green">Agregar Aerolinea</h4>
+                        	<small class="text-muted">todos los campos son obligatorios</small>
+                        </div>
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        
+						<div class="form-group">
+							<label class="small wtext-green-light">País</label>											
+							<select th:field="*{paisId}" class="form-control form-control-sm wselect paisId" >
+								<option value="">-- elegir pais --</option>
+								<option th:each="c : ${paises}" th:text="${c.nombre}" th:value="${c.id}"> </option>
+							</select>
+							<small class=" form-text text-danger" th:if="${#fields.hasErrors('paisId')}" th:errors="*{paisId}"></small>
+						</div>
+						
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
+                        <button type="submit" class="btn wbtn-green"> Guardar <i class="fas fa-chevron-circle-right"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+		
 	</div>
+	
+	
+	
 	
 </body>
 </html>	
