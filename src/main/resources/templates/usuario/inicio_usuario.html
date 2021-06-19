@@ -91,34 +91,29 @@
 		
 		</div>
 		
-		<div id="reserva_Modal" class="modal fade" th:if="${newReserv}">
+		<div id="reserva_Modal" class="modal fade" th:if="${newReserva}">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form th:action="@{/gestion/aerolinea/guardar}" th:object="${newReserv}" method="POST"  id="form_add">
+                
                     <div class="modal-header">
                         <div>
-                        	<h4 class="modal-title mx-auto wtext-green">Agregar Aerolinea</h4>
-                        	<small class="text-muted">todos los campos son obligatorios</small>
+                        	<h4 class="modal-title mx-auto wtext-green">Seleccionar tipo de asiento</h4>
+                        	<small class="text-muted"></small>
                         </div>
                         
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     
-                    <div class="modal-body">
+                    <div class="modal-body p-4">
                         
-						<div class="form-group">
-							<label class="small wtext-green-light">País</label>											
-							<select th:field="*{paisId}" class="form-control form-control-sm wselect paisId" >
-								<option value="">-- elegir pais --</option>
-								<option th:each="c : ${paises}" th:text="${c.nombre}" th:value="${c.id}"> </option>
-							</select>
-							<small class=" form-text text-danger" th:if="${#fields.hasErrors('paisId')}" th:errors="*{paisId}"></small>
+						<div class="row" >
+							<a th:each="a:${newReserva}" class="btn btn btn-outline-secondary d-inline-block mb-2" th:href="@{'/usuario/reservar/'+${viajeId}+'/'+${a.clase.id}}">[[${a.clase.nombre}]]</a>
 						</div>
 						
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
-                        <button type="submit" class="btn wbtn-green"> Guardar <i class="fas fa-chevron-circle-right"></i></button>
+                        
                     </div>
                 </form>
             </div>
@@ -127,8 +122,9 @@
 		
 	</div>
 	
+	<footer th:replace="fragmentos/footer :: footer"></footer>
+	<div th:replace="fragmentos/datatables :: cdn"></div>
 	
-	
-	
+	<script th:if="${newReserva}"> $(document).ready(function(){$("#reserva_Modal").modal("show");});</script>
 </body>
 </html>	

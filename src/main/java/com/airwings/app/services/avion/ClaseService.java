@@ -13,4 +13,6 @@ public interface ClaseService {
     public void eliminar(Clase clase);
     
     public Clase encontrarClase(Clase clase);
+    
+    public Clase findById(Long id);
 }
