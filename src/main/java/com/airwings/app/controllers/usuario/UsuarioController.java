@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.airwings.app.model.DAO.boleto.ViajeVueloDao;
 import com.airwings.app.model.DAO.usuario.EstadoCivilDao;
 import com.airwings.app.model.DAO.usuario.TipoDocumentoDao;
 import com.airwings.app.model.DTO.usuario.EmpresaAutoEdit;
 import com.airwings.app.model.DTO.usuario.PersonaAutoEdit;
 import com.airwings.app.model.entity.usuario.Usuario;
+import com.airwings.app.services.boleto.ViajeService;
 import com.airwings.app.services.usuario.UsuarioService;
 
 @Controller
@@ -34,6 +36,11 @@ public class UsuarioController {
 	EstadoCivilDao ecDao;
 	@Autowired
 	TipoDocumentoDao tdDao;
+	@Autowired
+	ViajeService viajeService;
+	@Autowired
+	ViajeVueloDao viajeVueloDao;
+	
 	//##################################################################################################################
 	@Secured({"ROLE_user"})
 	@GetMapping("/inicio")
@@ -48,6 +55,10 @@ public class UsuarioController {
 			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";	
 			else return "redirect:/usuario/empresa/datos";								
 		}//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		
+		
+		model.addAttribute("boletos", viajeService.listaViaje());
+		
 		
 		
 		/* Este bloque se envía para efectos de mostrar y ocultar elementos en el html */
@@ -160,5 +171,34 @@ public class UsuarioController {
 		
 		if(id==null) return "usuario/inicio_usuario";
 		else return "redirect:/gestion/usuario/";
+	}
+	
+	/**/
+	@GetMapping("/reservar/{id}")
+	public String reservar(@PathVariable(name = "id")Long id, Model model, Principal principal, Authentication auth, RedirectAttributes flash) {
+		if(principal==null) return "redirect:/login";						//si no hay sesión redirecciona al login
+		Usuario usuario = usuarioService.findByUsername(auth.getName());	//recuperar de la base al usuario logeado (a veces es util)
+		
+		/* 	si el registro de datos	no está completo, redirigir según tipo de cliente. */
+		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		if(!usuario.getRegistroCompleto()) {											 
+			flash.addFlashAttribute("warning","Completa la información antes de empezar");
+			if(usuario.getClienteNatural()) return "redirect:/usuario/persona/datos";	
+			else return "redirect:/usuario/empresa/datos";								
+		}//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		
+		
+		model.addAttribute("boletos", viajeService.listaViaje());
+		
+		
+		
+		/* Este bloque se envía para efectos de mostrar y ocultar elementos en el html */
+		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		if(usuario.getClienteNatural())	model.addAttribute("personaCl"," ");	
+		else model.addAttribute("empresaCl"," ");								
+		model.addAttribute("menuHome", " ");									
+		model.addAttribute( "title", "Inicio");
+		//¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+		return "usuario/inicio_usuario";
 	}
 }

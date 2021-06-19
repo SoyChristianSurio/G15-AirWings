@@ -42,7 +42,7 @@ public class AerolineaController {
 	@Autowired
 	AdminAerolineaService adminAerolService;
 	
-	@Secured("ROLE_admin")// aeropuerto_listar
+	@Secured({"ROLE_admin"})// aeropuerto_listar
 	@GetMapping({"/lista","/","/guardar","/editar","/eliminar"})
 	public String lista(Model model) {
 		model.addAttribute("aerols", aerolService.findAll());
@@ -164,6 +164,7 @@ public class AerolineaController {
 		Aerolinea a = aerolService.findById(id);
 		model.addAttribute("aerol",a);
 		model.addAttribute("myAerol",a.toAerolineaDto());
+		model.addAttribute("myViaje", new Viaje());		
 		model.addAttribute("viajes",viajeService.findAllByAerolinea(a));
 		model.addAttribute("paises", paisService.findAll());
 		model.addAttribute("ciudades", paisService.findById( a.getPais().getId() ).getCiudades());
@@ -177,6 +178,9 @@ public class AerolineaController {
 		if(result.hasErrors()) {			
 			Aerolinea a = aerolService.findById(aerol.getId());
 			model.addAttribute("aerol",a);
+			model.addAttribute("errorEditar","");
+			model.addAttribute("myViaje", new Viaje());	
+			model.addAttribute("viajes",viajeService.findAllByAerolinea(a));
 			model.addAttribute("paises", paisService.findAll());
 			if(aerol.getPaisId()!=null)model.addAttribute("ciudades", paisService.findById(aerol.getPaisId()).getCiudades());
 			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
@@ -188,13 +192,22 @@ public class AerolineaController {
 		return "redirect:/gestion/aerolinea/ges/"+aerol.getId();
 	}
 	
-	@GetMapping({"/ges/{id}/addViaje"})
-	public String gesAddViaje(@PathVariable(name = "id")Long id, Model model) {
+	@PostMapping({"/ges/{id}/addViaje"})
+	public String gesAddViaje(@Valid @ModelAttribute(name = "myViaje")Viaje viaje, BindingResult result, @PathVariable(name = "id")Long id, Model model, RedirectAttributes flash) {
 		Aerolinea a = aerolService.findById(id);
-		Viaje viaje = new Viaje();
+		if (result.hasErrors()) {
+			model.addAttribute("aerol",a);
+			model.addAttribute("myAerol",a.toAerolineaDto());
+			model.addAttribute("errorCrear","");
+			model.addAttribute("viajes",viajeService.findAllByAerolinea(a));
+			model.addAttribute("paises", paisService.findAll());
+			model.addAttribute("ciudades", paisService.findById( a.getPais().getId() ).getCiudades());
+			model.addAttribute("fechaSistema",new SimpleDateFormat("dd/MMMM/yyyy").format(new Date()));
+			return "/aerolinea/gestion";
+		}
 		viaje.setAerolinea(a);
 		viajeService.guardar(viaje);
-		
+		flash.addFlashAttribute("success","Viaje creado");
 		return "redirect:/gestion/aerolinea/ges/"+a.getId();
 	}
 	

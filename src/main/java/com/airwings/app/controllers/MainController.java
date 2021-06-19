@@ -33,13 +33,11 @@ public class MainController {
 	
 	@GetMapping
 	public String inicio(Model model, Principal principal, Authentication auth) {
-		for(Usuario u: usuarioService.findAllAdminNotOfAerop((long) 1)) {
-			System.out.println(u.getUsername()+" "+u.getId());
-		}
 		
 		if(principal==null) return "redirect:/login";
 		Usuario usuario = usuarioService.findByUsername(auth.getName());
-		
+		System.out.println(auth.getName());
+		if(usuario==null) auth.setAuthenticated(false);
 		
 		//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| Inicio admin de aerolinea
 		if(hasRol("ROLE_admin")) {

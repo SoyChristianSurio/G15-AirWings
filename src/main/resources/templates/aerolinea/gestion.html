@@ -40,9 +40,9 @@
                             <tr>
                                 <th scope="col" ></th>
                                 <th scope="col" >Id</th>
-                                <th scope="col" >precio</th>
+                                <th scope="col" >nombre</th>
                                 <th scope="col" >escalas</th>
-                                <th scope="col" >duración</th>
+                                <th scope="col" >precio</th>
                                                                   
                                 <th scope="col" >Acciones</th>                                
                             </tr>
@@ -51,14 +51,14 @@
                             <tr th:each=" v : ${viajes}">
                                 <td></td>
                                 <td>[[${v.id}]]</td>
-                                <td>[[${v.precio}]]</td>
+                                <td>[[${v.nombre}]]</td>
                                 <td>[[${v.escalas}]]</td>
-                                <td>[[${v.duracion}]]</td>
+                                <td>[[${v.precio}]]</td>
                                 
                                 <td class="">
-                                    <a  class="btn btn-primary btn-sm link-detail mb-1"  
+                                    <a  class="btn wbtn-green-light btn-sm link-detail mb-1"  
                                     	th:href="@{'/gestion/viaje/'+${v.id}+'/vuelo'}" 
-                                    	title="Editar Vuelos"><i class="fas fa-edit"></i></a>
+                                    	title="Editar Vuelos"><i class="fas fa-paper-plane"></i></a>
                                     
                                     <a  class="btn btn-danger btn-delete btn-sm link-danger2 mb-1"  
                                     	th:href="@{/gestion/viaje/eliminar/}+${v.id}" 
@@ -71,14 +71,14 @@
                 </div>
             </div>
             
-            <div class="text-center p-2" th:if="${aerols==null or aerols.empty}">
-                <span th:text="'Lista vacia'">Lista vacia</span>
+            <div class="text-center p-2" th:if="${viajes==null or viajes.empty}">
+                <span th:text="'No hay viajes para esta aerolinea'"></span>
             </div>
 
         </div>
     </div>
 
-	<div id="addV_Modal" class="modal fade" th:if="${myAerol}">
+	<div id="addV_Modal" class="modal fade" th:if="${myViaje}">
         <div class="modal-dialog">
             <div class="modal-content">
 				
@@ -89,16 +89,20 @@
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    
+                <form th:object="${myViaje}" method="POST" th:action="@{'/gestion/aerolinea/ges/'+${aerol.id}+'/addViaje'}">
                     <div class="modal-body">
  						¿Desea agregar un nuevo viaje a esta aerolinea?
+ 						<div class="form-group">
+							<label class="small wtext-green-light">Nombre Largo</label> 
+							<input type="text" th:field="*{nombre}" class="form-control form-control-sm" autofocus/>
+						</div>
+ 						<small class="form-text text-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar <i class="fa">&#xf00d;</i></button>
-                        <a class="btn wbtn-green" th:href="@{'/gestion/aerolinea/ges/'+${aerol.id}+'/addViaje'}">Agregar <i class="fas fa-save"></i></a>
-                        
+                        <button type="submit" class="btn wbtn-green">Agregar <i class="fas fa-save"></i></button>
                     </div>
-                
+                </form>
             </div>
         </div>
     </div>
@@ -194,8 +198,8 @@
 		var s = '';for(var i = 0; i < result.length; i++) {s+='<option value="'+result[i].id+'">'+result[i].nombre+'</option>';}
 		$('.ciudadIde').html(s);}});});});</script>
 		
-	<script th:if="${errorCrear}"> $(document).ready(function(){$("#add_Modal").modal("show");});</script>
-    <script th:if="${errorEditar}"> $(document).ready(function(){$("#modal-edit").modal("show");});</script>
+	<script th:if="${errorCrear}"> $(document).ready(function(){$("#addV_Modal").modal("show");});</script>
+    <script th:if="${errorEditar}"> $(document).ready(function(){$("#editA_Modal").modal("show");});</script>
     <script th:if="${delAerol}"> $(document).ready(function(){$("#modal-delete").modal("show");});</script>
 </body>
 </html>

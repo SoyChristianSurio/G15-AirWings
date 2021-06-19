@@ -18,5 +18,7 @@ public interface VueloService {
 
     public Vuelo encontrarVuelo(Vuelo vuelo);
     
+    public Vuelo findById(Long id);
+    
     public List<Vuelo> findAllByAerolinea(Long id);
 }

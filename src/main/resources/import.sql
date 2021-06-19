@@ -59,6 +59,8 @@ Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloq
 Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('al2', 3, '$2a$10$jFOIUVg7qfSrvhkuTPrzb.KPr5eyAU.SNFKD92lrNJwuHNnw9axsS','aerol2@mail.com',NULL,false, 0);
 Insert into usuario (username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values ('al3', 3, '$2a$10$wzZa6oRsBQfTjFEQkCke1OpUPdtoLYVhaeIQyKb3SfKumLEFfVl4O','aerol3@mail.com',NULL,true, 0);
 
+Insert into usuario (registro_completo, username, rol_id, contrasena, correo, cliente_natural, bloqueado, contador_bloqueo) values (true,'cliente', 2, '$2a$10$oIZ8A12Eppx5aKcYnetsb.v1IYYogPApnofuFa6SqITwlML8fADci','cliente@mail.com',false,false, 0);
+INSERT INTO cliente_empresa(direccion, distancia_recorrida, millas, nit, nic, nombre, nombre_contacto, numero_viajero, telefono_fijo, telefono_movil, usuario_id) VALUES ('Dirección genérica para propositos demostrativos', 0, 0, '0608-150810-105-1', '321654987', 'Surtidora de Jugos', 'Hugo el Tomajugo', '123456789', '74757879', '74859674', 8);
 
 
 Insert into aeropuerto (capacidad, codigo, nombre, nombre_responsable, numero_bahia, telefono, ciudad_id)	VALUES (2, '123-asd', 'Romero Airport', 'Jaime Eseman Escool', 2, '78784545', 1);
@@ -72,16 +74,38 @@ Insert into admin_aeropuerto (aeropuerto_id, usuario_id) VALUES (1, 3);
 Insert into admin_aerolinea (aerolinea_id, usuario_id) VALUES (1, 5);
 
 INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-121', 'mercedez', 'Boeing-777', 1, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 15, 1, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 25, 1, 2);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 60, 1, 4);
+
 INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-131', 'FlashAir', 'Concord-D', 1, 1);
-INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('AQO-141', 'CAT', 'Pajaro-D-A0', 2, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 15, 2, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 25, 2, 2);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 60, 2, 4);
 
-INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 61, '2021-06-12 00:21:00', '2021-06-11 23:20:00', 75, 3, 3, 1, 1);
-INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 60, '2021-06-12 01:21:00' ,'2021-06-12 00:21:00', 85, 2, 2, 1, 3);
-INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id) VALUES ('', 1234, 60, '2021-06-12 01:21:00' ,'2021-06-12 00:21:00', 85, 3, 2, 1, 3);
+INSERT INTO avion(codigo, marca, modelo, aerolinea_id, tipo_id)	VALUES ('VOA-141', 'CAT', 'Pajaro-D-A0', 2, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 15, 3, 1);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 25, 3, 2);
+INSERT INTO public.asiento(cantidad_asiento, precio_asiento, avion_id, clase_id)	VALUES (10, 60, 3, 4);
+
+INSERT INTO viaje(duracion, escalas, nombre, precio, aerolinea_id, vuelo_destino_id, vuelo_origen_id) VALUES (380, 2, 'HappyTryp', 250, 1, null, null);
+
+INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id, viaje_id) VALUES ('AQO-121', 123, 118, '2021-06-18 20:58:00', '2021-06-11 19:00:00', 100, 1, 3, 1, 1, 1);
+INSERT INTO viaje_vuelo(correl, viaje_id, vuelo_id)	VALUES (1, 1, 1);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 1, 1);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 2, 1);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 3, 1);
 
 
+INSERT INTO vuelo(codigo, distancia, duracion, fecha_aterrizaje, fecha_despegue, precio, avion_id, destino_id, estado_id, origen_id, viaje_id) VALUES ('AQO-245', 1452, 240, '2021-06-19 01:20:00' ,'2021-06-18 21:20:00', 150, 1, 2, 1, 3, 1);
+INSERT INTO viaje_vuelo(correl, viaje_id, vuelo_id)	VALUES (2, 1, 2);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 1, 2);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 2, 2);
+INSERT INTO vuelo_asiento(disponible, asiento_id, vuelo_id) VALUES (10, 3, 2);
 
-create or replace function allRolAeropAdmin () returns table (	id bigint, bloqueado boolean, cliente_natural boolean, contador_bloqueo integer, contrasena character varying(255),	correo varchar(255), registro_completo boolean,	username varchar(255), rol_id bigint) language plpgsql as $$ begin	return query select u.* from usuario u join rol r on (u.rol_id=r.id) where r.nombre='ROLE_aeropuerto_admin'; end;$$;
+UPDATE viaje SET vuelo_destino_id=2, vuelo_origen_id=1 	WHERE id=1;
+
+create or replace function allRolAeropAdmin () returns table (id bigint, bloqueado boolean, cliente_natural boolean, contador_bloqueo integer, contrasena character varying(255),	correo varchar(255), registro_completo boolean,	username varchar(255), rol_id bigint) language plpgsql as $$ begin	return query select u.* from usuario u join rol r on (u.rol_id=r.id) where r.nombre='ROLE_aeropuerto_admin'; end;$$;
 
 create or replace function allAdminNotOfAerop (bigint)	returns table (id bigint,bloqueado boolean,cliente_natural boolean,contador_bloqueo integer,contrasena character varying(255),correo varchar(255),registro_completo boolean,username varchar(255),rol_id bigint) language plpgsql as $$ begin return query select u.* from usuario u inner join rol r on u.rol_id = r.id where r.nombre='ROLE_aeropuerto_admin' and u.id not in (select adp.usuario_id from admin_aeropuerto adp inner join aeropuerto ap on adp.aeropuerto_id = ap.id where ap.id = $1 );end;$$
 create or replace function allAdminNotOfAerol (bigint)	returns table (id bigint,bloqueado boolean,cliente_natural boolean,contador_bloqueo integer,contrasena character varying(255),correo varchar(255),registro_completo boolean,username varchar(255),rol_id bigint) language plpgsql as $$ begin return query select u.* from usuario u inner join rol r on u.rol_id = r.id where r.nombre='ROLE_aerolinea_admin' and u.id not in  (select adl.usuario_id from admin_aerolinea adl inner join aerolinea  al on adl.aerolinea_id = al.id where al.id = $1 );end;$$

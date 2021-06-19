@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.airwings.app.model.DAO.usuario.ClienteEmpresaDao;
 import com.airwings.app.model.DAO.usuario.ClienteNaturalDao;
 import com.airwings.app.model.DAO.usuario.EstadoCivilDao;
 import com.airwings.app.model.DAO.usuario.RolDao;
@@ -31,6 +32,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	UsuarioDao usuarioDao;
 	@Autowired
 	ClienteNaturalDao clienteNaturalDao;
+	@Autowired
+	ClienteEmpresaDao cienteEmpresaDao;
+	
 	@Autowired
 	EstadoCivilDao ecDao;
 	@Autowired
@@ -193,7 +197,30 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public String saveEmpresa(EmpresaAutoEdit empresa) {
-		return null;
+		ClienteEmpresa e ;
+		Usuario u = usuarioDao.findById(empresa.getUsuarioId()).orElse(null);
+		if(u.getEmpresa()==null) {
+			e = new ClienteEmpresa();
+			e.setDistanciaRecorrida(0.0);
+			e.setMillas(0.0);
+			u.setRegistroCompleto(true);
+			usuarioDao.save(u);
+		}else {
+			e = u.getEmpresa();
+		}
+		
+		e.setUsuario(u);
+		e.setNic(empresa.getNic());
+		e.setNit(empresa.getNit());
+		e.setTelefonoFijo(empresa.getTelefonoFijo());
+		e.setTelefonoMovil(empresa.getTelefonoMovil());
+		e.setNombre(empresa.getNombre());
+		e.setNombreContacto(empresa.getNombreContacto());
+		e.setNumeroViajero(empresa.getNumeroViajero());
+		e.setDireccion(empresa.getDireccion());
+		
+		cienteEmpresaDao.save(e);
+		return "Los datos del usuario '"+u.getUsername()+"' han sido guardados";
 	}
 
 	@Override
